@@ -1,0 +1,90 @@
+{
+  "request_id": "d65d0bfe7d874f44a9c124daf9e56546",
+  "workflow": "teacher_report",
+  "intent": "teacher_report",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "metric_grid",
+        "metrics": [
+          {
+            "label_code": "learner_count",
+            "value": 24.0,
+            "unit": "count"
+          },
+          {
+            "label_code": "attempts",
+            "value": 195.0,
+            "unit": "count"
+          },
+          {
+            "label_code": "success_rate",
+            "value": 0.568,
+            "unit": "ratio"
+          }
+        ]
+      },
+      {
+        "type": "bar_chart",
+        "title_code": "success_rate_by_topic",
+        "value_unit": "ratio",
+        "bars": [
+          {
+            "label": "photosynthese",
+            "value": 0.57
+          },
+          {
+            "label": "chlorophylle",
+            "value": 0.55
+          },
+          {
+            "label": "respiration",
+            "value": 0.58
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "Synthèse simulée — class-demo-a."
+      },
+      {
+        "type": "heading",
+        "text": null,
+        "text_code": "recurring_difficulties",
+        "level": 3
+      },
+      {
+        "type": "bullet_list",
+        "items": [
+          "chlorophylle",
+          "photosynthese",
+          "respiration"
+        ]
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "not_applicable",
+      "sources": [],
+      "verification": {
+        "checks_run": [
+          "structure"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "learning_records"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

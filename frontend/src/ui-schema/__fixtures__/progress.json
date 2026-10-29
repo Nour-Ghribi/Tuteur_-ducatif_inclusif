@@ -1,0 +1,38 @@
+{
+  "request_id": "c2fe3822f7b148adaa9cf3825478eaaf",
+  "workflow": "progress",
+  "intent": "progress",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "metric_grid",
+        "metrics": [
+          {
+            "label_code": "attempts",
+            "value": 1.0,
+            "unit": "count"
+          }
+        ]
+      },
+      {
+        "type": "progress",
+        "label_code": "recent_success",
+        "value": 0.0
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "not_applicable",
+      "sources": [],
+      "verification": null,
+      "simulated": false,
+      "simulated_services": [],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": null,
+      "model_id": null
+    }
+  }
+}

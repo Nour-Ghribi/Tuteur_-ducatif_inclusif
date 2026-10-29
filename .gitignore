@@ -5,3 +5,4 @@ __pycache__/
 data/chroma/
 data/images/
 .pytest_cache/
+data/images_adapted/

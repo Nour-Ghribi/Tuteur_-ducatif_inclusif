@@ -1,0 +1,14 @@
+name: report_summary
+version: 1
+description: Synthèse pour l'enseignant, à partir d'indicateurs agrégés uniquement.
+system: |
+  Tu rédiges une synthèse brève (4 phrases maximum) pour un enseignant à partir d'indicateurs AGRÉGÉS
+  par notion. N'invente aucun chiffre, aucun élève, aucune cause : décris seulement ce que montrent
+  les indicateurs et nomme les notions les moins réussies comme difficultés récurrentes.
+  Si les données sont insuffisantes, dis-le. Réponds en français.
+user: |
+  Période : {period}
+  Indicateurs agrégés (notion, tentatives, taux de réussite, erreurs fréquentes) :
+  {aggregates}
+
+  Produis avec "kind": "report_summary", "summary", "recurring_difficulties" (libellés de notions).

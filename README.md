@@ -161,3 +161,32 @@ c'est du bruit (6 questions PDF), comme la remédiation (0 % → 25 % de quasi-d
 5. **Multimodal / Inclusion** : décrire les images de `data/images/` (BLIP/LLaVA) et indexer
    ces descriptions comme chunks → le RAG « voit » les schémas.
 6. **API** : exposer `Tutor` via FastAPI (le module RL appellera `quiz(difficulty=...)`).
+
+
+---
+
+## Couche agentique : orchestration temps réel + interface (branche `agentic-orchestration-ui`)
+
+Le module ci-dessus est une **bibliothèque** (`Tutor.ask/quiz/remediate`). Cette couche en fait **l'application** :
+elle déroule la session d'apprentissage complète et l'affiche de façon accessible.
+
+```
+élève ─► interface React (frontend/) ─► routeur FastAPI ─► graphe LangGraph (backend/agentic/)
+                                                              ├─ Tutor GenAI + RAG (ce module, en processus)
+                                                              ├─ service RL (adaptateur HTTP, simulé en attendant)
+                                                              └─ données d'apprentissage (agrégats, simulées en attendant)
+```
+
+| Ce que la couche ajoute | Où |
+|---|---|
+| comprendre la demande (« flashcards », « étape par étape »…) et choisir le format | `backend/agentic/src/tutor_agentic/routing/` |
+| carte mentale, étapes, comparaison, notions clés (prompts versionnés) | `…/genai_ext/` |
+| correction (corrigés gardés côté serveur), historique, remédiation → RL | `…/graph/`, `…/service.py`, `…/history.py` |
+| vérification des pages sources, reprises bornées, mode dégradé | `…/graph/verification.py`, `…/integrations/` |
+| descriptions de figures et adaptation des couleurs (daltonisme) | `…/integrations/inclusion_local.py`, `…/inclusion/` |
+| interface React/TypeScript : 17 composants validés, accessibilité, préférences déclarées | `frontend/` |
+
+- Lancer la démo (services simulés, sans clé API) : [`backend/agentic/README.md`](backend/agentic/README.md), [`frontend/README.md`](frontend/README.md).
+- Contrats et demandes à chaque équipe : [`docs/agentic/INTEGRATION.md`](docs/agentic/INTEGRATION.md).
+- Rapport (PDF) : [`docs/agentic/Rapport_Couche_Agentique.pdf`](docs/agentic/Rapport_Couche_Agentique.pdf).
+- Tests : `cd backend/agentic && pytest` · `cd frontend && npm test`. Tout tourne sans réseau ni LLM ; les résultats simulés sont étiquetés comme tels.

@@ -1,0 +1,93 @@
+{
+  "request_id": "5be2a51c7229413aba82a1a4498b10bb",
+  "workflow": "experience",
+  "intent": "concept_map",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "concept_map",
+        "title": "photosynthèse",
+        "central_node_id": "root",
+        "nodes": [
+          {
+            "node_id": "root",
+            "label": "photosynthèse"
+          },
+          {
+            "node_id": "n1",
+            "label": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+          },
+          {
+            "node_id": "n2",
+            "label": "Elle se déroule dans les chloroplastes."
+          },
+          {
+            "node_id": "n3",
+            "label": "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+          },
+          {
+            "node_id": "n4",
+            "label": "Les produits sont le glucose et le dioxygène."
+          }
+        ],
+        "edges": [
+          {
+            "source": "root",
+            "target": "n1",
+            "label": null
+          },
+          {
+            "source": "root",
+            "target": "n2",
+            "label": null
+          },
+          {
+            "source": "root",
+            "target": "n3",
+            "label": null
+          },
+          {
+            "source": "root",
+            "target": "n4",
+            "label": null
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "context_provided",
+      "sources": [
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c0",
+          "page": 1
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c2",
+          "page": 2
+        }
+      ],
+      "verification": {
+        "checks_run": [
+          "structure"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "rag"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

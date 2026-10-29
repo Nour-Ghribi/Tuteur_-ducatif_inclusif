@@ -1,0 +1,146 @@
+{
+  "request_id": "005b0310bb5b4516aa777a7a08579664",
+  "workflow": "experience",
+  "intent": "quiz",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "quiz",
+        "title": "photosynthèse",
+        "questions": [
+          {
+            "question_id": "005b0310bb5b4516-q1",
+            "item_type": "mcq",
+            "prompt": "Selon le cours, quelle affirmation est correcte ?",
+            "options": [
+              {
+                "option_id": "a",
+                "text": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+              },
+              {
+                "option_id": "b",
+                "text": "Affirmation simulée incorrecte 1"
+              },
+              {
+                "option_id": "c",
+                "text": "Affirmation simulée incorrecte 2"
+              }
+            ]
+          },
+          {
+            "question_id": "005b0310bb5b4516-q2",
+            "item_type": "mcq",
+            "prompt": "Selon le cours, quelle affirmation est correcte ?",
+            "options": [
+              {
+                "option_id": "a",
+                "text": "Elle se déroule dans les chloroplastes."
+              },
+              {
+                "option_id": "b",
+                "text": "Affirmation simulée incorrecte 1"
+              },
+              {
+                "option_id": "c",
+                "text": "Affirmation simulée incorrecte 2"
+              }
+            ]
+          },
+          {
+            "question_id": "005b0310bb5b4516-q3",
+            "item_type": "mcq",
+            "prompt": "Selon le cours, quelle affirmation est correcte ?",
+            "options": [
+              {
+                "option_id": "a",
+                "text": "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+              },
+              {
+                "option_id": "b",
+                "text": "Affirmation simulée incorrecte 1"
+              },
+              {
+                "option_id": "c",
+                "text": "Affirmation simulée incorrecte 2"
+              }
+            ]
+          },
+          {
+            "question_id": "005b0310bb5b4516-q4",
+            "item_type": "mcq",
+            "prompt": "Selon le cours, quelle affirmation est correcte ?",
+            "options": [
+              {
+                "option_id": "a",
+                "text": "Les produits sont le glucose et le dioxygène."
+              },
+              {
+                "option_id": "b",
+                "text": "Affirmation simulée incorrecte 1"
+              },
+              {
+                "option_id": "c",
+                "text": "Affirmation simulée incorrecte 2"
+              }
+            ]
+          },
+          {
+            "question_id": "005b0310bb5b4516-q5",
+            "item_type": "mcq",
+            "prompt": "Selon le cours, quelle affirmation est correcte ?",
+            "options": [
+              {
+                "option_id": "a",
+                "text": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+              },
+              {
+                "option_id": "b",
+                "text": "Affirmation simulée incorrecte 1"
+              },
+              {
+                "option_id": "c",
+                "text": "Affirmation simulée incorrecte 2"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "context_provided",
+      "sources": [
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c0",
+          "page": 1
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c2",
+          "page": 2
+        }
+      ],
+      "verification": {
+        "checks_run": [
+          "structure",
+          "grounding_pages"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "rag"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Couche agentique du tuteur éducatif inclusif</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm;
+    @bottom-center { content: "Couche agentique — rôle E4 — page " counter(page) " / " counter(pages); font: 8pt "Segoe UI", sans-serif; color: #5b6475; } }
+  :root { --blue:#1d4ed8; --ink:#1b2430; --muted:#5b6475; --line:#c9d1de; --soft:#eef3fb; --green:#e4f4ea; --amber:#fff4d6; --orange:#fde8d6; }
+  * { box-sizing: border-box; }
+  body { font: 10pt/1.45 "Segoe UI", system-ui, sans-serif; color: var(--ink); margin: 0; }
+  h1 { font-size: 22pt; line-height: 1.15; margin: 0 0 4pt; color: #12306e; }
+  h2 { font-size: 14pt; color: #12306e; border-bottom: 2px solid var(--blue); padding-bottom: 2pt; margin: 18pt 0 8pt; break-after: avoid; }
+  h3 { font-size: 11pt; margin: 12pt 0 4pt; color: #12306e; break-after: avoid; }
+  p { margin: 0 0 6pt; } ul, ol { margin: 0 0 6pt; padding-left: 16pt; } li { margin-bottom: 2pt; }
+  .subtitle { font-size: 12pt; color: var(--muted); margin-bottom: 10pt; }
+  .meta { font-size: 9pt; color: var(--muted); margin-bottom: 14pt; }
+  table { border-collapse: collapse; width: 100%; margin: 4pt 0 10pt; font-size: 9pt; break-inside: auto; }
+  th, td { border: 1px solid var(--line); padding: 3.5pt 5pt; vertical-align: top; text-align: left; }
+  th { background: var(--soft); } tr { break-inside: avoid; }
+  code { font: 8.5pt Consolas, "Courier New", monospace; background: #f1f3f7; padding: 0 2pt; border-radius: 2pt; }
+  pre { font: 8pt/1.35 Consolas, monospace; background: #f6f7fa; border: 1px solid var(--line); padding: 6pt 8pt; border-radius: 4pt; overflow: hidden; white-space: pre-wrap; break-inside: avoid; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6pt; margin: 8pt 0 12pt; }
+  .kpi { border: 1px solid var(--line); border-radius: 6pt; padding: 6pt 8pt; background: var(--soft); }
+  .kpi b { display: block; font-size: 17pt; color: var(--blue); line-height: 1.1; } .kpi span { font-size: 8.5pt; color: var(--muted); }
+  .box { border-left: 4px solid var(--blue); background: var(--soft); padding: 6pt 10pt; margin: 8pt 0; border-radius: 0 4pt 4pt 0; break-inside: avoid; }
+  .warn { border-left-color: #b45309; background: var(--amber); }
+  figure { margin: 8pt 0; break-inside: avoid; text-align: center; } figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 3pt; }
+  .figrow { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8pt; align-items: start; }
+  .figrow img { width: 100%; border: 1px solid var(--line); border-radius: 4pt; }
+  .lane { display: flex; align-items: center; flex-wrap: wrap; gap: 3pt; margin: 4pt 0; font-size: 8.5pt; break-inside: avoid; }
+  .lane .tag { width: 62pt; font-weight: 700; color: #12306e; }
+  .pill { border: 1px solid var(--line); border-radius: 10pt; padding: 1.5pt 7pt; background: #fff; }
+  .pill.dec { background: var(--soft); border-color: var(--blue); } .pill.svc { background: var(--green); border-color: #3c8f5a; }
+  .pill.opt { border-style: dashed; } .arrow { color: var(--muted); }
+  .cover { padding-top: 6mm; } .pagebreak { break-before: page; }
+  .legend span { display: inline-block; margin-right: 10pt; font-size: 8.5pt; } .sw { display:inline-block; width:9pt; height:9pt; border:1px solid #888; vertical-align:-1pt; margin-right:3pt; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Couche agentique du tuteur éducatif inclusif</h1>
+  <div class="subtitle">Orchestration temps réel, inclusion et interface dynamique — rapport de contribution du rôle E4</div>
+  <div class="meta">Projet MLOps · tuteur éducatif intelligent et inclusif (GenAI + RAG + RL + MLOps) · branche <code>agentic-orchestration-ui</code> · 30 octobre 2026</div>
+
+  <div class="kpis">
+    <div class="kpi"><b>4 + 1</b><span>workflows temps réel : expérience, réponse, rapport, parcours + progression</span></div>
+    <div class="kpi"><b>17</b><span>composants d'interface autorisés, tous validés avant affichage</span></div>
+    <div class="kpi"><b>3</b><span>modes de services : simulé, module GenAI en processus, HTTP</span></div>
+    <div class="kpi"><b>293</b><span>tests écrits (195 backend + 98 frontend), 42 tests GenAI inchangés</span></div>
+  </div>
+
+  <h2 style="margin-top:6pt">Résumé</h2>
+  <p>Le module GenAI + RAG de l'équipe est une <b>bibliothèque</b> évaluée avec soin (retrieval hybride, prompts versionnés, citations contrôlées, mode FALC). Le schéma MLOps prévoit une API FastAPI dont l'étape centrale est « génération simulée <i>ou</i> correction <i>ou</i> recommandation RL ». <b>Personne n'avait la charge du code qui relie ces éléments en une session d'apprentissage</b> : comprendre la demande, émettre des questions avec leurs corrigés, corriger, déclencher la remédiation, consulter le RL, gérer les pannes et présenter le résultat de façon accessible.</p>
+  <p>La couche livrée ici comble ce vide <b>sans dupliquer</b> le RAG, la génération, le RL ni le MLOps : elle appelle le module GenAI directement, expose un routeur FastAPI que l'équipe MLOps peut monter, et fournit une interface React/TypeScript dont chaque écran est décrit par une spécification validée (aucun code venant d'un modèle n'est exécuté).</p>
+
+  <h3>Le rôle</h3>
+  <div class="box"><b>E4 — Inclusion / Application : ingénieur d'intégration applicative.</b> Il possède la couche qui transforme des modèles indépendants en un tuteur utilisable : orchestration de la session, état de l'élève, vérification des sorties, résilience aux pannes, contrats entre équipes, interface accessible et préférences d'inclusion. Il est responsable de la <i>qualité d'intégration</i>, pas de la qualité des modèles.</div>
+  <table>
+    <tr><th style="width:24%">Il possède</th><th style="width:38%">Il consomme (sans le réimplémenter)</th><th>Il ne fait pas</th></tr>
+    <tr><td>routage d'intention, graphe LangGraph, vérification, reprises, secours · historique et corrigés côté serveur · spécification d'interface · interface React · adaptation des couleurs, descriptions d'images · contrats et télémétrie</td>
+        <td>retrieval, quiz, réponses, remédiation (E1/E2) · politique RL (E3) · FastAPI de production, Docker, MLflow, Prometheus, Airflow, CI (E5)</td>
+        <td>entraîner un modèle · indexer des documents · déployer · créer un second serveur MLflow/Airflow/Prometheus</td></tr>
+  </table>
+</div>
+
+<h2 class="pagebreak">1. État de départ et lacunes constatées</h2>
+<p>Constat établi le 30 octobre 2026 sur la branche <code>genai-rag</code> du dépôt et sur le schéma d'architecture du MLOps.</p>
+<table>
+  <tr><th style="width:21%">Composant</th><th>État</th><th style="width:28%">Conséquence pour cette couche</th></tr>
+  <tr><td>GenAI + RAG (E1/E2)</td><td>Bibliothèque + CLI : ingestion PDF/MD, E5 + ChromaDB, recherche hybride BM25, prompts YAML versionnés, quiz/réponse/remédiation, garde-fou de citations, évaluation RAGAS v1→v5. Pas d'API.</td><td>appelé <b>en processus</b> ; son code n'est pas modifié</td></tr>
+  <tr><td>MLOps (E5)</td><td>Schéma : FastAPI :8000, MLflow, Prometheus/Grafana, Airflow (pipelines RAG/RL simulés), CI. Code non encore publié.</td><td>routeur <b>montable</b> + événements de télémétrie ; aucune infrastructure ajoutée</td></tr>
+  <tr><td>RL (E3)</td><td>Non livré.</td><td>adaptateur HTTP + simulation étiquetée</td></tr>
+</table>
+
+<h3>Ce que le code existant ne couvre pas, et la réponse apportée</h3>
+<table>
+  <tr><th style="width:36%">Lacune</th><th>Réponse de la couche agentique</th></tr>
+  <tr><td>Aucune correction de réponse ; la réponse attendue est passée à la main à <code>remediate()</code></td><td>QCM et vrai/faux corrigés localement par clé de réponse ; réponses libres notées par un LLM (prompt versionné <code>grade@v1</code>)</td></tr>
+  <tr><td><code>QuizItem</code> sans identifiant et avec son corrigé embarqué : l'envoyer au navigateur révèle les réponses</td><td>identifiants uniques par requête ; vue « élève » sans corrigé ; corrigés conservés côté serveur et rattachés à l'élève</td></tr>
+  <tr><td>Aucun historique d'élève (« LLM + historique élève » dans le sujet)</td><td>historique serveur par élève (scores, erreurs par compétence) alimentant la remédiation <i>et</i> le RL ; le client ne peut pas le fournir</td></tr>
+  <tr><td><code>diagnostic</code> de remédiation présenté comme un fait</td><td>affiché comme <b>hypothèse</b> ; formulation distincte après une erreur isolée ou répétée ; l'« erreur observée » reste un bloc séparé</td></tr>
+  <tr><td><code>quiz()</code> et <code>remediate()</code> ne renvoient pas leurs passages ; les <code>source_pages</code> ne sont jamais vérifiées</td><td>retrieval indépendant avec la même requête ; contrôle « pages sources ⊆ passages récupérés » ; régénération bornée avec le motif de rejet</td></tr>
+  <tr><td>Client LLM : 8 reprises et délai par défaut du SDK (10 min) : une panne bloque la requête de l'élève</td><td>timeout par appel, reprises bornées, mode dégradé, bloc de secours ; délai global du graphe</td></tr>
+  <tr><td>Trois méthodes séparées ; pas de demande en langage naturel ; pas de carte mentale, d'étapes, de comparaison, de notions clés</td><td>routeur d'intention FR/EN ; quatre prompts versionnés supplémentaires appelés via <code>Tutor.llm.structured</code></td></tr>
+  <tr><td>Images extraites mais jamais décrites ; pas d'adaptation des couleurs</td><td>descriptions par modèle de vision (optionnel), adaptation daltonisme sans modèle, texte de remplacement explicite si indisponible</td></tr>
+  <tr><td>Pas d'interface ; schéma MLOps sans élève ni enseignant</td><td>interface React/TypeScript élève et enseignant</td></tr>
+</table>
+
+<h2>2. Architecture</h2>
+<figure>
+<svg viewBox="0 0 770 318" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif" font-size="10.5">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#44506a"/></marker></defs>
+  <g stroke="#44506a" fill="none" stroke-width="1.4" marker-end="url(#a)">
+    <path d="M112,145 H138"/><path d="M270,145 H298"/><path d="M450,145 H478"/>
+    <path d="M600,120 L632,38"/><path d="M600,135 L632,108"/><path d="M600,155 L632,178"/><path d="M600,172 L632,248"/>
+    <path d="M375,182 V248" stroke-dasharray="4 3"/>
+  </g>
+  <g stroke="#44506a" stroke-width="1.2">
+    <rect x="8" y="118" width="104" height="54" rx="8" fill="#f1f3f7"/>
+    <rect x="140" y="108" width="130" height="74" rx="8" fill="#dbe7ff"/>
+    <rect x="300" y="108" width="150" height="74" rx="8" fill="#dbe7ff"/>
+    <rect x="480" y="48" width="120" height="190" rx="8" fill="#dbe7ff"/>
+    <rect x="634" y="12" width="128" height="52" rx="8" fill="#e4f4ea"/>
+    <rect x="634" y="82" width="128" height="52" rx="8" fill="#fff4d6" stroke-dasharray="5 3"/>
+    <rect x="634" y="152" width="128" height="52" rx="8" fill="#fff4d6" stroke-dasharray="5 3"/>
+    <rect x="634" y="222" width="128" height="52" rx="8" fill="#dbe7ff"/>
+    <rect x="140" y="250" width="310" height="44" rx="8" fill="#fde8d6"/>
+  </g>
+  <g fill="#1b2430" text-anchor="middle">
+    <text x="60" y="142" font-weight="700">Élève</text><text x="60" y="157">Enseignant</text>
+    <text x="205" y="132" font-weight="700">Interface React</text><text x="205" y="147">17 composants validés</text><text x="205" y="162">préférences déclarées</text>
+    <text x="375" y="132" font-weight="700">Routeur FastAPI</text><text x="375" y="147">TutorService · auth dév.</text><text x="375" y="162">historique · corrigés</text>
+    <text x="540" y="104" font-weight="700">Graphe LangGraph</text><text x="540" y="121">routage d'intention</text><text x="540" y="136">retrieval → génération</text><text x="540" y="151">⇄ vérification (bornée)</text><text x="540" y="166">recommandation · figures</text><text x="540" y="181">mise en page · secours</text>
+    <text x="698" y="33" font-weight="700">GenAI + RAG (E1/E2)</text><text x="698" y="49">module en processus</text>
+    <text x="698" y="103" font-weight="700">Service RL (E3)</text><text x="698" y="119">HTTP — simulé</text>
+    <text x="698" y="173" font-weight="700">Données d'apprentissage</text><text x="698" y="189">agrégats — simulés</text>
+    <text x="698" y="243" font-weight="700">Inclusion</text><text x="698" y="259">vision · daltonisme</text>
+    <text x="295" y="269" font-weight="700">MLOps (E5)</text><text x="295" y="285">MLflow · Prometheus · Airflow · CI/CD</text>
+  </g>
+  <text x="381" y="232" font-size="9.5" fill="#44506a" font-style="italic">événements de télémétrie</text>
+</svg>
+<figcaption>Figure 1 — Couches et responsabilités. Bleu : livré par cette couche · vert : module de l'équipe · jaune pointillé : service à venir (simulé) · orange : infrastructure de l'équipe MLOps.</figcaption>
+</figure>
+
+<p><b>Principe de séparation.</b> React affiche ; FastAPI valide et authentifie ; <b>LangGraph orchestre</b> les requêtes temps réel (routage conditionnel, boucle de vérification bornée, reprise sur erreur) ; les adaptateurs appellent les services des coéquipiers ; le MLOps observe, versionne et déploie sans orchestrer chaque requête d'élève. <b>Airflow reste réservé aux traitements par lots</b> (ingestion, évaluation, réentraînement) : il n'intervient jamais dans une interaction d'élève, qui doit répondre en quelques secondes et conserver son état de session.</p>
+
+<h3>Le graphe, workflow par workflow</h3>
+<div class="legend"><span><i class="sw" style="background:#eef3fb;border-color:#1d4ed8"></i>décision</span><span><i class="sw" style="background:#e4f4ea;border-color:#3c8f5a"></i>appel de service</span><span><i class="sw" style="background:#fff;border-style:dashed"></i>facultatif</span></div>
+<div class="lane"><span class="tag">A Expérience</span><span class="pill dec">intention</span><span class="arrow">→</span><span class="pill dec">plan</span><span class="arrow">→</span><span class="pill svc">retrieval</span><span class="arrow">→</span><span class="pill svc">génération</span><span class="arrow">⇄</span><span class="pill dec">vérification ≤ 2</span><span class="arrow">→</span><span class="pill svc opt">RL</span><span class="arrow">→</span><span class="pill svc opt">figures</span><span class="arrow">→</span><span class="pill dec">mise en page</span></div>
+<div class="lane"><span class="tag">B Réponse</span><span class="pill dec">correction</span><span class="arrow">→</span><span class="pill opt">si faux :</span><span class="pill svc opt">retrieval</span><span class="arrow">→</span><span class="pill svc opt">remédiation</span><span class="arrow">⇄</span><span class="pill dec opt">vérification</span><span class="arrow">→</span><span class="pill svc opt">RL</span><span class="arrow">→</span><span class="pill dec">mise en page</span></div>
+<div class="lane"><span class="tag">C Rapport</span><span class="pill dec">rôle + classe</span><span class="arrow">→</span><span class="pill svc">agrégats</span><span class="arrow">→</span><span class="pill svc">synthèse LLM</span><span class="arrow">→</span><span class="pill dec">mise en page</span></div>
+<div class="lane"><span class="tag">D Parcours</span><span class="pill svc">RL</span><span class="arrow">→</span><span class="pill dec">activité offerte ?</span><span class="arrow">→</span><span class="pill dec">mise en page</span><span class="arrow">→</span><span class="arrow">retour d'activité → RL</span></div>
+<p style="font-size:9pt;color:#5b6475;margin-top:4pt">Toute erreur fatale route vers <i>recover</i> (bloc de secours localisable) puis <i>finalize</i>, qui revalide la spécification complète avant envoi. Un nœud n'est un « agent » que s'il décide (intention, vérification, reprise) ; le reste est déterministe.</p>
+
+<h2>3. Les workflows</h2>
+<table>
+  <tr><th style="width:18%">Workflow</th><th>Déroulement</th><th style="width:25%">Garde-fous</th></tr>
+  <tr><td><b>A — Expérience adaptative</b><br><code>POST /tutor/experiences</code></td><td>« Génère cinq questions », « flashcards », « carte mentale », « étape par étape », « compare », « montre les notions clés », « un autre exercice » → intention (règles FR/EN, classifieur LLM facultatif pour les cas ambigus) → récupération des passages → génération → vérification → recommandation RL si la demande l'exige → figures → spécification d'interface.</td><td>pas d'appel RL pour une simple explication ; aucun passage trouvé → on le dit (aucune génération hors cours)</td></tr>
+  <tr><td><b>B — Réponse et remédiation</b><br><code>POST /tutor/answers</code></td><td>correction (clé de réponse, ou LLM pour une réponse libre) → <b>erreur observée</b> → si faux : passages ciblés, remédiation (<code>Tutor.remediate</code> avec les erreurs précédentes de l'élève) présentée comme <b>hypothèse</b> → exercice → RL.</td><td>question à tentative unique (le retour révèle la réponse) ; panne de remédiation → on garde le retour de correction</td></tr>
+  <tr><td><b>C — Rapport enseignant</b><br><code>POST /teacher/reports</code></td><td>période validée → agrégats par notion (jamais de ligne par élève) → synthèse LLM <i>à partir des seuls agrégats</i> → indicateurs, graphique + tableau, difficultés récurrentes.</td><td>rôle enseignant <i>et</i> classe autorisée ; période ≤ 366 jours, pas dans le futur ; données simulées étiquetées</td></tr>
+  <tr><td><b>D — Parcours d'apprentissage</b><br><code>POST /tutor/recommendations</code><br><code>…/{id}/outcome</code></td><td>caractéristiques calculées côté serveur (scores récents, temps moyen, préférences déclarées) → demande au RL parmi un catalogue d'activités → validation de la réponse → carte de recommandation ; le retour de l'élève est transmis au RL (signal de récompense).</td><td>une activité non proposée est rejetée ; aucun entraînement dans le graphe</td></tr>
+  <tr><td><b>Progression</b><br><code>GET /tutor/progress</code></td><td>indicateurs de l'élève à partir de l'historique serveur.</td><td>aucun appel de modèle</td></tr>
+</table>
+
+<h2>4. Interface pilotée par une spécification validée (« agent-to-UI »)</h2>
+<p>Le modèle ne renvoie <b>jamais</b> de HTML, de JavaScript ni de React. La couche sépare le <i>contenu</i> (produit par le GenAI, typé par format) de la <i>présentation</i> : un planificateur déterministe le traduit en blocs choisis dans une liste fermée. La spécification est validée côté serveur (Pydantic, champs inconnus rejetés, textes bornés, texte brut uniquement), <b>revalidée dans le navigateur</b> (zod), puis rendue par une table unique type → composant. Un bloc inconnu ou mal formé est écarté et signalé ; une spécification illisible devient un message de secours.</p>
+<table>
+  <tr><th style="width:21%">Blocs</th><th>Composants et accessibilité</th></tr>
+  <tr><td><code>heading</code> <code>text</code> <code>bullet_list</code> <code>callout</code></td><td>titres hiérarchisés (un seul <code>h1</code>), paragraphes, listes ; les messages d'état ont <code>role="note"</code> / <code>"alert"</code> et une icône <i>et</i> un texte (jamais la couleur seule)</td></tr>
+  <tr><td><code>flashcard_deck</code></td><td>carte = bouton (<code>aria-pressed</code>), Entrée/Espace pour retourner, flèches pour naviguer, annonce vocale de la carte</td></tr>
+  <tr><td><code>quiz</code> <code>quiz_feedback</code></td><td><code>fieldset/legend</code>, boutons radio étiquetés ou champ texte, retour dans une zone <code>aria-live</code> ; aucun corrigé dans le bloc <code>quiz</code></td></tr>
+  <tr><td><code>concept_cards</code> <code>steps</code> <code>comparison_table</code></td><td>fiches ; parcours séquentiel (<code>aria-current="step"</code>) ; tableau avec <code>caption</code> et <code>th scope</code></td></tr>
+  <tr><td><code>concept_map</code></td><td>dessin SVG décoratif <b>et</b> liste textuelle des relations ; liste seule si l'affichage épuré est demandé</td></tr>
+  <tr><td><code>progress</code> <code>metric_grid</code> <code>bar_chart</code> <code>recommendation_card</code></td><td><code>&lt;progress&gt;</code> étiqueté ; graphique = tableau de données ; carte avec retour d'activité</td></tr>
+  <tr><td><code>image</code> <code>fallback</code></td><td>figure avec texte alternatif obligatoire, ou texte de remplacement explicite si aucune description n'existe ; message de secours localisé</td></tr>
+</table>
+<div class="figrow">
+  <figure><img src="img/fig-flashcards.png" alt="Flashcards"><figcaption>Figure 2 — Flashcards (clavier, annonce vocale).</figcaption></figure>
+  <figure><img src="img/fig-concept-map.png" alt="Carte conceptuelle"><figcaption>Figure 3 — Carte conceptuelle, doublée d'une version texte.</figcaption></figure>
+</div>
+
+<h2>5. Inclusion et accessibilité</h2>
+<p>Les adaptations reposent <b>uniquement sur des préférences déclarées</b> par l'utilisateur ; aucun handicap ni besoin n'est déduit du comportement. Les préférences sont mémorisées sur l'appareil, envoyées avec chaque demande et appliquées des deux côtés.</p>
+<table>
+  <tr><th style="width:29%">Préférence déclarée</th><th>Effet</th></tr>
+  <tr><td>Explications plus simples</td><td>niveau de lecture FALC demandé au module GenAI (<code>styles</code> du module, réutilisés)</td></tr>
+  <tr><td>Textes plus courts</td><td>segments plafonnés (400 caractères) dans la demande de génération</td></tr>
+  <tr><td>Affichage épuré</td><td>aucune figure ; carte conceptuelle en liste ; pas de graphique décoratif</td></tr>
+  <tr><td>Lecteur d'écran</td><td>description longue des figures ; version texte des cartes ouverte</td></tr>
+  <tr><td>Contraste élevé · taille du texte</td><td>thème noir/blanc/jaune ; échelle de 100 % à 200 % ; cibles ≥ 44 px ; focus toujours visible</td></tr>
+  <tr><td>Vision des couleurs (protanopie, deutéranopie, tritanopie)</td><td>les figures du cours sont <b>recolorées</b> : simulation de Machado et al. (2009) en RVB linéaire, puis décalage de l'information perdue vers des canaux distinguables (« daltonize ») ; les gris restent inchangés (testé)</td></tr>
+</table>
+<p><b>Descriptions de figures.</b> L'ingestion du module extrait déjà les images ; la couche les décrit avec un modèle de vision compatible OpenAI (par exemple LLaVA sur Ollama) si un modèle est configuré, avec une description courte et une description détaillée. Sans modèle, la figure s'affiche avec la mention « description indisponible » : <b>aucune légende n'est inventée</b>. Les images ne sont jamais servies par chemin de fichier : le navigateur reçoit un identifiant opaque et les récupère avec son jeton.</p>
+<figure>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8pt">
+    <div><img src="img/daltonize-1-original.png" alt="Graphique d'origine" style="width:100%;border:1px solid var(--line)"><div style="font-size:8.5pt">1 · Image d'origine</div></div>
+    <div><img src="img/daltonize-2-simule.png" alt="Graphique vu en deutéranopie" style="width:100%;border:1px solid var(--line)"><div style="font-size:8.5pt">2 · Vue par une personne deutéranope (simulation)</div></div>
+    <div><img src="img/daltonize-3-adapte-vu.png" alt="Graphique adapté, vu en deutéranopie" style="width:100%;border:1px solid var(--line)"><div style="font-size:8.5pt">3 · Image adaptée, vue par la même personne (simulation)</div></div>
+  </div>
+  <figcaption>Figure 4 — Adaptation des couleurs sur un graphique synthétique à quatre barres (rouge, vert, orange, bleu). Écart de couleur minimal entre deux barres, tel que perçu en deutéranopie : <b>51,9 → 62,4</b> (distance RVB). Le gain est réel mais modeste : c'est une heuristique, qui ne remplace ni les motifs ni les étiquettes textuelles.</figcaption>
+</figure>
+<div class="figrow">
+  <figure><img src="img/fig-remediation.png" alt="Remédiation"><figcaption>Figure 5 — Après une erreur : constat, puis hypothèse clairement présentée comme telle, explication et nouvel exercice.</figcaption></figure>
+  <figure><img src="img/fig-accessible.png" alt="Contraste élevé"><figcaption>Figure 6 — Contraste élevé et texte à 150 %. La figure de démonstration y est l'image d'origine ; la recoloration est illustrée en figure 4.</figcaption></figure>
+</div>
+
+<h2>6. Fiabilité, sécurité et vie privée</h2>
+<table>
+  <tr><th style="width:30%">Garantie</th><th>Mécanisme</th><th style="width:20%">Vérifié par</th></tr>
+  <tr><td>Les corrigés ne quittent pas le serveur ; une question corrigée n'est pas rejouable</td><td>vue élève sans clé ; corrigés rattachés à l'élève ; question supprimée après correction</td><td><code>test_session_loop</code>, <code>contract.test</code></td></tr>
+  <tr><td>L'identité et le rôle ne sont pas falsifiables</td><td>identité issue du jeton ; champs <code>student_ref</code> / en-tête de rôle ignorés ; corps strict</td><td><code>test_api</code></td></tr>
+  <tr><td>Authentification de développement jamais présentée comme réelle</td><td>refus hors développement ; sans jeton configuré, tout est rejeté ; interface <code>Authenticator</code> remplaçable</td><td><code>test_api</code>, <code>test_adapters</code></td></tr>
+  <tr><td>Injection par le contenu du cours</td><td>passages transmis comme <b>données non fiables</b> ; consignes explicites dans chaque prompt ajouté ; sorties validées par schéma, jamais interprétées comme du HTML</td><td><code>test_tuteur_adapter</code>, <code>render.test</code></td></tr>
+  <tr><td>Sortie de modèle malformée</td><td>schémas stricts ; contrat violé → erreur typée, pas de reprise inutile ; régénération bornée avec motif</td><td><code>test_schemas</code>, <code>test_tuteur_adapter</code></td></tr>
+  <tr><td>Panne ou lenteur d'un service</td><td>timeout, reprises bornées sur erreurs transitoires seulement, réponse « partielle » ou bloc de secours, délai global (504)</td><td><code>test_adapters</code>, <code>test_graph_workflows</code></td></tr>
+  <tr><td>Aucune affirmation de vérification non exécutée</td><td><code>checks_run</code> liste les contrôles réels ; l'interface les nomme</td><td><code>render.test</code>, <code>test_session_loop</code></td></tr>
+  <tr><td>Aucune donnée simulée présentée comme réelle</td><td><code>simulated</code> sur chaque réponse issue d'un service simulé ; mocks refusés en production</td><td><code>contract.test</code>, <code>test_adapters</code></td></tr>
+  <tr><td>Minimisation des données</td><td>identifiant pseudonyme ; rapports en agrégats ; télémétrie et logs sans texte d'élève</td><td><code>test_graph_workflows</code></td></tr>
+  <tr><td>Hypothèse ≠ constat</td><td>erreur observée et confusion supposée dans des blocs distincts, formulation selon la répétition</td><td><code>test_session_loop</code></td></tr>
+</table>
+
+<h2>7. Intégration avec l'équipe</h2>
+<h3>Contrats</h3>
+<table>
+  <tr><th style="width:22%">Service</th><th>Interface</th></tr>
+  <tr><td>GenAI + RAG (E1/E2)</td><td><b>En processus</b> : <code>Tutor.store.search</code>, <code>Tutor.quiz</code>, <code>Tutor.ask</code>, <code>Tutor.remediate</code>, <code>Tutor.llm.structured</code>. Seul <code>integrations/tuteur_backend.py</code> connaît ces signatures. Commutable vers HTTP (<code>TUTOR_GENAI_BACKEND=http</code>) sans toucher au graphe.</td></tr>
+  <tr><td>RL (E3)</td><td><code>POST /v1/recommend</code> (élève pseudonyme, caractéristiques, activités proposées) → une activité <i>parmi celles proposées</i> ; <code>POST /v1/outcomes</code> pour le signal de récompense.</td></tr>
+  <tr><td>Données d'apprentissage (propriétaire à confirmer)</td><td><code>POST /v1/learning-summaries</code> → agrégats par notion ; jamais de lignes par élève.</td></tr>
+  <tr><td>MLOps (E5)</td><td>routeur à monter sous <code>/api/v1</code> ; <code>service.readiness()</code> pour <code>/ready</code> ; <code>Telemetry(sink)</code> avec les événements <code>tutor.adapter.call</code>, <code>tutor.verification.result</code>, <code>tutor.workflow.completed</code> (workflow, résultat, latence, tentatives, versions, <code>request_id</code>).</td></tr>
+</table>
+<h3>Demandes concrètes</h3>
+<table>
+  <tr><th style="width:15%">Équipe</th><th>Demande</th></tr>
+  <tr><td>GenAI / RAG</td><td>(1) paramètre <code>doc_id</code> pour <code>ask()</code> et <code>quiz()</code> (aujourd'hui toute l'indexation est interrogée) ; (2) renvoyer les passages utilisés par <code>quiz()</code> et <code>remediate()</code> ; (3) timeout configurable dans <code>LLM</code> (délai par défaut du SDK : 10 min, 8 reprises) ; (4) formuler <code>diagnostic</code> comme hypothèse ; (5) reprendre ou non les prompts ajoutés ; (6) mini-jeux : toujours à faire de leur côté.</td></tr>
+  <tr><td>RL</td><td>valider le vocabulaire (<code>quiz|exercise|flashcards|explanation|revision|mini_game</code> ; <code>easy|medium|hard</code>) et fournir un catalogue d'activités réel.</td></tr>
+  <tr><td>MLOps</td><td>monter le routeur ; exposer <code>/health</code>, <code>/ready</code>, <code>/metrics</code> ; pont MLflow/Prometheus pour la télémétrie ; appeler le vrai <code>tuteur ingest</code>/<code>eval</code> dans Airflow plutôt que des pipelines simulés ; format du manifeste <code>registry/validation/latest.json</code> à définir ; remplacer l'authentification de développement.</td></tr>
+</table>
+<div class="box"><b>Fichiers partagés modifiés :</b> <code>README.md</code> (section ajoutée à la fin, contenu GenAI inchangé) et <code>.gitignore</code> (une ligne : <code>data/images_adapted/</code>). Tout le reste est nouveau : <code>backend/agentic/</code>, <code>frontend/</code>, <code>docs/agentic/</code>. Aucun fichier de <code>src/tuteur</code>, <code>tests</code>, <code>eval</code> ni <code>data</code> n'est touché.</div>
+
+<h2>8. Tests et vérifications</h2>
+<table>
+  <tr><th style="width:36%">Ce qui a été exécuté</th><th style="width:16%">Résultat</th><th>Portée</th></tr>
+  <tr><td>Backend : <code>pytest</code> (hermétique)</td><td><b>192 réussis</b></td><td>schémas (24), routage (31), adaptateurs et résilience (21), workflows et graphe (38), API (29), module GenAI simulé sur ses vrais schémas (17), inclusion (19), boucle de session (13)</td></tr>
+  <tr><td>Backend : tests sur le <b>vrai</b> <code>Tutor</code> et <code>VectorStore</code></td><td><b>3 réussis</b> (opt-in)</td><td>vrai ingestion, embeddings E5, ChromaDB, recherche hybride, prompts et schémas du module, garde-fou de citations ; <b>seul le LLM est remplacé par un bouchon</b></td></tr>
+  <tr><td>Frontend : <code>vitest</code></td><td><b>98 réussis</b></td><td>contrat avec le backend (19) ; rendu des 14 réponses réelles — audit axe-core avec et sans préférences, absence de codes bruts (42) — plus transparence et contenu malformé (13) ; comportement (15) ; application (9)</td></tr>
+  <tr><td>Tests de l'équipe GenAI (module inchangé)</td><td><b>42 réussis</b></td><td>exécutés dans le même environnement</td></tr>
+  <tr><td><code>ruff</code> · <code>tsc</code> · <code>vite build</code></td><td>sans erreur</td><td>bundle de production 343 Ko (104 Ko compressé)</td></tr>
+  <tr><td>Parcours HTTP bout en bout (serveur de développement + proxy Vite)</td><td>conforme</td><td>401 sans jeton, quiz sans corrigé, remédiation, question non rejouable (404), progression, rapport refusé à un élève (403), rapport enseignant</td></tr>
+</table>
+<p>Deux anomalies ont été trouvées <i>par ces tests</i> puis corrigées : une question corrigée pouvait être rejouée après avoir lu la réponse dans le retour, et un code interne (<code>selected_incorrect_option</code>) s'affichait tel quel à l'élève. Une troisième, visuelle (bouton radio écrasé par un libellé long), a été repérée sur capture d'écran.</p>
+<div class="box warn"><b>Ce qui n'a pas été vérifié.</b> (1) Aucun LLM réel : la <i>qualité</i> des quiz, remédiations, cartes mentales, corrections libres et descriptions d'images n'est pas évaluée ; les nouveaux prompts n'ont pas de jeu d'évaluation. (2) Les services RL et données d'apprentissage n'existent pas : leurs adaptateurs HTTP sont testés contre des réponses simulées. (3) Pas de test avec un lecteur d'écran réel ni de mesure automatique de contraste (jsdom n'a pas de rendu). (4) Pas de test de charge. (5) Les stores (questions émises, historique) sont en mémoire et propres à un processus.</div>
+
+<h2>9. Limites et suite proposée</h2>
+<ul>
+  <li><b>Évaluer les nouveaux formats</b> avec la même méthode que l'équipe GenAI (jeu de référence, juge d'une autre famille de modèles) avant de les présenter comme fiables.</li>
+  <li><b>Persister l'état</b> (questions émises, historique) dans un store partagé, avec l'équipe MLOps.</li>
+  <li><b>Brancher le RL réel</b> et un catalogue d'activités issu du cours ; rendre les mini-jeux dès que le GenAI les produit (le rendu accepte de nouveaux blocs).</li>
+  <li><b>Valider l'accessibilité avec des utilisateurs</b> et un lecteur d'écran ; ajouter une seconde langue d'interface (le système de traduction est prêt).</li>
+  <li><b>Remplacer l'authentification de développement</b> par celle de l'équipe.</li>
+</ul>
+
+<h2>Annexe — Structure et commandes</h2>
+<pre>backend/agentic/src/tutor_agentic/
+  routing/        intentions : règles FR/EN + classifieur facultatif
+  graph/          nœuds, arêtes, vérification, planificateur d'interface
+  integrations/   contrats, adaptateurs HTTP, adaptateurs du module GenAI, simulations
+  genai_ext/      prompts versionnés : carte mentale, étapes, comparaison, notions, correction, intention
+  inclusion/      adaptation des couleurs (daltonize)
+  schemas/        requêtes, contenus, spécification d'interface (UISpec)
+  service.py  history.py  store.py  auth.py  telemetry.py  api/  dev_server.py
+frontend/src/     ui-schema/ renderer/ components/ a11y/ i18n/ api/ pages/ test/
+docs/agentic/     INTEGRATION.md · ce rapport</pre>
+<pre># tests (sans réseau ni clé API)
+cd backend/agentic &amp;&amp; pip install -e ".[dev]" &amp;&amp; pytest &amp;&amp; ruff check src tests
+cd frontend &amp;&amp; npm install &amp;&amp; npm test &amp;&amp; npm run build
+# démonstration locale (services simulés)
+python -m tutor_agentic.dev_server        # puis, dans frontend/ : npm run dev
+# avec le vrai module GenAI + RAG
+pip install -e . &amp;&amp; tuteur ingest data/raw/photosynthese.md &amp;&amp; TUTOR_GENAI_BACKEND=tuteur python -m tutor_agentic.dev_server
+# vérification sur le vrai module (télécharge le modèle d'embedding)
+TUTOR_REAL_MODULE=1 pytest tests/test_real_module.py</pre>
+</body>
+</html>

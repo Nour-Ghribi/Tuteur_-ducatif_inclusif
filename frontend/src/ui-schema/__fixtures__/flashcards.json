@@ -1,0 +1,82 @@
+{
+  "request_id": "1518956b12f247d4965c085a31807f1a",
+  "workflow": "experience",
+  "intent": "flashcards",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "flashcard_deck",
+        "title": "photosynthèse",
+        "cards": [
+          {
+            "front": "Notion 1 — photosynthèse",
+            "back": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+          },
+          {
+            "front": "Notion 2 — photosynthèse",
+            "back": "Elle se déroule dans les chloroplastes."
+          },
+          {
+            "front": "Notion 3 — photosynthèse",
+            "back": "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+          },
+          {
+            "front": "Notion 4 — photosynthèse",
+            "back": "Les produits sont le glucose et le dioxygène."
+          },
+          {
+            "front": "Notion 5 — photosynthèse",
+            "back": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+          },
+          {
+            "front": "Notion 6 — photosynthèse",
+            "back": "Elle se déroule dans les chloroplastes."
+          },
+          {
+            "front": "Notion 7 — photosynthèse",
+            "back": "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+          },
+          {
+            "front": "Notion 8 — photosynthèse",
+            "back": "Les produits sont le glucose et le dioxygène."
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "context_provided",
+      "sources": [
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c0",
+          "page": 1
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c2",
+          "page": 2
+        }
+      ],
+      "verification": {
+        "checks_run": [
+          "structure"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "rag"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

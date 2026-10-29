@@ -1,0 +1,32 @@
+{
+  "request_id": "9ceebd419e794f50aa713a861fe52139",
+  "workflow": "experience",
+  "intent": "explain",
+  "status": "failed",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "fallback",
+        "reason_code": "generation_unavailable",
+        "text": null
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "not_applicable",
+      "sources": [],
+      "verification": null,
+      "simulated": true,
+      "simulated_services": [
+        "rag"
+      ],
+      "fallback_used": true,
+      "warnings": [
+        "generation_unavailable"
+      ],
+      "prompt_version": null,
+      "model_id": null
+    }
+  }
+}

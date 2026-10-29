@@ -1,0 +1,33 @@
+{
+  "request_id": "d11691ad5fa14351a668809da1670432",
+  "workflow": "experience",
+  "intent": "explain",
+  "status": "degraded",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "callout",
+        "tone": "info",
+        "message_code": "no_course_content",
+        "text": null
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "not_applicable",
+      "sources": [],
+      "verification": null,
+      "simulated": true,
+      "simulated_services": [
+        "rag"
+      ],
+      "fallback_used": false,
+      "warnings": [
+        "no_context_found"
+      ],
+      "prompt_version": null,
+      "model_id": null
+    }
+  }
+}
