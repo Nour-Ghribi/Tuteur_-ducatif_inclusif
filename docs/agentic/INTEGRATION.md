@@ -62,6 +62,19 @@ Types : `quiz|exercise|flashcards|explanation|revision|mini_game` ; difficultés
 - **Python** : testé en 3.13 ; aligner avec l'image Docker.
 - **Authentification** : jeton de développement uniquement ; à remplacer par l'authentification de l'équipe via le protocole `Authenticator`.
 
+### Constat sur la branche `mlops` (publiée le 29/10, vérifié le 30/10)
+
+Vérifié en montant le routeur dans l'application **non modifiée** de la branche `mlops`, avec ses versions épinglées (`fastapi==0.119.0`, `httpx==0.28.1`) :
+
+- **Aucun conflit de route.** E5 expose `/health`, `/metrics`, `/artifacts/validated`, `/generate-quiz`, `/student-answer`, `/next-activity` (services simulés) ; la couche ajoute 7 routes sous `/api/v1`.
+- Le routeur se monte en 5 lignes dans `app/main.py` (extrait dans `backend/agentic/README.md`) ; `/health` reste en 200, les routes montées répondent (200 avec jeton, 401 sans), et le middleware Prometheus d'E5 les compte **sous leur vrai chemin** (`endpoint="/api/v1/tutor/experiences"`).
+- ⚠ Avec une FastAPI **plus récente** (testé : 0.162), `_route_template` d'`app/metrics.py` renvoie `endpoint="unknown"` pour toute route issue d'un `include_router` (les routes sont des `_IncludedRouter` sans `.path`). Conserver l'épinglage ou corriger cette fonction avant de monter à jour FastAPI.
+- Ma suite de tests passe avec ces versions épinglées (175 réussis ; 17 tests supplémentaires exigent le module GenAI installé).
+- `/generate-quiz`, `/student-answer`, `/next-activity` font **double emploi** avec les workflows A, B et D : les garder comme tests de fumée ou les retirer — à décider avec E5.
+- `/ready` n'existe pas encore (`service.readiness()` est prêt à l'alimenter).
+- La branche `mlops` est issue de `main` (vide), pas de `genai-rag` : à la fusion, `README.md` et `.gitignore` seront en conflit textuel (modifiés des deux côtés) ; le reste ne se recoupe pas (`app/` ≠ `backend/agentic/`, `INTEGRATION.md` racine ≠ `docs/agentic/INTEGRATION.md`).
+- Dépendances à ajouter à leur `requirements.txt` pour la couche : `langgraph`, `pydantic-settings`, `pyyaml` (et `numpy`, `pillow` pour l'adaptation des couleurs).
+
 ## 6. Fichiers partagés modifiés par cette branche
 
 | Fichier | Modification |
