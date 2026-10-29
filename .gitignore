@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Runtime files
+*.log
+
+# Airflow runtime artifacts (synthetic but generated)
+orchestration/shared/runs/
+orchestration/shared/registry/
+orchestration/shared/policies/
+
+# Local DVC test storage (never commit cached data)
+.dvc-storage/
+

@@ -1,0 +1,92 @@
+{
+  "evidently_version": "0.7.23",
+  "is_synthetic": true,
+  "intentional_distribution_change": true,
+  "monitored_columns": [
+    "session_duration_minutes",
+    "quiz_score",
+    "interaction_count",
+    "difficulty",
+    "accessibility_mode"
+  ],
+  "dataset_drift_share_threshold": 0.4,
+  "result": {
+    "drifted_columns": 4,
+    "drifted_share": 0.8,
+    "dataset_drift_detected": true,
+    "columns": {
+      "session_duration_minutes": {
+        "method": "K-S p_value",
+        "score": 1.6314609320381457e-70,
+        "threshold": 0.05,
+        "drift_detected": true
+      },
+      "quiz_score": {
+        "method": "K-S p_value",
+        "score": 1.701913467404464e-45,
+        "threshold": 0.05,
+        "drift_detected": true
+      },
+      "interaction_count": {
+        "method": "K-S p_value",
+        "score": 7.92155857098811e-80,
+        "threshold": 0.05,
+        "drift_detected": true
+      },
+      "difficulty": {
+        "method": "chi-square p_value",
+        "score": 1.1461888876071518e-38,
+        "threshold": 0.05,
+        "drift_detected": true
+      },
+      "accessibility_mode": {
+        "method": "chi-square p_value",
+        "score": 0.254756616721271,
+        "threshold": 0.05,
+        "drift_detected": false
+      }
+    }
+  },
+  "reference": {
+    "row_count": 240,
+    "means": {
+      "session_duration_minutes": 30.4578,
+      "quiz_score": 0.7398,
+      "interaction_count": 8.9417
+    },
+    "category_shares": {
+      "difficulty": {
+        "difficile": 0.225,
+        "facile": 0.2375,
+        "moyen": 0.5375
+      },
+      "accessibility_mode": {
+        "audio": 0.1458,
+        "lecture_simplifiee": 0.25,
+        "standard": 0.6042
+      }
+    }
+  },
+  "current": {
+    "row_count": 240,
+    "means": {
+      "session_duration_minutes": 45.7265,
+      "quiz_score": 0.539,
+      "interaction_count": 14.7917
+    },
+    "category_shares": {
+      "difficulty": {
+        "difficile": 0.1375,
+        "facile": 0.6,
+        "moyen": 0.2625
+      },
+      "accessibility_mode": {
+        "audio": 0.1417,
+        "lecture_simplifiee": 0.2958,
+        "standard": 0.5625
+      }
+    }
+  },
+  "report": "monitoring/evidently/reports/data_drift_report.html",
+  "snapshot": "monitoring/evidently/reports/data_drift_snapshot.json"
+}

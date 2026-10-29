@@ -1,0 +1,9 @@
+Les fractions représentent des parts d'un tout. Une fraction possède un numérateur,
+qui indique le nombre de parts considérées, et un dénominateur, qui indique en combien
+de parts égales le tout est partagé. Deux fractions sont équivalentes lorsqu'elles
+représentent la même quantité, par exemple un demi et deux quarts. Pour additionner
+des fractions ayant le même dénominateur, on additionne les numérateurs et on conserve
+le dénominateur. Lorsque les dénominateurs sont différents, on recherche d'abord un
+dénominateur commun. Une représentation visuelle avec des disques ou des bandes
+partagées peut faciliter la compréhension. Ce cours est entièrement synthétique et ne
+contient aucune donnée personnelle ni aucune production réelle d'élève.
