@@ -1,0 +1,7 @@
+name: styles
+version: 1
+description: Consignes de niveau de lecture injectées dans {style} de chaque prompt (inclusion).
+standard: |
+  Utilise un langage clair et adapté à un élève.
+simplifie: |
+  L'élève a besoin d'un texte simplifié (FALC — Facile à Lire et à Comprendre) : phrases courtes (une idée par phrase), mots courants, explique tout mot difficile, pas de double négation, donne un exemple concret.

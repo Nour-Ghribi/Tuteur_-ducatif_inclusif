@@ -1,0 +1,61 @@
+{
+  "label": "prompts-v3-hybride",
+  "generator": "openai/gpt-oss-120b",
+  "prompts": [
+    "answer@v3",
+    "quiz@v2",
+    "remediation@v2",
+    "styles@v2"
+  ],
+  "top_k": 5,
+  "search_mode": "hybride",
+  "judge": "qwen/qwen3.8-27b",
+  "judge_mode": "leger",
+  "date": "2026-10-28T18:27:46",
+  "summary": {
+    "retrieval": {
+      "hit@1": 0.75,
+      "hit@3": 1,
+      "hit@5": 1,
+      "mrr": 0.8645833333333334,
+      "source@1": 1
+    },
+    "retrieval_paraphrases": {
+      "hit@1": 0.7,
+      "hit@3": 1,
+      "hit@5": 1,
+      "mrr": 0.8333333333333334,
+      "source@1": 1
+    },
+    "standard": {
+      "faithfulness": 0.9875,
+      "answer_relevancy": 1.0,
+      "answer_correctness": 1.0,
+      "citation_rate": 1,
+      "citation_validity": 1.0,
+      "citation_hit_pdf": 0.8333333333333334,
+      "words_mean": 25.75,
+      "words_per_sentence_mean": 12.155059523809523,
+      "kandel_moles_mean": 68.45181360923188,
+      "refusal_rate_out_of_scope": 1
+    },
+    "simplifie": {
+      "faithfulness": 0.903125,
+      "answer_relevancy": 1.0,
+      "answer_correctness": 1.0,
+      "citation_rate": 1,
+      "citation_validity": 1.0,
+      "citation_hit_pdf": 1,
+      "words_mean": 34.375,
+      "words_per_sentence_mean": 6.823958333333334,
+      "kandel_moles_mean": 82.9447060548651,
+      "refusal_rate_out_of_scope": 1
+    },
+    "remediation": {
+      "exercise_similarity_mean": 0.9010628914724546,
+      "exercise_near_duplicate_rate": 0,
+      "explanation_words_mean": 32.75
+    }
+  },
+  "complete": true
+}

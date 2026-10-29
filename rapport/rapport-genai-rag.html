@@ -1,0 +1,265 @@
+<title>Tuteur inclusif GenAI RAG</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Mise en page : rapport d'une page, en bandes — verdict, pipeline avec paramètres, résultats chiffrés, versions, tests. */
+:root {
+  --bg: #f6f8f7;
+  --surface: #ffffff;
+  --ink: #15211d;
+  --muted: #5a6b65;
+  --line: #d9e2de;
+  --leaf: #1f7a4d;      /* série « hybride », valeurs finales */
+  --leaf-soft: #e1f1e8;
+  --ink-blue: #2c4f8f;  /* série « standard », dense */
+  --ink-blue-soft: #e5ecf8;
+  --warn: #a2611a;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101614; --surface: #17201d; --ink: #e6eeeb; --muted: #9db0a9; --line: #2b3834;
+    --leaf: #5cc58f; --leaf-soft: #1b3428; --ink-blue: #86a8e6; --ink-blue-soft: #1d2a40; --warn: #e0a35c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101614; --surface: #17201d; --ink: #e6eeeb; --muted: #9db0a9; --line: #2b3834;
+  --leaf: #5cc58f; --leaf-soft: #1b3428; --ink-blue: #86a8e6; --ink-blue-soft: #1d2a40; --warn: #e0a35c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 40px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 44px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); line-height: 1.1; font-weight: 700; }
+h2 { font-size: 1.45rem; font-weight: 700; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.15rem; max-width: 62ch; color: var(--ink); }
+.muted { color: var(--muted); }
+.small { font-size: .88rem; }
+.mono { font-family: var(--mono); font-size: .86em; }
+section { display: grid; gap: 18px; min-width: 0; }
+.head { display: grid; gap: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Verdict */
+header { display: grid; gap: 14px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 4px; align-content: start; }
+.kpi b { font-family: var(--display); font-size: 2rem; line-height: 1; color: var(--leaf); font-variant-numeric: tabular-nums; }
+.kpi span { font-size: .92rem; }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Pipeline */
+.pipe { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.step { padding: 16px 14px; display: grid; gap: 8px; align-content: start; border-left: 1px solid var(--line); position: relative; min-width: 0; }
+.step:first-child { border-left: 0; }
+.step .n { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+.step dl { margin: 0; display: grid; gap: 6px; }
+.step dt { font-size: .74rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.step dd { margin: 0; font-family: var(--mono); font-size: .8rem; overflow-wrap: anywhere; }
+.step .why { font-size: .86rem; color: var(--muted); }
+@media (max-width: 900px) { .pipe { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step { border-left: 0; border-top: 1px solid var(--line); } .step:nth-child(-n+2) { border-top: 0; } .step:nth-child(even) { border-left: 1px solid var(--line); } }
+@media (max-width: 480px) { .pipe { grid-template-columns: 1fr; } .step:nth-child(even) { border-left: 0; } .step:nth-child(2) { border-top: 1px solid var(--line); } }
+
+/* Résultats */
+.two { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 12px; min-width: 0; align-content: start; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .86rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+svg text { font-family: var(--body); }
+.bars { display: grid; gap: 14px; }
+.bar-row { display: grid; gap: 4px; }
+.bar-row .lbl { display: flex; justify-content: space-between; gap: 8px; font-size: .9rem; }
+.bar { display: grid; grid-template-columns: 58px 1fr 44px; align-items: center; gap: 8px; font-size: .8rem; color: var(--muted); }
+.track { height: 12px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.fill { height: 100%; border-radius: 3px; }
+.fill.dense { background: var(--ink-blue); }
+.fill.hyb { background: var(--leaf); }
+.bar .v { font-family: var(--mono); color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.delta { font-family: var(--mono); font-size: .8rem; }
+.up { color: var(--leaf); } .down { color: var(--warn); }
+
+/* Versions */
+.versions { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .versions { grid-template-columns: 1fr; } }
+.ver { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.ver .tag { font-family: var(--mono); font-weight: 600; color: var(--leaf); }
+.ver .k { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.ver p { font-size: .9rem; }
+.ver .res { font-family: var(--mono); font-size: .8rem; background: var(--leaf-soft); border-radius: 6px; padding: 6px 8px; }
+
+/* Tests */
+.tests { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 760px) { .tests { grid-template-columns: 1fr; } }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+td.n { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scroll { overflow-x: auto; }
+.note { border-left: 3px solid var(--warn); padding: 4px 0 4px 12px; font-size: .92rem; max-width: 75ch; }
+footer { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Projet Tuteur éducatif inclusif · module GenAI + RAG · octobre 2026</span>
+  <h1>Un tuteur qui répond à partir du cours, cite la bonne page et n'invente rien</h1>
+  <p class="lead">Le module transforme un cours (PDF, texte) en réponses, quiz et remédiations, en version standard et simplifiée (FALC). Résultats de la dernière version (v5) sur 16 questions de référence :</p>
+  <div class="kpis">
+    <div class="kpi"><b>1.00</b><span>Fidélité au cours, standard et simplifié</span><span class="muted small">part des affirmations présentes dans le cours</span></div>
+    <div class="kpi"><b>100 %</b><span>Bon passage trouvé dans les 5 premiers</span><span class="muted small">hit@5, recherche hybride</span></div>
+    <div class="kpi"><b>100 %</b><span>Citations [p. N] valides</span><span class="muted small">la page citée a bien été fournie au modèle</span></div>
+    <div class="kpi"><b>100 %</b><span>Refus des questions hors cours</span><span class="muted small">2 questions pièges</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="head">
+    <span class="eyebrow">Fonctionnement et paramètres choisis</span>
+    <h2>Le pipeline RAG, étape par étape</h2>
+    <p class="muted">RAG : avant de répondre, on cherche les passages utiles du cours, et le modèle ne répond qu'avec eux.</p>
+  </div>
+  <div class="pipe">
+    <div class="step"><span class="n">1</span><h3>Lecture</h3>
+      <dl><dt>Outil</dt><dd>PyMuPDF</dd><dt>Unité</dt><dd>page par page</dd></dl>
+      <p class="why">Garder la page permet de citer la source. Les images sont extraites pour le module Inclusion.</p></div>
+    <div class="step"><span class="n">2</span><h3>Découpage</h3>
+      <dl><dt>Taille</dt><dd>800 caractères</dd><dt>Chevauchement</dt><dd>150 caractères</dd></dl>
+      <p class="why">Coupe aux paragraphes puis aux phrases. Le chevauchement évite de couper une idée en deux.</p></div>
+    <div class="step"><span class="n">3</span><h3>Embeddings</h3>
+      <dl><dt>Modèle</dt><dd>multilingual-e5-small</dd><dt>Base</dt><dd>ChromaDB, cosinus</dd></dl>
+      <p class="why">Bon en français, petit, tourne sur CPU. ChromaDB est locale, sans serveur.</p></div>
+    <div class="step"><span class="n">4</span><h3>Recherche hybride</h3>
+      <dl><dt>Sens + mots</dt><dd>dense + BM25</dd><dt>Fusion</dt><dd>RRF k=60, 20 candidats</dd><dt>Gardés</dt><dd>top 5</dd></dl>
+      <p class="why">BM25 trouve les mots exacts (« 5 à 10 quiz ») que les embeddings ratent.</p></div>
+    <div class="step"><span class="n">5</span><h3>Génération</h3>
+      <dl><dt>LLM</dt><dd>gpt-oss-120b (Groq)</dd><dt>Température</dt><dd>0.3</dd><dt>Sortie</dt><dd>JSON validé</dd></dl>
+      <p class="why">Gratuit, sans GPU. Prompts en YAML versionnés. Un quiz mal formé est redemandé.</p></div>
+    <div class="step"><span class="n">6</span><h3>Garde-fou</h3>
+      <dl><dt>Contrôle</dt><dd>chaque [p. N]</dd><dt>Action</dt><dd>retire les pages fausses</dd></dl>
+      <p class="why">Une fausse page montrée à un élève est pire que pas de citation.</p></div>
+  </div>
+  <p class="small muted">Évaluation : un juge LLM d'une autre famille (<span class="mono">qwen3.8-27b</span>) note les réponses, pour éviter qu'un modèle se note lui-même.</p>
+</section>
+
+<section>
+  <div class="head">
+    <span class="eyebrow">Résultats</span>
+    <h2>Ce que les améliorations ont changé</h2>
+  </div>
+  <div class="two">
+    <div class="panel">
+      <h3>Fidélité au cours, version par version</h3>
+      <div class="legend"><span><i style="background:var(--ink-blue)"></i>Standard</span><span><i style="background:var(--leaf)"></i>Simplifié (FALC)</span></div>
+      <svg viewBox="0 0 560 270" role="img" aria-label="Fidélité au cours de v1 à v5 : standard de 0.93 à 1.00, simplifié de 0.70 à 1.00">
+        <rect x="232" y="22" width="312" height="206" fill="var(--leaf-soft)" opacity=".6"/>
+        <text x="388" y="212" text-anchor="middle" font-size="12" fill="var(--muted)">recherche hybride</text>
+        <text x="170" y="212" text-anchor="middle" font-size="12" fill="var(--muted)">recherche dense</text>
+        <g stroke="var(--line)" stroke-width="1">
+          <line x1="44" y1="220" x2="544" y2="220"/><line x1="44" y1="172.5" x2="544" y2="172.5"/>
+          <line x1="44" y1="125" x2="544" y2="125"/><line x1="44" y1="77.5" x2="544" y2="77.5"/><line x1="44" y1="30" x2="544" y2="30"/>
+        </g>
+        <g font-size="12" fill="var(--muted)" text-anchor="end" class="num">
+          <text x="36" y="224">0.6</text><text x="36" y="176.5">0.7</text><text x="36" y="129">0.8</text><text x="36" y="81.5">0.9</text><text x="36" y="34">1.0</text>
+        </g>
+        <g font-size="13" fill="var(--ink)" text-anchor="middle" font-weight="600">
+          <text x="70" y="248">v1</text><text x="180" y="248">v2</text><text x="290" y="248">v3</text><text x="400" y="248">v4</text><text x="510" y="248">v5</text>
+        </g>
+        <polyline fill="none" stroke="var(--ink-blue)" stroke-width="2.5" points="70,63.3 180,34.8 290,35.7 400,30 510,30"/>
+        <polyline fill="none" stroke="var(--leaf)" stroke-width="2.5" points="70,172.5 180,53.8 290,77.5 400,30 510,30"/>
+        <g fill="var(--ink-blue)"><circle cx="70" cy="63.3" r="4"/><circle cx="180" cy="34.8" r="4"/><circle cx="290" cy="35.7" r="4"/><circle cx="400" cy="30" r="4"/><circle cx="510" cy="30" r="4"/></g>
+        <g fill="var(--leaf)"><circle cx="70" cy="172.5" r="4.5"/><circle cx="180" cy="53.8" r="4.5"/><circle cx="290" cy="77.5" r="4.5"/><circle cx="400" cy="30" r="5.5"/><circle cx="510" cy="30" r="5.5"/></g>
+        <g font-size="12" class="num">
+          <text x="70" y="78" text-anchor="middle" fill="var(--ink-blue)">0.93</text>
+          <text x="70" y="195" text-anchor="middle" fill="var(--leaf)">0.70</text>
+          <text x="180" y="72" text-anchor="middle" fill="var(--leaf)">0.95</text>
+          <text x="290" y="96" text-anchor="middle" fill="var(--leaf)">0.90</text>
+          <text x="455" y="20" text-anchor="middle" fill="var(--leaf)" font-weight="600">1.00 · 0 affirmation inventée</text>
+        </g>
+      </svg>
+      <p class="small muted">v1 → v2 : réponses simplifiées de 144 à 38 mots. v4 : plus d'exemples inventés. v5 : réponses simplifiées complètes (pertinence 0.97 → 1.00).</p>
+    </div>
+    <div class="panel">
+      <h3>Trouver le bon passage : dense ou hybride</h3>
+      <div class="legend"><span><i style="background:var(--ink-blue)"></i>Dense (embeddings seuls)</span><span><i style="background:var(--leaf)"></i>Hybride (+ BM25)</span></div>
+      <div class="bars">
+        <div class="bar-row"><div class="lbl"><span>hit@1 · le bon passage est 1er</span><span class="delta up">+0.19</span></div>
+          <div class="bar"><span>dense</span><div class="track"><div class="fill dense" style="width:56%"></div></div><span class="v">0.56</span></div>
+          <div class="bar"><span>hybride</span><div class="track"><div class="fill hyb" style="width:75%"></div></div><span class="v">0.75</span></div></div>
+        <div class="bar-row"><div class="lbl"><span>hit@5 · dans les 5 envoyés au LLM</span><span class="delta up">+0.06</span></div>
+          <div class="bar"><span>dense</span><div class="track"><div class="fill dense" style="width:94%"></div></div><span class="v">0.94</span></div>
+          <div class="bar"><span>hybride</span><div class="track"><div class="fill hyb" style="width:100%"></div></div><span class="v">1.00</span></div></div>
+        <div class="bar-row"><div class="lbl"><span>MRR · rang moyen du bon passage</span><span class="delta up">+0.12</span></div>
+          <div class="bar"><span>dense</span><div class="track"><div class="fill dense" style="width:75%"></div></div><span class="v">0.75</span></div>
+          <div class="bar"><span>hybride</span><div class="track"><div class="fill hyb" style="width:86.5%"></div></div><span class="v">0.87</span></div></div>
+        <div class="bar-row"><div class="lbl"><span>hit@1 · questions reformulées (10)</span><span class="delta down">−0.10</span></div>
+          <div class="bar"><span>dense</span><div class="track"><div class="fill dense" style="width:80%"></div></div><span class="v">0.80</span></div>
+          <div class="bar"><span>hybride</span><div class="track"><div class="fill hyb" style="width:70%"></div></div><span class="v">0.70</span></div></div>
+      </div>
+      <p class="small muted">Sur les questions reformulées sans les mots du cours, l'hybride perd un peu au 1er rang mais garde hit@5 = 1.00 : le bon passage arrive toujours au LLM.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="head">
+    <span class="eyebrow">Améliorations</span>
+    <h2>Cinq versions, chacune corrige un défaut mesuré</h2>
+  </div>
+  <div class="versions">
+    <div class="ver"><span class="tag">v1</span><span class="k">Point de départ</span><p>Prompts de base.</p><span class="k">Défaut trouvé</span><p>Réponses simplifiées longues, définitions venues d'ailleurs.</p><span class="res">fidélité simplifié 0.70</span></div>
+    <div class="ver"><span class="tag">v2</span><span class="k">Changement</span><p>FALC strict : 5 phrases max de 12 mots, définitions tirées du cours. Remédiation « sous un autre angle ».</p><span class="res">0.70 → 0.95 · 144 → 38 mots</span></div>
+    <div class="ver"><span class="tag">v2 + hybride</span><span class="k">Changement</span><p>Recherche embeddings + BM25. Résout « combien de quiz par chapitre ».</p><span class="res">hit@1 0.56 → 0.75</span></div>
+    <div class="ver"><span class="tag">v3</span><span class="k">Changement</span><p>« [p. 8] » cité pour un PDF de 4 pages : en-tête « PASSAGE 1 — page 4 » + garde-fou.</p><span class="res">citations valides 100 %</span></div>
+    <div class="ver"><span class="tag">v4 · v5</span><span class="k">Changement</span><p>Plus d'exemple inventé (« une vache… »), puis réponses simplifiées complètes.</p><span class="res">fidélité 1.00 · pertinence 1.00</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="head">
+    <span class="eyebrow">Tests</span>
+    <h2>Comment c'est vérifié</h2>
+  </div>
+  <div class="tests">
+    <div class="panel">
+      <h3>42 tests automatiques (pytest)</h3>
+      <p class="small muted">Sans appel au LLM : un faux LLM simule les réponses. Tous passent.</p>
+      <div class="scroll"><table>
+        <tr><th>Fichier</th><th>Vérifie</th><th style="text-align:right">Fonctions</th></tr>
+        <tr><td class="mono">test_citations</td><td>pages valides, retrait des fausses, versions de prompts</td><td class="n">9</td></tr>
+        <tr><td class="mono">test_evaluation</td><td>juge, lisibilité</td><td class="n">6</td></tr>
+        <tr><td class="mono">test_chunking</td><td>découpage, chevauchement, pages</td><td class="n">5</td></tr>
+        <tr><td class="mono">test_rag</td><td>bon passage trouvé, dense et hybride, quiz de bout en bout</td><td class="n">5</td></tr>
+        <tr><td class="mono">test_schemas</td><td>un QCM a 4 choix, la réponse est parmi eux</td><td class="n">5</td></tr>
+        <tr><td class="mono">test_lexical</td><td>BM25 en français, fusion RRF</td><td class="n">3</td></tr>
+      </table></div>
+      <p class="small muted">33 fonctions, dont certaines testées sur plusieurs cas : 42 tests au total.</p>
+    </div>
+    <div class="panel">
+      <h3>Jeu d'évaluation</h3>
+      <div class="scroll"><table>
+        <tr><th>Fichier</th><th>Contenu</th><th style="text-align:right">Cas</th></tr>
+        <tr><td class="mono">reference</td><td>questions sur 2 cours (photosynthèse, PDF du projet), avec réponse attendue</td><td class="n">16</td></tr>
+        <tr><td class="mono">reference</td><td>questions hors cours, à refuser</td><td class="n">2</td></tr>
+        <tr><td class="mono">paraphrases</td><td>questions reformulées comme un élève</td><td class="n">10</td></tr>
+        <tr><td class="mono">remediation</td><td>erreurs d'élève à corriger</td><td class="n">4</td></tr>
+      </table></div>
+      <p class="note">Limite : 16 questions, c'est petit. Une seule réponse fait bouger un score de 6 points, donc on ne lit que les écarts nets et répétés.</p>
+    </div>
+  </div>
+</section>
+
+<footer>Module GenAI + RAG du Tuteur éducatif inclusif. Générateur <span class="mono">openai/gpt-oss-120b</span>, juge <span class="mono">qwen/qwen3.8-27b</span>, via Groq. Chiffres : évaluations du 26 au 29 octobre 2026, détail dans <span class="mono">eval/results/</span>.</footer>
+</div>

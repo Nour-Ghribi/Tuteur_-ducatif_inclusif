@@ -1,0 +1,100 @@
+{
+  "photo-01": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-02": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-03": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-04": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-05": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-06": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-07": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-08": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-09": {
+    "faithfulness": 0.8571428571428571,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les animaux consomment le dioxygène pour libérer l'énergie contenue dans leurs nutriments."
+    ]
+  },
+  "photo-10": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-01": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-02": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-03": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-04": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-05": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-06": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.0,
+    "answer_correctness": 0.0,
+    "unsupported_claims": []
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "photo-01": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-02": {
+    "faithfulness": 0.8571428571428571,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Nos yeux voient la lumière qui revient de la feuille."
+    ]
+  },
+  "photo-03": {
+    "faithfulness": 0.9090909090909091,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Ces trois éléments sont réunis dans les feuilles, dans des petites « usines » appelées chloroplastes."
+    ]
+  },
+  "photo-04": {
+    "faithfulness": 0.6,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les stomates sont comme de minuscules portes sur la surface de la feuille.",
+      "Les stomates sont les fenêtres ouvertes qui laissent entrer l’air contenant le CO₂."
+    ]
+  },
+  "photo-05": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-06": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-07": {
+    "faithfulness": 0.8333333333333334,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les plantes utilisent l'oxygène de l'air et rejettent du CO2, comme nous le faisons quand nous respirons."
+    ]
+  },
+  "photo-08": {
+    "faithfulness": 0.7058823529411765,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "La respiration est le même processus que chez les animaux.",
+      "En quelques minutes, la feuille produit du sucre et libère de l'oxygène.",
+      "L'air autour de la feuille devient plus riche en O₂.",
+      "Le dioxygène est le gaz que nous respirons.",
+      "Le dioxyde de carbone est le gaz que nous expirons."
+    ]
+  },
+  "photo-09": {
+    "faithfulness": 0.6428571428571429,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Un humain qui mange de la viande est un carnivore.",
+      "Sans ce gaz, les animaux ne pourraient pas produire de l'énergie dans leurs cellules.",
+      "Une vache mange de l'herbe.",
+      "La vache utilise ce sucre pour grandir et produire du lait.",
+      "Un humain boit le lait."
+    ]
+  },
+  "photo-10": {
+    "faithfulness": 0.2857142857142857,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Cette eau passe ensuite dans les parties de la plante où se fait la photosynthèse.",
+      "Une fleur dans un jardin envoie ses racines dans la terre.",
+      "La terre contient de l'eau de la pluie ou de l'arrosage.",
+      "La fleur boit cette eau avec ses racines pour fabriquer son sucre.",
+      "Puisée signifie prélevée, prise."
+    ]
+  },
+  "projet-01": {
+    "faithfulness": 0.5333333333333333,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "GenAI signifie « Intelligence artificielle générative ».",
+      "GenAI est une IA qui écrit du texte ou crée des images.",
+      "RL signifie « Reinforcement Learning ».",
+      "RL est une méthode où l'IA apprend en recevant des récompenses ou des pénalités.",
+      "Chaque fois qu'on améliore le modèle, on le met à jour sur le serveur et on vérifie qu'il fonctionne bien.",
+      "MLOps signifie « Machine-Learning Operations ».",
+      "MLOps sont les pratiques qui assurent que les modèles d'IA restent fiables et faciles à mettre à jour."
+    ]
+  },
+  "projet-02": {
+    "faithfulness": 0.2857142857142857,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Versionner veut dire sauvegarder chaque version d'un fichier, comme on le fait avec des photos.",
+      "Un dataset est un groupe de données, par exemple les réponses des élèves à des exercices.",
+      "DVC signifie « Data Version Control ».",
+      "DVC est un logiciel qui fonctionne comme Git mais pour les gros fichiers.",
+      "Avec DVC, on peut revenir facilement à une version antérieure d'un fichier."
+    ]
+  },
+  "projet-03": {
+    "faithfulness": 0.5,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Le bandit contextuel est un petit programme qui regarde le profil de l'élève (ses réponses, son niveau) et qui décide quelle activité proposer ensuite.",
+      "L'élève répond correctement à un quiz facile, le bandit note ce succès et propose un quiz un peu plus difficile.",
+      "Si l'élève échoue, le bandit propose un exercice plus simple ou une explication supplémentaire."
+    ]
+  },
+  "projet-04": {
+    "faithfulness": 0.5,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "On peut regarder les réponses d'un élève à des exercices de fractions, voir s'il a fait des erreurs et mesurer son progrès avec ASSISTments.",
+      "Le dataset EdNet sert à tester et à entraîner le tuteur intelligent pour qu'il comprenne différents comportements d'élèves et qu'il s'adapte correctement.",
+      "On peut faire croire que 10 000 élèves répondent à un même quiz de géographie avec EdNet.",
+      "Le projet utilise EdNet pour créer de nombreuses réponses fictives afin d'entraîner le tuteur."
+    ]
+  },
+  "projet-05": {
+    "faithfulness": 0.5714285714285714,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Un exercice montre une carte où le texte est en rouge sur fond vert.",
+      "Le module ajoute une description « texte rouge sur fond vert ».",
+      "Le module augmente le contraste et change les couleurs (texte bleu, fond jaune)."
+    ]
+  },
+  "projet-06": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.0,
+    "answer_correctness": 0.0,
+    "unsupported_claims": []
+  }
+}

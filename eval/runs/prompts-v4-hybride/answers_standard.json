@@ -1,0 +1,416 @@
+[
+  {
+    "id": "photo-01",
+    "source": "photosynthese.md",
+    "question": "Où se déroule la photosynthèse dans la plante ?",
+    "reference": "Principalement dans les feuilles, à l'intérieur des chloroplastes.",
+    "evidence": "chloroplastes",
+    "answer": "La photosynthèse se déroule principalement dans les feuilles, à l’intérieur des chloroplastes [p. 1].",
+    "raw_answer": "La photosynthèse se déroule principalement dans les feuilles, à l’intérieur des chloroplastes [p. 1].",
+    "contexts": [
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      " évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou React"
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "photo-02",
+    "source": "photosynthese.md",
+    "question": "Pourquoi les feuilles nous paraissent-elles vertes ?",
+    "reference": "Parce que la chlorophylle absorbe surtout la lumière rouge et bleue et réfléchit la lumière verte.",
+    "evidence": "réfléchit la lumière verte",
+    "answer": "Les chloroplastes contiennent la chlorophylle qui absorbe surtout la lumière rouge et bleue, mais réfléchit la lumière verte ; c’est cette réflexion qui fait que les feuilles nous paraissent vertes[p. 1].",
+    "raw_answer": "Les chloroplastes contiennent la chlorophylle qui absorbe surtout la lumière rouge et bleue, mais réfléchit la lumière verte ; c’est cette réflexion qui fait que les feuilles nous paraissent vertes【p. 1】.",
+    "contexts": [
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "3\nPROPOSITION DE PROJET\n5.\nCe que nous allons réellement implémenter\nModule\nDescription minimaliste\nOutils\nRAG pédagogique\nIndexer un chapitre et retrouver les passages\nutiles pour chaque question.\nLangChain/LlamaIndex + Chroma ou\nQdrant\nQuiz & jeux\nGénérer QCM, vrai/faux, flashcards et\nmini-défis avec correction.\nLLM + templates de prompts\nReprise après échec\nAnalyser l’erreur et générer une explication +\nexercice de remédiation.\nLLM + historique élève\nInclusion\nDécrire les images, détecter les supports\ndépendants des couleurs et proposer une\nversion accessible.\nOpenCV + BLIP/LLaVA + daltonize\nAdaptation RL\nChoisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer."
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "photo-03",
+    "source": "photosynthese.md",
+    "question": "De quoi la plante a-t-elle besoin pour faire la photosynthèse ?",
+    "reference": "De lumière, d'eau puisée dans le sol par les racines et de dioxyde de carbone prélevé dans l'air.",
+    "evidence": "trois éléments",
+    "answer": "La plante a besoin de trois éléments pour réaliser la photosynthèse : la lumière, de l’eau (H₂O) puisée dans le sol, et du dioxyde de carbone (CO₂) prélevé dans l’air via les stomates [p. 1].",
+    "raw_answer": "La plante a besoin de trois éléments pour réaliser la photosynthèse : la lumière, de l’eau (H₂O) puisée dans le sol, et du dioxyde de carbone (CO₂) prélevé dans l’air via les stomates [p. 1].",
+    "contexts": [
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.\nPourtant, les élèves n’ont pas le\nmême rythme, les mêmes erreurs, ni les mêmes besoins d’accessibilité.\nCertains ont besoin d’une\nexplication plus simple, d’un quiz plus progressif, d’un support visuel, ou d’une adaptation des images\net couleurs.\nMotivation.\nLe projet vise à créer un tuteur intelligent capable de transformer un cours en activités\npersonnalisées :\nquiz, mini-jeux, exercices, explications et feedbacks.\nLa GenAI permet de générer le\ncontenu, le RL permet d’adapter le parcours après chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique."
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "id": "photo-04",
+    "source": "photosynthese.md",
+    "question": "Comment le dioxyde de carbone entre-t-il dans la feuille ?",
+    "reference": "Par de petits orifices des feuilles appelés stomates.",
+    "evidence": "stomates",
+    "answer": "Le dioxyde de carbone (CO₂) est prélevé dans l’air à travers de petits orifices des feuilles appelés **stomates**. [p. 1]",
+    "raw_answer": "Le dioxyde de carbone (CO₂) est prélevé dans l’air à travers de petits orifices des feuilles appelés **stomates**. [p. 1]",
+    "contexts": [
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "mulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.\nRéférence / repo\nUtilité dans notre projet\nLien\nASSISTments 2017 Dataset\ndonnées éducatives pour performance et personnalisation\nouvrir\nEdNet dataset\ninteractions élève-système pour simulation et knowledge tracing\nouvrir\nMLflow LLMOps\ntracing, prompt registry, évaluation GenAI\nouvrir\nDVC\nversioning données, modèles et pipelines\nouvrir\nRAGAS\nmétriques d’évaluation RAG\nouvrir\nGymnasium\nenvironnement RL standard\nouvrir\nStable-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée."
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      4
+    ]
+  },
+  {
+    "id": "photo-05",
+    "source": "photosynthese.md",
+    "question": "Que produit la photosynthèse ?",
+    "reference": "Du glucose, qui sert d'énergie et de matériau de construction, et du dioxygène rejeté dans l'atmosphère.",
+    "evidence": "glucose",
+    "answer": "La photosynthèse produit du glucose (C6H12O6), un sucre utilisé par la plante comme source d’énergie et matériau de construction, et elle libère du dioxygène (O2) dans l’atmosphère[p. 1].",
+    "raw_answer": "La photosynthèse produit du glucose (C6H12O6), un sucre utilisé par la plante comme source d’énergie et matériau de construction, et elle libère du dioxygène (O2) dans l’atmosphère【p. 1】.",
+    "contexts": [
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "3\nPROPOSITION DE PROJET\n5.\nCe que nous allons réellement implémenter\nModule\nDescription minimaliste\nOutils\nRAG pédagogique\nIndexer un chapitre et retrouver les passages\nutiles pour chaque question.\nLangChain/LlamaIndex + Chroma ou\nQdrant\nQuiz & jeux\nGénérer QCM, vrai/faux, flashcards et\nmini-défis avec correction.\nLLM + templates de prompts\nReprise après échec\nAnalyser l’erreur et générer une explication +\nexercice de remédiation.\nLLM + historique élève\nInclusion\nDécrire les images, détecter les supports\ndépendants des couleurs et proposer une\nversion accessible.\nOpenCV + BLIP/LLaVA + daltonize\nAdaptation RL\nChoisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer."
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "photo-06",
+    "source": "photosynthese.md",
+    "question": "Quelle est l'équation bilan de la photosynthèse ?",
+    "reference": "6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.",
+    "evidence": "équation bilan",
+    "answer": "L’équation bilan de la photosynthèse est : \n\n6 CO₂ + 6 H₂O + lumière → C₆H₁₂O₆ + 6 O₂. [p. 1]",
+    "raw_answer": "L’équation bilan de la photosynthèse est :  \n\n6 CO₂ + 6 H₂O + lumière → C₆H₁₂O₆ + 6 O₂. [p. 1]",
+    "contexts": [
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "ances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :\noutils et rôle précis\nCe qu’on veut faire\nOutil conseillé\nVersionner datasets, cours et logs anonymisés\nDVC\nVersionner prompts et templates pédagogiques\nMLflow Prompt Registry ou YAML + Git\nSuivre expériences GenAI/RL\nMLflow Tracking\nÉvaluer réponses GenAI/RAG\nMLflow GenAI Eval, RAGAS, DeepEval\nTracer appels LLM, latence, coût, erreurs\nMLflow Tracing ou LangSmith\nDéployer le backend\nFastAPI\nConteneuriser les services\nDocker\nAutomatiser tests et redéploiement\nGitHub Actions\nOrchestrer ingestion, évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou Rea"
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "photo-07",
+    "source": "photosynthese.md",
+    "question": "Quand la respiration a-t-elle lieu chez la plante ?",
+    "reference": "Jour et nuit, dans toutes les cellules vivantes.",
+    "evidence": "jour et nuit",
+    "answer": "La respiration a lieu jour et nuit, dans toutes les cellules vivantes de la plante. [p. 1]",
+    "raw_answer": "La respiration a lieu jour et nuit, dans toutes les cellules vivantes de la plante. [p. 1]",
+    "contexts": [
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      " évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou React"
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "photo-08",
+    "source": "photosynthese.md",
+    "question": "Pourquoi une plante rejette-t-elle globalement du dioxygène le jour ?",
+    "reference": "Parce que le jour la photosynthèse est plus intense que la respiration.",
+    "evidence": "plus intense que la respiration",
+    "answer": "Le jour, la photosynthèse (qui ne se produit qu’en présence de lumière) est plus intense que la respiration, qui consomme du dioxygène; le résultat est donc une libération nette de dioxygène par la plante [p. 1] .",
+    "raw_answer": "Le jour, la photosynthèse (qui ne se produit qu’en présence de lumière) est plus intense que la respiration, qui consomme du dioxygène ; le résultat est donc une libération nette de dioxygène par la plante [p. 1] .",
+    "contexts": [
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "ances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :\noutils et rôle précis\nCe qu’on veut faire\nOutil conseillé\nVersionner datasets, cours et logs anonymisés\nDVC\nVersionner prompts et templates pédagogiques\nMLflow Prompt Registry ou YAML + Git\nSuivre expériences GenAI/RL\nMLflow Tracking\nÉvaluer réponses GenAI/RAG\nMLflow GenAI Eval, RAGAS, DeepEval\nTracer appels LLM, latence, coût, erreurs\nMLflow Tracing ou LangSmith\nDéployer le backend\nFastAPI\nConteneuriser les services\nDocker\nAutomatiser tests et redéploiement\nGitHub Actions\nOrchestrer ingestion, évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou Rea"
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "photo-09",
+    "source": "photosynthese.md",
+    "question": "Pourquoi la photosynthèse est-elle importante pour les animaux ?",
+    "reference": "Elle est à la base des chaînes alimentaires et a produit l'essentiel du dioxygène de l'atmosphère, indispensable à leur respiration.",
+    "evidence": "chaînes alimentaires",
+    "answer": "La photosynthèse fournit aux animaux deux éléments essentiels : \n\n* Elle produit la majeure partie du dioxygène de l’atmosphère, indispensable à leur respiration [p. 1]. \n* Elle constitue la base des chaînes alimentaires : les herbivores se nourrissent des plantes, puis les carnivores mangent les herbivores [p. 1].",
+    "raw_answer": "La photosynthèse fournit aux animaux deux éléments essentiels :  \n\n* Elle produit la majeure partie du dioxygène de l’atmosphère, indispensable à leur respiration [p. 1].  \n* Elle constitue la base des chaînes alimentaires : les herbivores se nourrissent des plantes, puis les carnivores mangent les herbivores [p. 1].",
+    "contexts": [
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "le-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.\nNotre innovation n’est pas de prétendre inventer un nouveau modèle, mais de créer\nun prototype intégré :\nGenAI pour produire le contenu, RL pour adapter le parcours et MLOps pour\ncontrôler la qualité.\nLa dimension inclusion renforce le projet :\nl’expérience est personnalisée non\nseulement selon le niveau, mais aussi selon les besoins de l’apprenant.\n• Upload d’un cours PDF avec extraction texte/images.\n• Indexation RAG et génération de 5 à 10 quiz par chapitre.\n• Feedback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme."
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      4
+    ]
+  },
+  {
+    "id": "photo-10",
+    "source": "photosynthese.md",
+    "question": "D'où vient l'eau utilisée par la plante pour la photosynthèse ?",
+    "reference": "Elle est puisée dans le sol par les racines.",
+    "evidence": "racines",
+    "answer": "L’eau utilisée par la plante provient du sol, où elle est puisée par les racines [p. 1].",
+    "raw_answer": "L’eau utilisée par la plante provient du sol, où elle est puisée par les racines [p. 1].",
+    "contexts": [
+      "# La photosynthèse\nLa photosynthèse est le processus par lequel les plantes vertes fabriquent leur propre matière organique à partir de la lumière du soleil. Elle se déroule principalement dans les feuilles, à l'intérieur de petits organites appelés chloroplastes.\nLes chloroplastes contiennent un pigment vert, la chlorophylle. C'est la chlorophylle qui capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue, et réfléchit la lumière verte : c'est pour cela que les feuilles nous paraissent vertes.\n## Les besoins de la plante\nPour réaliser la photosynthèse, la plante a besoin de trois éléments : de la lumière, de l'eau (H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.",
+      "H2O) puisée dans le sol par les racines, et du dioxyde de carbone (CO2) prélevé dans l'air à travers de petits orifices des feuilles appelés stomates.\n## Les produits\nLa photosynthèse produit du glucose (C6H12O6), un sucre qui sert de source d'énergie et de matériau de construction à la plante. Elle rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration",
+      "e. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre\nLa photosynthèse est à la base de presque toutes les chaînes alimentaires : les herbivores mangent les plantes, et les carnivores mangent les herbivores. Elle a aussi produit l'essentiel du dioxygène présent dans l'atmosphère, indispensable à la respiration des animaux.",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "mulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.\nRéférence / repo\nUtilité dans notre projet\nLien\nASSISTments 2017 Dataset\ndonnées éducatives pour performance et personnalisation\nouvrir\nEdNet dataset\ninteractions élève-système pour simulation et knowledge tracing\nouvrir\nMLflow LLMOps\ntracing, prompt registry, évaluation GenAI\nouvrir\nDVC\nversioning données, modèles et pipelines\nouvrir\nRAGAS\nmétriques d’évaluation RAG\nouvrir\nGymnasium\nenvironnement RL standard\nouvrir\nStable-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée."
+    ],
+    "context_pages": [
+      1,
+      1,
+      1,
+      1,
+      4
+    ]
+  },
+  {
+    "id": "projet-01",
+    "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "question": "Quels sont les trois axes principaux du projet de tuteur ?",
+    "reference": "La GenAI, l'apprentissage par renforcement (RL) et le MLOps/LLMOps.",
+    "evidence": "trois axes",
+    "answer": "Les trois axes principaux du projet sont :\n\n- **GenAI** : génération de contenus pédagogiques (quiz, exercices, explications, résumés) [p. 2] \n- **Apprentissage par renforcement (RL)** : adaptation du parcours en fonction du score, des erreurs, du temps, du niveau et des besoins d’accessibilité [p. 2] \n- **MLOps / LLMOps** : versionnage, évaluation, déploiement et suivi des modèles, données, prompts et traces [p. 2] \n\n(ou, de façon résumée : GenAI, RL et MLOps/LLMOps) [p. 1].",
+    "raw_answer": "Les trois axes principaux du projet sont :\n\n- **GenAI** : génération de contenus pédagogiques (quiz, exercices, explications, résumés) [p. 2]  \n- **Apprentissage par renforcement (RL)** : adaptation du parcours en fonction du score, des erreurs, du temps, du niveau et des besoins d’accessibilité [p. 2]  \n- **MLOps / LLMOps** : versionnage, évaluation, déploiement et suivi des modèles, données, prompts et traces [p. 2]  \n\n(ou, de façon résumée : GenAI, RL et MLOps/LLMOps) [p. 1].",
+    "contexts": [
+      "2\nPROPOSITION DE PROJET\n3.\nLes trois axes principaux du projet\nAxe\nRôle dans le projet\nOutils en tendance\nLivrable attendu\nGenAI\nCréer du contenu\npédagogique à partir du cours\n:\nquiz, exercices, jeux,\nexplications, résumé.\nLLM\nGPT/Gemini/Llama/Qwen,\nLangChain/LlamaIndex,\nChroma/Qdrant/FAISS,\nRAGAS, LLaVA/BLIP pour\nimages.\nGénérateur de quiz +\nexplications personnalisées\n+ adaptation multimodale.\nRL\nChoisir la prochaine activité\nselon score, erreurs, temps,\nniveau et besoin\nd’accessibilité.\nContextual Bandit, Gymnasium,\nStable-Baselines3, Ray RLlib.\nPolicy qui propose\nfacile/moyen/difficile,\nrévision, mini-jeu ou\nexplication.\nMLOps /\nLLMOps\nVersionner, évaluer, déployer\net monitorer les modèles,\ndonnées, prompts et traces.",
+      "1\nProposition de projet\nTuteur éducatif inclusif\nGenAI, apprentissage par renforcement et MLOps\nCréation de quiz, parcours adaptatif, accessibilité et monitoring opérationnel\nGenAI\nRAG, quiz, explications\nRL\npersonnalisation du parcours\nMLOps\nversioning, CI/CD, monitoring\nL’idée existe déjàdans la littérature et les plateformes de tutorat intelligent, mais notre valeur ajoutée\nconsiste à combiner trois dimensions dans un prototype cohérent :\ngénération pédagogique, adaptation\ndu parcours et exploitation MLOps/LLMOps, avec une attention explicite à l’inclusion.\n1.\nContexte et motivation\nContexte.\nLes plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.",
+      "plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.\nPourtant, les élèves n’ont pas le\nmême rythme, les mêmes erreurs, ni les mêmes besoins d’accessibilité.\nCertains ont besoin d’une\nexplication plus simple, d’un quiz plus progressif, d’un support visuel, ou d’une adaptation des images\net couleurs.\nMotivation.\nLe projet vise à créer un tuteur intelligent capable de transformer un cours en activités\npersonnalisées :\nquiz, mini-jeux, exercices, explications et feedbacks.\nLa GenAI permet de générer le\ncontenu, le RL permet d’adapter le parcours après chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique.",
+      "ès chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique.\nComment concevoir un tuteur éducatif capable de générer du contenu pédagogique\nfiable, d’adapter automatiquement le parcours d’un apprenant selon ses performances et de prendre en\ncompte l’inclusion, tout en assurant un déploiement contrôlé grâce à une chaîne MLOps complète ?\nObjectif général.\nDévelopper un prototype de tuteur éducatif inclusif combinant GenAI,\nReinforcement Learning et MLOps pour créer, personnaliser, évaluer et monitorer des activités\nd’apprentissage.\n• Construire une base RAG à partir de supports pédagogiques :\nPDF, texte, images, schémas.",
+      "edback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme.\n• Contextual bandit simple pour choisir la prochaine difficulté.\n• MLflow + DVC + FastAPI + Docker + dashboard Grafana.\nRésumé final :\nun tuteur qui génère, adapte, inclut et s’améliore, avec une chaîne MLOps pour\nrendre le prototype démontrable et crédible."
+    ],
+    "context_pages": [
+      2,
+      1,
+      1,
+      1,
+      4
+    ]
+  },
+  {
+    "id": "projet-02",
+    "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "question": "Quel outil est conseillé pour versionner les datasets et les cours ?",
+    "reference": "DVC.",
+    "evidence": "DVC",
+    "answer": "L’outil conseillé pour versionner les datasets et les cours est **DVC** [p. 3].",
+    "raw_answer": "L’outil conseillé pour versionner les datasets et les cours est **DVC** [p. 3].",
+    "contexts": [
+      "ances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :\noutils et rôle précis\nCe qu’on veut faire\nOutil conseillé\nVersionner datasets, cours et logs anonymisés\nDVC\nVersionner prompts et templates pédagogiques\nMLflow Prompt Registry ou YAML + Git\nSuivre expériences GenAI/RL\nMLflow Tracking\nÉvaluer réponses GenAI/RAG\nMLflow GenAI Eval, RAGAS, DeepEval\nTracer appels LLM, latence, coût, erreurs\nMLflow Tracing ou LangSmith\nDéployer le backend\nFastAPI\nConteneuriser les services\nDocker\nAutomatiser tests et redéploiement\nGitHub Actions\nOrchestrer ingestion, évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou Rea",
+      "4\nPROPOSITION DE PROJET\n7.\nDonnées et références utiles\nDatasets éducatifs.\nASSISTments peut servir pour les logs de réponses, compétences et performances\n;\nEdNet peut servir pour la simulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.",
+      "mulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.\nRéférence / repo\nUtilité dans notre projet\nLien\nASSISTments 2017 Dataset\ndonnées éducatives pour performance et personnalisation\nouvrir\nEdNet dataset\ninteractions élève-système pour simulation et knowledge tracing\nouvrir\nMLflow LLMOps\ntracing, prompt registry, évaluation GenAI\nouvrir\nDVC\nversioning données, modèles et pipelines\nouvrir\nRAGAS\nmétriques d’évaluation RAG\nouvrir\nGymnasium\nenvironnement RL standard\nouvrir\nStable-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.",
+      "Choisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :",
+      "plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.\nPourtant, les élèves n’ont pas le\nmême rythme, les mêmes erreurs, ni les mêmes besoins d’accessibilité.\nCertains ont besoin d’une\nexplication plus simple, d’un quiz plus progressif, d’un support visuel, ou d’une adaptation des images\net couleurs.\nMotivation.\nLe projet vise à créer un tuteur intelligent capable de transformer un cours en activités\npersonnalisées :\nquiz, mini-jeux, exercices, explications et feedbacks.\nLa GenAI permet de générer le\ncontenu, le RL permet d’adapter le parcours après chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique."
+    ],
+    "context_pages": [
+      3,
+      4,
+      4,
+      3,
+      1
+    ]
+  },
+  {
+    "id": "projet-03",
+    "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "question": "Quel algorithme est prévu pour choisir la prochaine difficulté dans le MVP ?",
+    "reference": "Un contextual bandit simple.",
+    "evidence": "ontextual",
+    "answer": "Le MVP prévoit d’utiliser un **bandit contextuel (Contextual Bandit)** pour choisir la prochaine difficulté [p. 4].",
+    "raw_answer": "Le MVP prévoit d’utiliser un **bandit contextuel (Contextual Bandit)** pour choisir la prochaine difficulté [ p. 4 ].",
+    "contexts": [
+      "Choisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :",
+      "edback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme.\n• Contextual bandit simple pour choisir la prochaine difficulté.\n• MLflow + DVC + FastAPI + Docker + dashboard Grafana.\nRésumé final :\nun tuteur qui génère, adapte, inclut et s’améliore, avec une chaîne MLOps pour\nrendre le prototype démontrable et crédible.",
+      "le-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.\nNotre innovation n’est pas de prétendre inventer un nouveau modèle, mais de créer\nun prototype intégré :\nGenAI pour produire le contenu, RL pour adapter le parcours et MLOps pour\ncontrôler la qualité.\nLa dimension inclusion renforce le projet :\nl’expérience est personnalisée non\nseulement selon le niveau, mais aussi selon les besoins de l’apprenant.\n• Upload d’un cours PDF avec extraction texte/images.\n• Indexation RAG et génération de 5 à 10 quiz par chapitre.\n• Feedback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme.",
+      "aliser, évaluer et monitorer des activités\nd’apprentissage.\n• Construire une base RAG à partir de supports pédagogiques :\nPDF, texte, images, schémas.\n• Générer automatiquement des quiz, exercices, flashcards, mini-jeux et explications adaptées.\n• Personnaliser le niveau de difficulté et proposer une reprise ciblée après échec.\n• Prendre en compte l’accessibilité :\ndescription d’images, adaptation des couleurs, simplification du\ncontenu.\n• Mettre en place une chaîne MLOps :\nDVC, MLflow, CI/CD, Docker, FastAPI, monitoring Grafana.\n• Évaluer la qualité des réponses GenAI et du parcours adaptatif avec des métriques pédagogiques et\ntechniques.",
+      "mulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.\nRéférence / repo\nUtilité dans notre projet\nLien\nASSISTments 2017 Dataset\ndonnées éducatives pour performance et personnalisation\nouvrir\nEdNet dataset\ninteractions élève-système pour simulation et knowledge tracing\nouvrir\nMLflow LLMOps\ntracing, prompt registry, évaluation GenAI\nouvrir\nDVC\nversioning données, modèles et pipelines\nouvrir\nRAGAS\nmétriques d’évaluation RAG\nouvrir\nGymnasium\nenvironnement RL standard\nouvrir\nStable-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée."
+    ],
+    "context_pages": [
+      3,
+      4,
+      4,
+      1,
+      4
+    ]
+  },
+  {
+    "id": "projet-04",
+    "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "question": "Quels datasets éducatifs sont proposés et à quoi servent-ils ?",
+    "reference": "ASSISTments pour les logs de réponses, compétences et performances ; EdNet pour simuler des interactions élève-système à grande échelle.",
+    "evidence": "ASSISTments",
+    "answer": "Les deux jeux de données éducatifs proposés sont :\n\n- **ASSISTments 2017 Dataset** : il fournit des logs de réponses, de compétences et de performances des élèves, utiles pour mesurer la performance et personnaliser l’apprentissage[p. 4]. \n- **EdNet dataset** : il contient des interactions élève‑système à grande échelle, permettant de simuler ces interactions et de réaliser du knowledge tracing (suivi des connaissances)[p. 4].",
+    "raw_answer": "Les deux jeux de données éducatifs proposés sont :\n\n- **ASSISTments 2017 Dataset** : il fournit des logs de réponses, de compétences et de performances des élèves, utiles pour mesurer la performance et personnaliser l’apprentissage【p. 4】.  \n- **EdNet dataset** : il contient des interactions élève‑système à grande échelle, permettant de simuler ces interactions et de réaliser du knowledge tracing (suivi des connaissances)【p. 4】.",
+    "contexts": [
+      "4\nPROPOSITION DE PROJET\n7.\nDonnées et références utiles\nDatasets éducatifs.\nASSISTments peut servir pour les logs de réponses, compétences et performances\n;\nEdNet peut servir pour la simulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.",
+      "1\nProposition de projet\nTuteur éducatif inclusif\nGenAI, apprentissage par renforcement et MLOps\nCréation de quiz, parcours adaptatif, accessibilité et monitoring opérationnel\nGenAI\nRAG, quiz, explications\nRL\npersonnalisation du parcours\nMLOps\nversioning, CI/CD, monitoring\nL’idée existe déjàdans la littérature et les plateformes de tutorat intelligent, mais notre valeur ajoutée\nconsiste à combiner trois dimensions dans un prototype cohérent :\ngénération pédagogique, adaptation\ndu parcours et exploitation MLOps/LLMOps, avec une attention explicite à l’inclusion.\n1.\nContexte et motivation\nContexte.\nLes plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.",
+      "mulation d’interactions élève-système à grande échelle.\nLes cours PDF\nutilisés pour le RAG peuvent provenir de supports ouverts ou créés par l’équipe.\nRéférence / repo\nUtilité dans notre projet\nLien\nASSISTments 2017 Dataset\ndonnées éducatives pour performance et personnalisation\nouvrir\nEdNet dataset\ninteractions élève-système pour simulation et knowledge tracing\nouvrir\nMLflow LLMOps\ntracing, prompt registry, évaluation GenAI\nouvrir\nDVC\nversioning données, modèles et pipelines\nouvrir\nRAGAS\nmétriques d’évaluation RAG\nouvrir\nGymnasium\nenvironnement RL standard\nouvrir\nStable-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.",
+      "ès chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique.\nComment concevoir un tuteur éducatif capable de générer du contenu pédagogique\nfiable, d’adapter automatiquement le parcours d’un apprenant selon ses performances et de prendre en\ncompte l’inclusion, tout en assurant un déploiement contrôlé grâce à une chaîne MLOps complète ?\nObjectif général.\nDévelopper un prototype de tuteur éducatif inclusif combinant GenAI,\nReinforcement Learning et MLOps pour créer, personnaliser, évaluer et monitorer des activités\nd’apprentissage.\n• Construire une base RAG à partir de supports pédagogiques :\nPDF, texte, images, schémas.",
+      "le-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.\nNotre innovation n’est pas de prétendre inventer un nouveau modèle, mais de créer\nun prototype intégré :\nGenAI pour produire le contenu, RL pour adapter le parcours et MLOps pour\ncontrôler la qualité.\nLa dimension inclusion renforce le projet :\nl’expérience est personnalisée non\nseulement selon le niveau, mais aussi selon les besoins de l’apprenant.\n• Upload d’un cours PDF avec extraction texte/images.\n• Indexation RAG et génération de 5 à 10 quiz par chapitre.\n• Feedback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme."
+    ],
+    "context_pages": [
+      4,
+      1,
+      4,
+      1,
+      4
+    ]
+  },
+  {
+    "id": "projet-05",
+    "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "question": "Que fait le module inclusion pour les supports visuels ?",
+    "reference": "Il décrit les images, détecte les supports dépendants des couleurs et propose une version accessible (contraste, daltonisation).",
+    "evidence": "dépendants des couleurs",
+    "answer": "Le module inclusion adapte les supports visuels : il décrit les images, améliore le contraste et applique une daltonisation pour rendre les contenus accessibles aux personnes daltoniennes[p. 2]. Il détecte également les éléments dépendants des couleurs et propose une version accessible du support visuel[p. 3].",
+    "raw_answer": "Le module inclusion adapte les supports visuels : il décrit les images, améliore le contraste et applique une daltonisation pour rendre les contenus accessibles aux personnes daltoniennes【p. 2】. Il détecte également les éléments dépendants des couleurs et propose une version accessible du support visuel【p. 3】.",
+    "contexts": [
+      "continue\n1.\nL’enseignant dépose un cours :\nPDF, texte, image ou schéma.\n2.\nLe système extrait le texte et les images, puis construit une base RAG.\n3.\nLa GenAI génère quiz, exercices, mini-jeux et explications contextualisées.\n4.\nLe module inclusion adapte les supports visuels :\ndescription, contraste, daltonisation.\n5.\nL’élève répond ;\nle système enregistre score, temps, erreurs et compétence ciblée.\n6.\nLe module RL choisit la prochaine activité :\nrévision, difficulté supérieure, reprise après\néchec.\n7.\nLa chaîne MLOps trace les prompts, versions, métriques, logs et qualité de service.",
+      "3\nPROPOSITION DE PROJET\n5.\nCe que nous allons réellement implémenter\nModule\nDescription minimaliste\nOutils\nRAG pédagogique\nIndexer un chapitre et retrouver les passages\nutiles pour chaque question.\nLangChain/LlamaIndex + Chroma ou\nQdrant\nQuiz & jeux\nGénérer QCM, vrai/faux, flashcards et\nmini-défis avec correction.\nLLM + templates de prompts\nReprise après échec\nAnalyser l’erreur et générer une explication +\nexercice de remédiation.\nLLM + historique élève\nInclusion\nDécrire les images, détecter les supports\ndépendants des couleurs et proposer une\nversion accessible.\nOpenCV + BLIP/LLaVA + daltonize\nAdaptation RL\nChoisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.",
+      "le-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.\nNotre innovation n’est pas de prétendre inventer un nouveau modèle, mais de créer\nun prototype intégré :\nGenAI pour produire le contenu, RL pour adapter le parcours et MLOps pour\ncontrôler la qualité.\nLa dimension inclusion renforce le projet :\nl’expérience est personnalisée non\nseulement selon le niveau, mais aussi selon les besoins de l’apprenant.\n• Upload d’un cours PDF avec extraction texte/images.\n• Indexation RAG et génération de 5 à 10 quiz par chapitre.\n• Feedback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme.",
+      "1\nProposition de projet\nTuteur éducatif inclusif\nGenAI, apprentissage par renforcement et MLOps\nCréation de quiz, parcours adaptatif, accessibilité et monitoring opérationnel\nGenAI\nRAG, quiz, explications\nRL\npersonnalisation du parcours\nMLOps\nversioning, CI/CD, monitoring\nL’idée existe déjàdans la littérature et les plateformes de tutorat intelligent, mais notre valeur ajoutée\nconsiste à combiner trois dimensions dans un prototype cohérent :\ngénération pédagogique, adaptation\ndu parcours et exploitation MLOps/LLMOps, avec une attention explicite à l’inclusion.\n1.\nContexte et motivation\nContexte.\nLes plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.",
+      "plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.\nPourtant, les élèves n’ont pas le\nmême rythme, les mêmes erreurs, ni les mêmes besoins d’accessibilité.\nCertains ont besoin d’une\nexplication plus simple, d’un quiz plus progressif, d’un support visuel, ou d’une adaptation des images\net couleurs.\nMotivation.\nLe projet vise à créer un tuteur intelligent capable de transformer un cours en activités\npersonnalisées :\nquiz, mini-jeux, exercices, explications et feedbacks.\nLa GenAI permet de générer le\ncontenu, le RL permet d’adapter le parcours après chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique."
+    ],
+    "context_pages": [
+      2,
+      3,
+      4,
+      1,
+      1
+    ]
+  },
+  {
+    "id": "projet-06",
+    "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "question": "Combien de quiz par chapitre le MVP doit-il générer ?",
+    "reference": "De 5 à 10 quiz par chapitre.",
+    "evidence": "5 à 10",
+    "answer": "Le MVP doit générer entre 5 et 10 quiz par chapitre [p. 4].",
+    "raw_answer": "Le MVP doit générer entre 5 et 10 quiz par chapitre [p. 4].",
+    "contexts": [
+      "plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.\nPourtant, les élèves n’ont pas le\nmême rythme, les mêmes erreurs, ni les mêmes besoins d’accessibilité.\nCertains ont besoin d’une\nexplication plus simple, d’un quiz plus progressif, d’un support visuel, ou d’une adaptation des images\net couleurs.\nMotivation.\nLe projet vise à créer un tuteur intelligent capable de transformer un cours en activités\npersonnalisées :\nquiz, mini-jeux, exercices, explications et feedbacks.\nLa GenAI permet de générer le\ncontenu, le RL permet d’adapter le parcours après chaque réponse, et le MLOps garantit que le\nsystème reste traçable, évalué, déployable et améliorable.\n2.\nProblématique et objectifs\nProblématique.",
+      "aliser, évaluer et monitorer des activités\nd’apprentissage.\n• Construire une base RAG à partir de supports pédagogiques :\nPDF, texte, images, schémas.\n• Générer automatiquement des quiz, exercices, flashcards, mini-jeux et explications adaptées.\n• Personnaliser le niveau de difficulté et proposer une reprise ciblée après échec.\n• Prendre en compte l’accessibilité :\ndescription d’images, adaptation des couleurs, simplification du\ncontenu.\n• Mettre en place une chaîne MLOps :\nDVC, MLflow, CI/CD, Docker, FastAPI, monitoring Grafana.\n• Évaluer la qualité des réponses GenAI et du parcours adaptatif avec des métriques pédagogiques et\ntechniques.",
+      "le-Baselines3\nalgorithmes RL PPO/DQN\nouvrir\nDaltonize repo\nadaptation d’images pour daltonisme\nouvrir\n8.\nValeur ajoutée et MVP proposé\nValeur ajoutée.\nNotre innovation n’est pas de prétendre inventer un nouveau modèle, mais de créer\nun prototype intégré :\nGenAI pour produire le contenu, RL pour adapter le parcours et MLOps pour\ncontrôler la qualité.\nLa dimension inclusion renforce le projet :\nl’expérience est personnalisée non\nseulement selon le niveau, mais aussi selon les besoins de l’apprenant.\n• Upload d’un cours PDF avec extraction texte/images.\n• Indexation RAG et génération de 5 à 10 quiz par chapitre.\n• Feedback personnalisé après réponse incorrecte et reprise ciblée.\n• Module accessibilité :\ndescription d’image + adaptation de couleurs pour daltonisme.",
+      "3\nPROPOSITION DE PROJET\n5.\nCe que nous allons réellement implémenter\nModule\nDescription minimaliste\nOutils\nRAG pédagogique\nIndexer un chapitre et retrouver les passages\nutiles pour chaque question.\nLangChain/LlamaIndex + Chroma ou\nQdrant\nQuiz & jeux\nGénérer QCM, vrai/faux, flashcards et\nmini-défis avec correction.\nLLM + templates de prompts\nReprise après échec\nAnalyser l’erreur et générer une explication +\nexercice de remédiation.\nLLM + historique élève\nInclusion\nDécrire les images, détecter les supports\ndépendants des couleurs et proposer une\nversion accessible.\nOpenCV + BLIP/LLaVA + daltonize\nAdaptation RL\nChoisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.",
+      "continue\n1.\nL’enseignant dépose un cours :\nPDF, texte, image ou schéma.\n2.\nLe système extrait le texte et les images, puis construit une base RAG.\n3.\nLa GenAI génère quiz, exercices, mini-jeux et explications contextualisées.\n4.\nLe module inclusion adapte les supports visuels :\ndescription, contraste, daltonisation.\n5.\nL’élève répond ;\nle système enregistre score, temps, erreurs et compétence ciblée.\n6.\nLe module RL choisit la prochaine activité :\nrévision, difficulté supérieure, reprise après\néchec.\n7.\nLa chaîne MLOps trace les prompts, versions, métriques, logs et qualité de service."
+    ],
+    "context_pages": [
+      1,
+      1,
+      4,
+      3,
+      2
+    ]
+  },
+  {
+    "id": "hors-01",
+    "source": null,
+    "question": "Qui a gagné la Coupe du monde de football 2018 ?",
+    "reference": "Le cours ne contient pas cette information.",
+    "evidence": null,
+    "answer": "Le cours n’en parle pas.",
+    "raw_answer": "Le cours n’en parle pas.",
+    "contexts": [
+      "ances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :\noutils et rôle précis\nCe qu’on veut faire\nOutil conseillé\nVersionner datasets, cours et logs anonymisés\nDVC\nVersionner prompts et templates pédagogiques\nMLflow Prompt Registry ou YAML + Git\nSuivre expériences GenAI/RL\nMLflow Tracking\nÉvaluer réponses GenAI/RAG\nMLflow GenAI Eval, RAGAS, DeepEval\nTracer appels LLM, latence, coût, erreurs\nMLflow Tracing ou LangSmith\nDéployer le backend\nFastAPI\nConteneuriser les services\nDocker\nAutomatiser tests et redéploiement\nGitHub Actions\nOrchestrer ingestion, évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou Rea",
+      "3\nPROPOSITION DE PROJET\n5.\nCe que nous allons réellement implémenter\nModule\nDescription minimaliste\nOutils\nRAG pédagogique\nIndexer un chapitre et retrouver les passages\nutiles pour chaque question.\nLangChain/LlamaIndex + Chroma ou\nQdrant\nQuiz & jeux\nGénérer QCM, vrai/faux, flashcards et\nmini-défis avec correction.\nLLM + templates de prompts\nReprise après échec\nAnalyser l’erreur et générer une explication +\nexercice de remédiation.\nLLM + historique élève\nInclusion\nDécrire les images, détecter les supports\ndépendants des couleurs et proposer une\nversion accessible.\nOpenCV + BLIP/LLaVA + daltonize\nAdaptation RL\nChoisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.",
+      "1\nProposition de projet\nTuteur éducatif inclusif\nGenAI, apprentissage par renforcement et MLOps\nCréation de quiz, parcours adaptatif, accessibilité et monitoring opérationnel\nGenAI\nRAG, quiz, explications\nRL\npersonnalisation du parcours\nMLOps\nversioning, CI/CD, monitoring\nL’idée existe déjàdans la littérature et les plateformes de tutorat intelligent, mais notre valeur ajoutée\nconsiste à combiner trois dimensions dans un prototype cohérent :\ngénération pédagogique, adaptation\ndu parcours et exploitation MLOps/LLMOps, avec une attention explicite à l’inclusion.\n1.\nContexte et motivation\nContexte.\nLes plateformes d’apprentissage en ligne proposent souvent le même contenu à tous les\napprenants :\ncours, exercices, correction standard et suivi global.",
+      "2\nPROPOSITION DE PROJET\n3.\nLes trois axes principaux du projet\nAxe\nRôle dans le projet\nOutils en tendance\nLivrable attendu\nGenAI\nCréer du contenu\npédagogique à partir du cours\n:\nquiz, exercices, jeux,\nexplications, résumé.\nLLM\nGPT/Gemini/Llama/Qwen,\nLangChain/LlamaIndex,\nChroma/Qdrant/FAISS,\nRAGAS, LLaVA/BLIP pour\nimages.\nGénérateur de quiz +\nexplications personnalisées\n+ adaptation multimodale.\nRL\nChoisir la prochaine activité\nselon score, erreurs, temps,\nniveau et besoin\nd’accessibilité.\nContextual Bandit, Gymnasium,\nStable-Baselines3, Ray RLlib.\nPolicy qui propose\nfacile/moyen/difficile,\nrévision, mini-jeu ou\nexplication.\nMLOps /\nLLMOps\nVersionner, évaluer, déployer\net monitorer les modèles,\ndonnées, prompts et traces.",
+      "Choisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :"
+    ],
+    "context_pages": [
+      3,
+      3,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "hors-02",
+    "source": null,
+    "question": "Quelle est la capitale de l'Australie ?",
+    "reference": "Le cours ne contient pas cette information.",
+    "evidence": null,
+    "answer": "Le cours n’en parle pas.",
+    "raw_answer": "Le cours n’en parle pas.",
+    "contexts": [
+      "ances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer.\nDVC + MLflow + Docker + FastAPI\n+ Grafana\n6.\nPartie MLOps :\noutils et rôle précis\nCe qu’on veut faire\nOutil conseillé\nVersionner datasets, cours et logs anonymisés\nDVC\nVersionner prompts et templates pédagogiques\nMLflow Prompt Registry ou YAML + Git\nSuivre expériences GenAI/RL\nMLflow Tracking\nÉvaluer réponses GenAI/RAG\nMLflow GenAI Eval, RAGAS, DeepEval\nTracer appels LLM, latence, coût, erreurs\nMLflow Tracing ou LangSmith\nDéployer le backend\nFastAPI\nConteneuriser les services\nDocker\nAutomatiser tests et redéploiement\nGitHub Actions\nOrchestrer ingestion, évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou Rea",
+      " évaluation, réentraînement\nAirflow ou Kubeflow\nMonitoring technique\nPrometheus\nDashboard de suivi\nGrafana\nInterface de démonstration\nStreamlit ou React",
+      "le rejette aussi du dioxygène (O2) dans l'atmosphère. L'équation bilan est : 6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2.\n## Photosynthèse et respiration\nIl ne faut pas confondre photosynthèse et respiration. La respiration a lieu jour et nuit dans toutes les cellules vivantes : elle consomme du dioxygène et rejette du dioxyde de carbone. La photosynthèse, elle, n'a lieu qu'en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration, donc la plante rejette globalement du dioxygène.\n## Importance pour la vie sur Terre",
+      "2\nPROPOSITION DE PROJET\n3.\nLes trois axes principaux du projet\nAxe\nRôle dans le projet\nOutils en tendance\nLivrable attendu\nGenAI\nCréer du contenu\npédagogique à partir du cours\n:\nquiz, exercices, jeux,\nexplications, résumé.\nLLM\nGPT/Gemini/Llama/Qwen,\nLangChain/LlamaIndex,\nChroma/Qdrant/FAISS,\nRAGAS, LLaVA/BLIP pour\nimages.\nGénérateur de quiz +\nexplications personnalisées\n+ adaptation multimodale.\nRL\nChoisir la prochaine activité\nselon score, erreurs, temps,\nniveau et besoin\nd’accessibilité.\nContextual Bandit, Gymnasium,\nStable-Baselines3, Ray RLlib.\nPolicy qui propose\nfacile/moyen/difficile,\nrévision, mini-jeu ou\nexplication.\nMLOps /\nLLMOps\nVersionner, évaluer, déployer\net monitorer les modèles,\ndonnées, prompts et traces.",
+      "3\nPROPOSITION DE PROJET\n5.\nCe que nous allons réellement implémenter\nModule\nDescription minimaliste\nOutils\nRAG pédagogique\nIndexer un chapitre et retrouver les passages\nutiles pour chaque question.\nLangChain/LlamaIndex + Chroma ou\nQdrant\nQuiz & jeux\nGénérer QCM, vrai/faux, flashcards et\nmini-défis avec correction.\nLLM + templates de prompts\nReprise après échec\nAnalyser l’erreur et générer une explication +\nexercice de remédiation.\nLLM + historique élève\nInclusion\nDécrire les images, détecter les supports\ndépendants des couleurs et proposer une\nversion accessible.\nOpenCV + BLIP/LLaVA + daltonize\nAdaptation RL\nChoisir la prochaine activité selon le profil et\nles performances.\nContextual Bandit puis\nGymnasium/SB3\nMLOps\nVersionner, tester, déployer, monitorer."
+    ],
+    "context_pages": [
+      3,
+      3,
+      1,
+      2,
+      3
+    ]
+  }
+]

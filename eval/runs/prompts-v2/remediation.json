@@ -1,0 +1,90 @@
+[
+  {
+    "id": "rem-01",
+    "question": "Que rejette la photosynthèse dans l'atmosphère ?",
+    "diagnostic": "Tu as mélangé la respiration et la photosynthèse. La respiration consomme O2 et libère CO2. La photosynthèse libère O2 et consomme CO2.",
+    "explanation": "La photosynthèse fabrique du sucre avec lumière, eau, CO2. Elle libère du dioxygène dans l'air. La respiration consomme ce dioxygène et rejette CO2.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "Vrai ou faux : La photosynthèse libère du dioxygène.",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "La photosynthèse produit du glucose et libère O2.",
+      "difficulty": "facile",
+      "competence": "Produits de la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.885901677272847,
+    "words": 23,
+    "words_per_sentence": 7.666666666666667,
+    "kandel_moles": 74.41833333333335
+  },
+  {
+    "id": "rem-02",
+    "question": "Quand la photosynthèse a-t-elle lieu ?",
+    "diagnostic": "Tu as confondu photosynthèse et respiration. Tu penses qu’elles se passent toujours. En fait, la photosynthèse ne se produit qu’avec lumière. La respiration se produit jour et nuit. Cette confusion explique ta réponse.",
+    "explanation": "La photosynthèse a besoin de lumière, d’eau et de CO2. Elle se fait dans les chloroplastes des feuilles. La chlorophylle capte la lumière rouge et bleue. Sans lumière, la plante ne fait pas de photosynthèse. Exemple : le jour, la plante libère du O2.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La photosynthèse se produit seulement la nuit.",
+      "choices": [],
+      "answer": "Faux",
+      "explanation": "La lumière active la chlorophylle. Sans lumière, pas de photosynthèse. Donc pas la nuit.",
+      "difficulty": "facile",
+      "competence": "Comprendre quand la photosynthèse a lieu",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.8837913300960134,
+    "words": 43,
+    "words_per_sentence": 7.166666666666667,
+    "kandel_moles": 95.31653100775193
+  },
+  {
+    "id": "rem-03",
+    "question": "Par où le CO2 entre-t-il dans la feuille ?",
+    "diagnostic": "L'élève a confondu les racines et les stomates pour l'entrée du CO2.",
+    "explanation": "Le CO2 passe de l'air dans la feuille par de petits orifices appelés stomates. Les racines absorbent l'eau, pas le CO2. Les stomates sont sur la surface des feuilles. Ils permettent les échanges gazeux. Exemple : la feuille prend le CO2 par ses stomates.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "Le CO2 entre dans la feuille par les stomates.",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "Les stomates sont les ouvertures qui laissent entrer le CO2 dans la feuille.",
+      "difficulty": "facile",
+      "competence": "Comprendre le point d'entrée du CO2 dans la feuille",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9338118166643268,
+    "words": 43,
+    "words_per_sentence": 7.166666666666667,
+    "kandel_moles": 85.04676356589147
+  },
+  {
+    "id": "rem-04",
+    "question": "Pourquoi les feuilles sont-elles vertes ?",
+    "diagnostic": "Tu as confondu absorption et réflexion de la lumière par la chlorophylle.",
+    "explanation": "La chlorophylle capte la lumière rouge et bleue. Elle reflète la lumière verte. C’est pourquoi les feuilles paraissent vertes.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La chlorophylle absorbe la lumière verte.",
+      "choices": [],
+      "answer": "Faux",
+      "explanation": "Elle reflète la lumière verte, elle absorbe rouge et bleue.",
+      "difficulty": "facile",
+      "competence": "Compréhension de la photosynthèse - absorption vs réflexion",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.8768352869550775,
+    "words": 19,
+    "words_per_sentence": 6.333333333333333,
+    "kandel_moles": 88.2348245614035
+  }
+]

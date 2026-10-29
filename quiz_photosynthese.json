@@ -1,0 +1,80 @@
+{
+  "items": [
+    {
+      "type": "qcm",
+      "question": "Quel pigment capte l'énergie lumineuse dans les chloroplastes ?",
+      "choices": [
+        "Chlorophylle",
+        "Carotène",
+        "Xanthophylle",
+        "Anthocyanine"
+      ],
+      "answer": "Chlorophylle",
+      "explanation": "La chlorophylle est le pigment vert qui absorbe la lumière rouge et bleue pour la photosynthèse.",
+      "difficulty": "moyen",
+      "competence": "Connaître le rôle des pigments photosynthétiques",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "type": "vrai_faux",
+      "question": "La photosynthèse a lieu uniquement la nuit.",
+      "choices": [
+        "Vrai",
+        "Faux"
+      ],
+      "answer": "Faux",
+      "explanation": "La photosynthèse ne se produit qu'en présence de lumière, donc principalement le jour.",
+      "difficulty": "moyen",
+      "competence": "Différencier photosynthèse et respiration",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "type": "flashcard",
+      "question": "Quels sont les trois éléments nécessaires à la photosynthèse ?",
+      "choices": [],
+      "answer": "Lumière, eau (H2O) et dioxyde de carbone (CO2)",
+      "explanation": "Ces trois facteurs (lumière, H2O et CO2) sont indispensables pour que la plante réalise la photosynthèse.",
+      "difficulty": "moyen",
+      "competence": "Identifier les besoins de la plante",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "type": "qcm",
+      "question": "Quelle est l'équation bilan de la photosynthèse ?",
+      "choices": [
+        "6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2",
+        "C6H12O6 + 6 O2 → 6 CO2 + 6 H2O + lumière",
+        "6 CO2 + 6 O2 → C6H12O6 + 6 H2O",
+        "C6H12O6 + lumière → 6 CO2 + 6 H2O"
+      ],
+      "answer": "6 CO2 + 6 H2O + lumière → C6H12O6 + 6 O2",
+      "explanation": "Cette équation représente la transformation du dioxyde de carbone et de l'eau en glucose et oxygène sous l'effet de la lumière.",
+      "difficulty": "moyen",
+      "competence": "Savoir écrire l'équation de la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "type": "vrai_faux",
+      "question": "La respiration consomme du dioxygène et libère du dioxyde de carbone.",
+      "choices": [
+        "Vrai",
+        "Faux"
+      ],
+      "answer": "Vrai",
+      "explanation": "Lors de la respiration cellulaire, les cellules utilisent O2 et produisent du CO2 comme déchet.",
+      "difficulty": "moyen",
+      "competence": "Comprendre la respiration cellulaire",
+      "source_pages": [
+        1
+      ]
+    }
+  ]
+}

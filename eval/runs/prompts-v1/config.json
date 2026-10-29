@@ -1,0 +1,12 @@
+{
+  "label": "prompts-v1",
+  "generator": "openai/gpt-oss-120b",
+  "prompts": [
+    "answer@v1",
+    "quiz@v1",
+    "remediation@v1",
+    "styles@v1"
+  ],
+  "top_k": 5,
+  "started": "2026-10-26T13:37:03"
+}

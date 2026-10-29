@@ -1,0 +1,100 @@
+[
+  {
+    "id": "rem-01",
+    "question": "Que rejette la photosynthèse dans l'atmosphère ?",
+    "diagnostic": "Tu as confondu le gaz libéré par la photosynthèse. Tu as pensé que c'était du dioxyde de carbone, alors que c'est du dioxygène.",
+    "explanation": "La photosynthèse est le processus où la plante utilise la lumière, l'eau et le dioxyde de carbone pour fabriquer du sucre. En même temps, elle libère du dioxygène (O2) dans l'air. Le dioxyde de carbone (CO2) est consommé, pas rejeté.",
+    "exercise": {
+      "type": "qcm",
+      "question": "Quel gaz la plante libère‑t‑elle pendant la photosynthèse ?",
+      "choices": [
+        "dioxyde de carbone",
+        "dioxygène",
+        "azote",
+        "hydrogène"
+      ],
+      "answer": "dioxygène",
+      "explanation": "Pendant la photosynthèse, la plante prend du CO2 et de l'eau, et elle libère du O2.",
+      "difficulty": "facile",
+      "competence": "Comprendre les produits de la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.8940839591012982,
+    "words": 40,
+    "words_per_sentence": 13.333333333333334,
+    "kandel_moles": 81.22666666666669
+  },
+  {
+    "id": "rem-02",
+    "question": "Quand la photosynthèse a-t-elle lieu ?",
+    "diagnostic": "Tu as pensé que la photosynthèse se passe le jour et la nuit. C’est une petite confusion entre la photosynthèse (qui a besoin de lumière) et la respiration (qui se fait tout le temps).",
+    "explanation": "La photosynthèse est le processus qui crée de la nourriture pour la plante. Elle a besoin de trois choses : de la lumière, de l'eau et du dioxyde de carbone. La lumière vient du soleil. Sans lumière, la plante ne peut pas faire la photosynthèse. Exemple : une plante placée dans une pièce complètement sombre ne produit pas de sucre ni d'oxygène. Le mot \"lumière\" désigne les rayons du soleil ou d'une lampe. Le mot \"dioxyde de carbone\" (CO2) est un gaz que l'on trouve dans l'air. Le mot \"oxygène\" (O2) est le gaz que nous respirons.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La photosynthèse se produit seulement quand il y a de la lumière ?",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "Oui, la plante a besoin de lumière pour faire la photosynthèse. Sans lumière, elle ne peut pas créer de sucre ni libérer de l'oxygène.",
+      "difficulty": "facile",
+      "competence": "Comprendre le moment où la photosynthèse a lieu",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9430498810213436,
+    "words": 95,
+    "words_per_sentence": 9.5,
+    "kandel_moles": 97.41644736842107
+  },
+  {
+    "id": "rem-03",
+    "question": "Par où le CO2 entre-t-il dans la feuille ?",
+    "diagnostic": "Tu as pensé que le CO₂ entre dans la feuille par les racines. C’est une confusion fréquente : les racines absorbent l’eau, pas le CO₂.",
+    "explanation": "Le dioxyde de carbone (CO₂) arrive dans la feuille par de petits orifices appelés stomates. Les stomates sont comme de petites fenêtres sur la surface de la feuille. L'eau, elle, vient du sol et monte par les racines jusqu'à la feuille. Exemple : imagine une maison où l'air entre par les fenêtres (stomates) et l'eau arrive par les tuyaux (racines).",
+    "exercise": {
+      "type": "qcm",
+      "question": "Comment le dioxyde de carbone (CO₂) entre-t-il dans la feuille d’une plante ?",
+      "choices": [
+        "Par les racines",
+        "Par les stomates (petits trous sur la feuille)",
+        "Par la tige",
+        "Par les fleurs"
+      ],
+      "answer": "Par les stomates (petits trous sur la feuille)",
+      "explanation": "Le CO₂ passe par les stomates, qui sont de petits trous sur la surface de la feuille. Les racines n’apportent que de l’eau.",
+      "difficulty": "facile",
+      "competence": "Comprendre le chemin du CO₂ dans la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9413264393057612,
+    "words": 59,
+    "words_per_sentence": 11.8,
+    "kandel_moles": 80.25689830508475
+  },
+  {
+    "id": "rem-04",
+    "question": "Pourquoi les feuilles sont-elles vertes ?",
+    "diagnostic": "Tu as confondu l’absorption et la réflexion de la lumière verte par la chlorophylle.",
+    "explanation": "La chlorophylle est le pigment vert des feuilles. Elle capte surtout la lumière rouge et bleue. Elle ne prend pas la lumière verte. Elle renvoie (réflète) la lumière verte. C’est cette lumière renvoyée qui rend les feuilles vertes à nos yeux.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La chlorophylle absorbe la lumière verte.",
+      "choices": [],
+      "answer": "Faux",
+      "explanation": "La chlorophylle reflète la lumière verte, c’est pourquoi les feuilles nous paraissent vertes.",
+      "difficulty": "facile",
+      "competence": "Comprendre pourquoi les feuilles sont vertes",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.8768352869550775,
+    "words": 41,
+    "words_per_sentence": 8.2,
+    "kandel_moles": 103.53553658536585
+  }
+]

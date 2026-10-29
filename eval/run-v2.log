@@ -1,0 +1,39 @@
+· retrieval
+Could not reach the Hub (Cannot reach https://huggingface.co/api/models/intfloat/multilingual-e5-small: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable.). Using cached commit hash for 'intfloat/multilingual-e5-small'.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  54%|█████▍    | 107/199 [00:00<00:00, 1033.97it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 1238.37it/s]
+· answers_standard
+· leger-qwen-qwen3.8-27b_standard (16 réponses à juger)
+· answers_simplifie
+· leger-qwen-qwen3.8-27b_simplifie (16 réponses à juger)
+· remediation
+# Évaluation prompts-v2 (juge leger) — 2026-10-26T16:55:16
+générateur=openai/gpt-oss-120b  juge=qwen/qwen3.8-27b  prompts=answer@v2, quiz@v2, remediation@v2, styles@v2
+
+## retrieval
+  hit@1                            0.562
+  hit@3                            0.938
+  hit@5                            0.938
+  mrr                              0.750
+  source@1                         1.000
+## standard
+  faithfulness                     0.991
+  answer_relevancy                 0.938
+  answer_correctness               0.938
+  words_mean                       34.500
+  words_per_sentence_mean          7.668
+  kandel_moles_mean                76.837
+  refusal_rate_out_of_scope        1.000
+## simplifie
+  faithfulness                     0.947
+  answer_relevancy                 0.938
+  answer_correctness               0.938
+  words_mean                       46.250
+  words_per_sentence_mean          3.820
+  kandel_moles_mean                92.397
+  refusal_rate_out_of_scope        1.000
+## remediation
+  exercise_similarity_mean         0.895
+  exercise_near_duplicate_rate     0.250
+  explanation_words_mean           32.000
+
+✓ Résultats détaillés : eval\results\prompts-v2-leger.json

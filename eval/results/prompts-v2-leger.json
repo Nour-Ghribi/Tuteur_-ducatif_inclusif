@@ -1,0 +1,55 @@
+{
+  "label": "prompts-v2",
+  "generator": "openai/gpt-oss-120b",
+  "prompts": [
+    "answer@v2",
+    "quiz@v2",
+    "remediation@v2",
+    "styles@v2"
+  ],
+  "top_k": 5,
+  "search_mode": "dense",
+  "judge": "qwen/qwen3.8-27b",
+  "judge_mode": "leger",
+  "date": "2026-10-26T17:23:38",
+  "summary": {
+    "retrieval": {
+      "hit@1": 0.5625,
+      "hit@3": 0.9375,
+      "hit@5": 0.9375,
+      "mrr": 0.75,
+      "source@1": 1
+    },
+    "retrieval_paraphrases": {
+      "hit@1": 0.8,
+      "hit@3": 1,
+      "hit@5": 1,
+      "mrr": 0.8833333333333333,
+      "source@1": 1
+    },
+    "standard": {
+      "faithfulness": 0.9910714285714286,
+      "answer_relevancy": 0.9375,
+      "answer_correctness": 0.9375,
+      "words_mean": 32.375,
+      "words_per_sentence_mean": 13.618229166666666,
+      "kandel_moles_mean": 66.74165960321756,
+      "refusal_rate_out_of_scope": 1
+    },
+    "simplifie": {
+      "faithfulness": 0.946875,
+      "answer_relevancy": 0.9375,
+      "answer_correctness": 0.9375,
+      "words_mean": 37.875,
+      "words_per_sentence_mean": 7.269345238095238,
+      "kandel_moles_mean": 80.82167442855807,
+      "refusal_rate_out_of_scope": 1
+    },
+    "remediation": {
+      "exercise_similarity_mean": 0.8950850277470661,
+      "exercise_near_duplicate_rate": 0.25,
+      "explanation_words_mean": 32
+    }
+  },
+  "complete": true
+}

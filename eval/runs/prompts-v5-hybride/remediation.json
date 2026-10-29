@@ -1,0 +1,96 @@
+[
+  {
+    "id": "rem-01",
+    "question": "Que rejette la photosynthèse dans l'atmosphère ?",
+    "diagnostic": "Vous avez confondu le gaz libéré par la photosynthèse avec celui de la respiration.",
+    "explanation": "La photosynthèse produit du glucose et du dioxygène. Elle utilise la lumière, l'eau et le dioxyde de carbone. Le dioxygène est libéré dans l'atmosphère. La respiration consomme du dioxygène et rejette du dioxyde de carbone. Ainsi, la photosynthèse ne rejette pas de dioxyde de carbone.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La photosynthèse libère du dioxygène dans l'atmosphère.",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "La photosynthèse libère du dioxygène, pas du dioxyde de carbone.",
+      "difficulty": "facile",
+      "competence": "Connaître le gaz rejeté par la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9110604280174088,
+    "words": 45,
+    "words_per_sentence": 9.0,
+    "kandel_moles": 68.65611111111113
+  },
+  {
+    "id": "rem-02",
+    "question": "Quand la photosynthèse a-t-elle lieu ?",
+    "diagnostic": "Tu as confondu la photosynthèse avec la respiration. La respiration se produit jour et nuit, la photosynthèse seulement avec lumière.",
+    "explanation": "La photosynthèse n’a lieu qu’en présence de lumière. Le jour, la photosynthèse est plus intense que la respiration. La respiration consomme du dioxygène et rejette du dioxyde de carbone.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La photosynthèse se produit uniquement en présence de lumière.",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "La photosynthèse n’a lieu qu’en présence de lumière.",
+      "difficulty": "facile",
+      "competence": "Moment de la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.8961079846221462,
+    "words": 29,
+    "words_per_sentence": 9.666666666666666,
+    "kandel_moles": 67.75385057471266
+  },
+  {
+    "id": "rem-03",
+    "question": "Par où le CO2 entre-t-il dans la feuille ?",
+    "diagnostic": "Vous pensez que le CO2 entre par les racines. En fait, le CO2 entre par les stomates des feuilles.",
+    "explanation": "Le CO2 vient de l'air. Il passe par les stomates des feuilles. Les stomates sont de petits orifices. Les racines absorbent l'eau, pas le CO2.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "Vrai ou faux : Le CO2 entre dans la feuille par les racines.",
+      "choices": [
+        "Vrai",
+        "Faux"
+      ],
+      "answer": "Faux",
+      "explanation": "Le CO2 entre par les stomates, pas par les racines.",
+      "difficulty": "facile",
+      "competence": "Comprendre le point d'entrée du CO2 dans la feuille",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9436147561688155,
+    "words": 25,
+    "words_per_sentence": 6.25,
+    "kandel_moles": 88.78425000000001
+  },
+  {
+    "id": "rem-04",
+    "question": "Pourquoi les feuilles sont-elles vertes ?",
+    "diagnostic": "Vous avez confondu l’absorption et la réflexion de la lumière verte.",
+    "explanation": "La chlorophylle capte l'énergie lumineuse. Elle absorbe surtout la lumière rouge et bleue. Elle réfléchit la lumière verte. C’est pourquoi les feuilles nous paraissent vertes.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La chlorophylle reflète la lumière verte.",
+      "choices": [
+        "Vrai",
+        "Faux"
+      ],
+      "answer": "Vrai",
+      "explanation": "Elle réfléchit la lumière verte, ce qui rend les feuilles vertes.",
+      "difficulty": "facile",
+      "competence": "Compréhension de la couleur des feuilles",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.8723861668259887,
+    "words": 25,
+    "words_per_sentence": 6.25,
+    "kandel_moles": 79.95225000000002
+  }
+]
