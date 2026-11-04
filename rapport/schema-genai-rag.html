@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Schéma GenAI RAG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Schéma d'une page, 1600 px de large : 3 bandes (préparation, question, évaluation), lecture de gauche à droite. */
+:root {
+  --bg: #f6f8f7; --card: #ffffff; --ink: #15211d; --muted: #5a6b65; --line: #cfdad5;
+  --prep: #2c4f8f; --prep-soft: #e5ecf8;
+  --ask: #1f7a4d; --ask-soft: #e1f1e8;
+  --eval: #a2611a; --eval-soft: #f8ecdc;
+  --display: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.35; }
+.page { width: 1600px; padding: 40px 44px 36px; display: grid; gap: 22px; }
+header { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+h1 { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1.05; margin: 0; }
+header p { margin: 8px 0 0; color: var(--muted); font-size: 19px; max-width: 900px; }
+.legend { display: flex; flex: none; white-space: nowrap; gap: 18px; font-size: 15px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 6px; vertical-align: -2px; background: var(--c); }
+
+.band { border-radius: 14px; padding: 16px 18px 18px; display: grid; gap: 12px; border: 1px solid var(--line); background: var(--soft); }
+.band h2 { margin: 0; font-family: var(--display); font-size: 21px; font-weight: 800; color: var(--c); display: flex; gap: 10px; align-items: baseline; }
+.band h2 small { font-family: var(--body); font-weight: 600; font-size: 15px; color: var(--muted); }
+.prep { --c: var(--prep); --soft: var(--prep-soft); }
+.ask { --c: var(--ask); --soft: var(--ask-soft); }
+.eval { --c: var(--eval); --soft: var(--eval-soft); }
+
+.flow { display: flex; align-items: stretch; gap: 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; flex: 1 1 0; min-width: 0; display: grid; gap: 6px; align-content: start; }
+.card .t { font-family: var(--display); font-weight: 800; font-size: 19px; display: flex; gap: 8px; align-items: center; }
+.n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--c); color: #fff; font-family: var(--mono); font-size: 14px; flex: none; }
+.card p { margin: 0; font-size: 15.5px; color: var(--muted); }
+.card .k { font-family: var(--mono); font-size: 13.5px; color: var(--ink); background: var(--soft); border-radius: 5px; padding: 3px 7px; justify-self: start; }
+.arrow { flex: 0 0 34px; display: grid; place-items: center; color: var(--c); font-size: 28px; font-weight: 700; }
+.ex { font-style: italic; color: var(--ink) !important; }
+.db { border: 2px solid var(--prep); }
+
+/* recherche hybride */
+.mini { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.mini div { border: 1px dashed var(--line); border-radius: 6px; padding: 5px 6px; font-size: 13.5px; text-align: center; }
+.mini b { display: block; font-size: 14px; }
+.merge { text-align: center; font-size: 14px; color: var(--ask); font-weight: 700; }
+.levels { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.levels div { border-radius: 6px; padding: 5px 7px; font-size: 13.5px; background: var(--soft); }
+.levels b { display: block; font-size: 14px; }
+.outs { display: grid; gap: 6px; }
+.outs div { border: 1px solid var(--line); border-radius: 7px; padding: 6px 8px; font-size: 14.5px; }
+.outs b { color: var(--ask); }
+.cite { font-family: var(--mono); font-size: 13px; background: var(--ask-soft); border-radius: 4px; padding: 0 4px; }
+.strike { text-decoration: line-through; color: #b23b3b; }
+
+/* évaluation */
+.evalgrid { display: grid; grid-template-columns: 1.05fr 34px 1.2fr 34px 1.5fr 1.25fr; align-items: stretch; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.tile b { font-family: var(--display); font-size: 30px; line-height: 1; color: var(--ask); }
+.tile span { font-size: 14.5px; color: var(--muted); }
+.vers { margin-left: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 8px; }
+.vers .t { font-family: var(--display); font-weight: 800; font-size: 17px; }
+.bars { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-items: end; height: 132px; }
+.bar { display: grid; gap: 4px; justify-items: center; align-content: end; height: 100%; }
+.bar i { display: block; width: 100%; border-radius: 4px 4px 0 0; background: var(--ask); }
+.bar span { font-family: var(--mono); font-size: 13px; }
+.bar em { font-style: normal; font-weight: 700; font-size: 14px; }
+.vers p { margin: 0; font-size: 13.5px; color: var(--muted); }
+ul.tight { margin: 0; padding-left: 18px; font-size: 15px; color: var(--muted); display: grid; gap: 2px; }
+footer { font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div>
+    <h1>Tuteur inclusif : la partie GenAI + RAG</h1>
+    <p>Le tuteur ne répond qu'avec le cours du professeur : il cherche d'abord les bons passages, puis le LLM répond uniquement avec eux, en citant la page.</p>
+  </div>
+  <div class="legend"><span style="--c:var(--prep)">Préparation</span><span style="--c:var(--ask)">À chaque question</span><span style="--c:var(--eval)">Mesure de la qualité</span></div>
+</header>
+
+<section class="band prep">
+  <h2>A. Préparer le cours <small>une seule fois par cours · commande tuteur ingest</small></h2>
+  <div class="flow">
+    <div class="card"><div class="t">Cours du professeur</div><p>PDF, TXT ou Markdown.</p><p class="ex">photosynthese.md + PDF du projet (4 pages)</p></div>
+    <div class="arrow">→</div>
+    <div class="card"><div class="t"><span class="n">1</span>Lecture</div><p>Texte et images, page par page. On garde le n° de page pour citer.</p><span class="k">PyMuPDF</span></div>
+    <div class="arrow">→</div>
+    <div class="card"><div class="t"><span class="n">2</span>Découpage</div><p>Passages d'une demi-page. Les 150 derniers caractères sont répétés au passage suivant.</p><span class="k">800 caractères · chevauchement 150</span></div>
+    <div class="arrow">→</div>
+    <div class="card"><div class="t"><span class="n">3</span>Embeddings</div><p>Chaque passage devient 384 nombres qui représentent son sens.</p><span class="k">multilingual-e5-small</span></div>
+    <div class="arrow">→</div>
+    <div class="card db"><div class="t">Base vectorielle</div><p>Passages + sens + page, enregistrés sur disque.</p><span class="k">ChromaDB · 19 passages</span></div>
+  </div>
+</section>
+
+<section class="band ask">
+  <h2>B. Répondre à un élève <small>exemple réel tiré de l'évaluation</small></h2>
+  <div class="flow">
+    <div class="card" style="flex-grow:.85"><div class="t">Question</div><p class="ex">« Pourquoi les feuilles nous paraissent-elles vertes ? »</p><p>Niveau choisi : standard ou simplifié (FALC).</p></div>
+    <div class="arrow">→</div>
+    <div class="card" style="flex-grow:1.35"><div class="t"><span class="n">4</span>Recherche hybride</div>
+      <div class="mini"><div><b>Dense</b>par le sens<br>20 meilleurs</div><div><b>BM25</b>par les mots<br>20 meilleurs</div></div>
+      <div class="merge">↓ fusion RRF : 1 / (60 + rang) ↓</div>
+      <span class="k">5 meilleurs passages → LLM</span></div>
+    <div class="arrow">→</div>
+    <div class="card" style="flex-grow:1.3"><div class="t"><span class="n">5</span>Génération</div>
+      <p>Prompt = règles + 5 passages « === PASSAGE 1 — page 1 === » + question.</p>
+      <div class="levels"><div><b>Standard</b>clair, concis</div><div><b>Simplifié (FALC)</b>≤ 5 phrases de ≤ 12 mots</div></div>
+      <span class="k">gpt-oss-120b · Groq · temp. 0.3</span></div>
+    <div class="arrow">→</div>
+    <div class="card"><div class="t"><span class="n">6</span>Garde-fou</div><p>Chaque [p. N] doit être la page d'un passage envoyé, sinon elle est retirée.</p><p>« 10 quiz <span class="strike">[p. 8]</span> » → « 10 quiz »</p></div>
+    <div class="arrow">→</div>
+    <div class="card" style="flex-grow:1.45"><div class="t">Résultat pour l'élève</div>
+      <div class="outs">
+        <div><b>Réponse</b> « …la chlorophylle refl&egrave;te la lumi&egrave;re verte… » <span class="cite">[p. 1]</span></div>
+        <div><b>Quiz</b> QCM, vrai/faux, flashcards en JSON vérifié (4 choix, réponse parmi eux)</div>
+        <div><b>Remédiation</b> diagnostic + explication + nouvel exercice sous un autre angle</div>
+      </div></div>
+  </div>
+  <p style="margin:0;font-size:15px;color:var(--muted)">Question hors cours (« capitale de l'Australie ? ») → « Le cours n'en parle pas. », sans citation. Règle clé : ne rien ajouter qui ne soit dans les passages.</p>
+</section>
+
+<section class="band eval">
+  <h2>C. Mesurer la qualité <small>chaque version de prompt, mêmes questions · commande tuteur eval</small></h2>
+  <div class="evalgrid">
+    <div class="card"><div class="t">Jeu de test</div>
+      <ul class="tight"><li>16 questions avec réponse attendue</li><li>2 questions hors cours</li><li>10 questions reformulées « comme un élève »</li><li>4 erreurs d'élève à corriger</li></ul></div>
+    <div class="arrow">→</div>
+    <div class="card"><div class="t">Notation automatique</div>
+      <ul class="tight"><li><b>LLM juge</b> qwen3.8-27b (autre famille) : fidélité, pertinence, exactitude, refus</li><li><b>Formules</b> : hit@5, citations valides, lisibilité Kandel-Moles</li><li><b>42 tests unitaires</b> pytest pour le code</li></ul></div>
+    <div class="arrow">→</div>
+    <div class="tiles">
+      <div class="tile"><b>1.00</b><span>Fidélité au cours (standard et FALC)</span></div>
+      <div class="tile"><b>100 %</b><span>Bon passage dans les 5 envoyés</span></div>
+      <div class="tile"><b>100 %</b><span>Citations valides</span></div>
+      <div class="tile"><b>100 %</b><span>Questions hors cours refusées</span></div>
+    </div>
+    <div class="vers"><div class="t">Fidélité en mode FALC, version par version</div>
+      <div class="bars">
+        <div class="bar"><em>0.70</em><i style="height:70px"></i><span>v1</span></div>
+        <div class="bar"><em>0.95</em><i style="height:95px"></i><span>v2</span></div>
+        <div class="bar"><em>0.90</em><i style="height:89px"></i><span>v3</span></div>
+        <div class="bar"><em>1.00</em><i style="height:100px"></i><span>v4</span></div>
+        <div class="bar"><em>1.00</em><i style="height:100px"></i><span>v5</span></div>
+      </div>
+      <p>v2 règles FALC · v3 citations fiables + recherche hybride · v4 plus d'exemples inventés · v5 réponses complètes</p></div>
+  </div>
+</section>
+
+<footer><span>Module GenAI + RAG · Tuteur éducatif inclusif · branche genai-rag</span><span>Chiffres : évaluation v5, recherche hybride, 16 questions, octobre 2026</span></footer>
+</div>
+</body>
+</html>
