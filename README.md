@@ -19,6 +19,7 @@ Cours (PDF/texte) ──► ingestion.py ──► chunking.py ──► vectors
 | `src/tuteur/schemas.py` | Formats Quiz / QuizItem / Remédiation, avec règles (QCM = 4 choix, réponse ∈ choix…). |
 | `src/tuteur/generation.py` | `Tutor.ask()`, `Tutor.quiz()`, `Tutor.remediate()`. |
 | `src/tuteur/cli.py` | Commande `tuteur`. |
+| `src/tuteur/pipeline.py` | Pipeline batch pour Airflow (branche `mlops`) : mêmes étapes et même manifeste `registry/rag/latest.json` que le pipeline simulé, avec le vrai code. DAG prêt à copier : `integration/airflow/rag_pipeline.py` ; mode d'emploi : `docs/INTEGRATION_MLOPS.md`. |
 
 ## Installation
 
