@@ -64,6 +64,78 @@ def retrieval_metrics(store: VectorStore, refs: list[dict], k: int) -> dict:
     }
 
 
+def chunk_size_experiment(
+    courses: list[Path],
+    sizes: tuple[int, ...] = (400, 800, 1200),
+    overlap_ratio: float = 150 / 800,
+    modes: tuple[str, ...] = ("dense", "hybride"),
+    k: int = 5,
+) -> dict:
+    """Compare des tailles de passages sur la recherche seule (sans LLM, donc sans quota).
+    Chaque taille est indexée dans une base en mémoire ; le chevauchement garde la même
+    proportion que le réglage par défaut (150/800). Seules les questions portant sur les
+    cours fournis sont utilisées."""
+    import chromadb
+
+    from tuteur.chunking import chunk_document
+    from tuteur.ingestion import load_document
+
+    docs = [load_document(Path(c)) for c in courses]
+    sources = {d.source for d in docs}
+    question_sets = {
+        name: [r for r in load_jsonl(EVAL_DIR / f"{name}.jsonl") if r.get("source") in sources and r.get("evidence")]
+        for name in ("reference", "paraphrases")
+    }
+    client = chromadb.EphemeralClient()
+    model = None
+    rows = []
+    for size in sizes:
+        overlap = round(size * overlap_ratio)
+        settings = get_settings().model_copy(
+            update={"chunk_size": size, "chunk_overlap": overlap, "collection": f"exp-{size}-{datetime.now():%H%M%S%f}"})
+        store = VectorStore(settings, client=client)
+        if model is not None:
+            store.__dict__["_model"] = model  # un seul chargement du modèle d'embedding pour toutes les tailles
+        chunks = [c for d in docs for c in chunk_document(d, size, overlap)]
+        store.add(chunks)
+        model = store._model
+        row = {
+            "chunk_size": size,
+            "chunk_overlap": overlap,
+            "chunks": len(chunks),
+            "mean_chunk_chars": round(statistics.mean(len(c.text) for c in chunks)),
+        }
+        for mode in modes:
+            store.settings = settings.model_copy(update={"search_mode": mode})
+            for name, refs in question_sets.items():
+                if refs:
+                    row[f"{name}.{mode}"] = retrieval_metrics(store, refs, k)
+        client.delete_collection(settings.collection)
+        rows.append(row)
+    return {
+        "date": datetime.now().isoformat(timespec="seconds"),
+        "courses": sorted(sources),
+        "questions": {name: len(refs) for name, refs in question_sets.items()},
+        "k": k,
+        "rows": rows,
+    }
+
+
+def format_chunk_experiment(report: dict) -> str:
+    k = report["k"]
+    lines = [f"Cours : {', '.join(report['courses'])} · questions : {report['questions']} · k = {k}", ""]
+    header = f"{'taille':>7} {'chevauch.':>9} {'passages':>8}  {'jeu':<12} {'mode':<8} {'hit@1':>6} {f'hit@{k}':>6} {'MRR':>6}"
+    lines += [header, "-" * len(header)]
+    for row in report["rows"]:
+        for key, m in row.items():
+            if "." not in key:
+                continue
+            name, mode = key.split(".")
+            lines.append(f"{row['chunk_size']:>7} {row['chunk_overlap']:>9} {row['chunks']:>8}  {name:<12} {mode:<8} "
+                         f"{m['hit@1']:>6.2f} {m[f'hit@{k}']:>6.2f} {m['mrr']:>6.2f}")
+    return "\n".join(lines)
+
+
 # ---------- Lisibilité (français) ----------
 
 _VOWELS = re.compile(r"[aeiouyàâäéèêëîïôöùûü]+", re.I)

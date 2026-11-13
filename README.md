@@ -128,6 +128,30 @@ Attention au bruit : avec 16 questions et une génération à température 0.3, 
 prompt varient (ex. remédiation : 25 % → 0 % de quasi-doublons alors que son prompt n'a pas changé).
 Seuls les écarts nets et cohérents sont à interpréter.
 
+### Taille des passages : pourquoi 800 caractères
+
+`tuteur eval --decoupage 300 400 600 800 1000 1200 --cours <cours…>` découpe et indexe les cours à
+chaque taille (chevauchement gardé à 150/800 de la taille), puis mesure la recherche seule : pas
+de LLM, pas de quota. Les 2 cours, recherche hybride, 13/11/2026 :
+
+| Taille | Passages | Les 5 envoyés = part du cours | hit@5 référence (16) | hit@5 reformulées (10) | hit@1 référence | hit@1 reformulées |
+|---|---|---|---|---|---|---|
+| 300 | 50 | 10 % | 1.00 | 1.00 | 0.50 | 0.30 |
+| 400 | 34 | 15 % | 1.00 | 0.90 | 0.81 | 0.50 |
+| 600 | 24 | 21 % | 1.00 | 0.90 | 0.75 | 0.60 |
+| **800** | 19 | 26 % | **1.00** | **1.00** | 0.75 | 0.70 |
+| 1000 | 15 | 33 % | 1.00 | 1.00 | 0.88 | 0.70 |
+| 1200 | 11 | 45 % | 1.00 | 1.00 | 0.75 | 0.90 |
+
+- **Ce qui compte, hit@5** (le bon passage parmi les 5 envoyés au LLM) : à 400 et 600, une question
+  reformulée sur 10 rate son passage. À partir de 800, 100 % partout.
+- **Plus grand n'est pas mieux** : à 1 200, les 5 passages envoyés couvrent 45 % de tout le cours,
+  donc les trouver devient presque automatique (la mesure ne départage plus rien), et le LLM reçoit
+  environ 4 800 caractères au lieu de 3 000 (plus de tokens, plus de texte hors sujet).
+- **Choix gardé : 800**, la plus petite taille qui trouve toujours le bon passage dans les deux jeux.
+- **Prudence** : 2 petits cours ; un écart de 0.06 (référence) ou 0.10 (reformulées) = une question.
+  Sur des cours plus longs, la comparaison serait plus discriminante.
+
 ### Mode simplifié sans exemples inventés (snapshot v4)
 
 La consigne « termine par un exemple concret » (styles v2) poussait le modèle à inventer des exemples

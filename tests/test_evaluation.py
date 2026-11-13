@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from tuteur.evaluation import light_judge, readability
 from tuteur.llm import LLM
@@ -52,3 +53,15 @@ def test_citations_are_not_sentences():
 
 def test_empty_text():
     assert readability("")["words"] == 0
+
+
+def test_chunk_size_experiment_compares_sizes():
+    from tuteur.evaluation import chunk_size_experiment, format_chunk_experiment
+
+    report = chunk_size_experiment([Path("data/raw/photosynthese.md")], sizes=(400, 1200), modes=("hybride",))
+    small, big = report["rows"]
+    assert (small["chunk_overlap"], big["chunk_overlap"]) == (75, 225)  # même proportion que 150/800
+    assert small["chunks"] > big["chunks"]
+    assert report["questions"]["reference"] == 10  # questions sur le PDF écartées : il n'est pas indexé
+    assert 0 <= small["reference.hybride"]["hit@5"] <= 1
+    assert "1200" in format_chunk_experiment(report)

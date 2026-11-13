@@ -92,6 +92,17 @@ def cmd_eval(args):
     if args.compare:
         print(compare(*args.compare))
         return
+    if args.decoupage:
+        from tuteur.evaluation import EVAL_DIR, chunk_size_experiment, format_chunk_experiment
+
+        courses = [Path(c) for c in args.cours] if args.cours else sorted(Path("data/raw").glob("*.*"))
+        report = chunk_size_experiment(courses, tuple(args.decoupage))
+        out = EVAL_DIR / "results" / "chunk-sizes.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(format_chunk_experiment(report))
+        print(f"\n✓ Résultats détaillés : {out}")
+        return
     metrics = DEFAULT_METRICS + (("llm_context_precision_with_reference",) if args.complet else ())
     report = run(label=args.label, prompt_version=args.prompts, judge_mode=args.juge, metrics=metrics,
                  search_mode=args.recherche)
@@ -153,6 +164,9 @@ def main(argv=None):
     sp.add_argument("--complet", action="store_true",
                     help="avec --juge ragas : ajoute context precision (≈5 appels juge par question)")
     sp.add_argument("--compare", nargs=2, metavar=("A.json", "B.json"), help="comparer deux résultats")
+    sp.add_argument("--decoupage", nargs="+", type=int, metavar="TAILLE",
+                    help="comparer des tailles de passages sur la recherche seule, ex. 400 800 1200 (sans LLM)")
+    sp.add_argument("--cours", nargs="+", metavar="FICHIER", help="avec --decoupage : cours à indexer (défaut : data/raw/)")
     sp.set_defaults(func=cmd_eval)
 
     args = p.parse_args(argv)
