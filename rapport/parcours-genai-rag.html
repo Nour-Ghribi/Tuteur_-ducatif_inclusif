@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Parcours GenAI RAG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Une page de 1600 px : 12 étapes chronologiques en 3 rangées (construire, mesurer et améliorer, livrer et brancher), puis le bilan. */
+:root {
+  --bg: #f6f8f7; --card: #ffffff; --ink: #15211d; --muted: #56665f; --line: #d3ddd8;
+  --build: #2c4f8f; --build-soft: #e5ecf8;
+  --improve: #1f7a4d; --improve-soft: #e1f1e8;
+  --ship: #a2611a; --ship-soft: #f8ecdc;
+  --display: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.33; }
+.page { width: 1600px; padding: 36px 40px 30px; display: grid; gap: 18px; }
+header { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
+h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1.05; }
+header p { margin: 8px 0 0; color: var(--muted); font-size: 18.5px; max-width: 980px; }
+.span { font-family: var(--mono); font-size: 14px; color: var(--muted); text-align: right; white-space: nowrap; }
+.span b { display: block; font-family: var(--display); font-size: 28px; color: var(--ink); }
+
+.phase { border-radius: 14px; padding: 14px 16px 16px; background: var(--soft); border: 1px solid var(--line); display: grid; gap: 10px; }
+.phase h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 21px; color: var(--c); display: flex; gap: 12px; align-items: baseline; }
+.phase h2 small { font-family: var(--body); font-weight: 600; font-size: 15px; color: var(--muted); }
+.b { --c: var(--build); --soft: var(--build-soft); }
+.i { --c: var(--improve); --soft: var(--improve-soft); }
+.s { --c: var(--ship); --soft: var(--ship-soft); }
+.row { display: flex; align-items: stretch; }
+.card { flex: 1 1 0; min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; display: grid; gap: 6px; align-content: start; }
+.top { display: flex; gap: 9px; align-items: center; }
+.n { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--c); color: #fff; font-family: var(--mono); font-size: 14px; flex: none; }
+.t { font-family: var(--display); font-weight: 800; font-size: 18px; line-height: 1.1; }
+.d { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+.card p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.card ul { margin: 0; padding-left: 17px; font-size: 14.5px; color: var(--muted); display: grid; gap: 1px; }
+.res { font-family: var(--mono); font-size: 12.5px; color: var(--ink); background: var(--soft); border-radius: 5px; padding: 4px 7px; justify-self: start; }
+.arr { flex: 0 0 26px; display: grid; place-items: center; color: var(--c); font-weight: 800; font-size: 22px; }
+.k { color: var(--ink); font-weight: 600; }
+
+.bottom { display: grid; grid-template-columns: 1.25fr 1fr 1.05fr; gap: 14px; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; align-content: start; }
+.panel h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 19px; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.tile { border: 1px solid var(--line); border-radius: 9px; padding: 9px 11px; display: grid; gap: 2px; }
+.tile b { font-family: var(--display); font-size: 27px; line-height: 1; color: var(--improve); }
+.tile span { font-size: 13.5px; color: var(--muted); }
+.chart { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; align-items: end; padding-top: 6px; }
+.bar { display: grid; gap: 4px; justify-items: center; align-content: end; }
+.bar i { display: block; width: 100%; border-radius: 4px 4px 0 0; background: var(--improve); }
+.bar em { font-style: normal; font-weight: 700; font-size: 14px; }
+.bar span { font-family: var(--mono); font-size: 13px; }
+.bar small { font-size: 11.5px; color: var(--muted); text-align: center; line-height: 1.15; min-height: 27px; }
+.files { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14.5px; }
+.files li { display: grid; grid-template-columns: 1fr; gap: 2px; }
+.files b { font-family: var(--mono); font-size: 12.5px; font-weight: 500; color: var(--ink); background: var(--build-soft); border-radius: 4px; padding: 2px 6px; align-self: start; }
+.files span { color: var(--muted); }
+.next { border-top: 1px dashed var(--line); padding-top: 8px; font-size: 14.5px; color: var(--muted); }
+.next b { color: var(--ship); }
+footer { font-size: 13.5px; color: var(--muted); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div>
+    <h1>Tuteur inclusif · partie GenAI + RAG, de A à Z</h1>
+    <p>Un tuteur qui répond, crée des quiz et corrige les erreurs <b>uniquement à partir du cours du professeur</b>, en français standard ou simplifié (FALC). Chaque étape a été mesurée avant d'être gardée.</p>
+  </div>
+  <div class="span"><b>26 oct → 13 nov 2026</b>12 étapes · 5 versions de prompts · 45 tests</div>
+</header>
+
+<section class="phase b">
+  <h2>A. Construire le tuteur <small>du sujet au premier quiz</small></h2>
+  <div class="row">
+    <div class="card"><div class="top"><span class="n">1</span><span class="t">Cadrer</span><span class="d">26 oct</span></div>
+      <p>Le sujet du projet (PDF) : ma partie = <span class="k">GenAI + RAG</span>. Les autres : RL, MLOps, Inclusion.</p></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">2</span><span class="t">Installer</span><span class="d">26 oct</span></div>
+      <ul><li>Disque plein : 3,1 Go libérés</li><li>Chemin trop long sous Windows</li><li>PyTorch sans GPU</li></ul></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">3</span><span class="t">Pipeline RAG</span><span class="d">26 oct</span></div>
+      <p>Lecture PDF page par page → passages de 800 caractères → embeddings e5 → base ChromaDB.</p><span class="res">19 passages, 2 cours</span></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">4</span><span class="t">Générer</span><span class="d">26 oct</span></div>
+      <p>LLM gpt-oss-120b via Groq. Prompts versionnés en YAML. Réponses citées <span class="k">[p. N]</span>, quiz et remédiations en JSON vérifié.</p></div>
+  </div>
+</section>
+
+<section class="phase i">
+  <h2>B. Mesurer, puis améliorer <small>chaque changement est évalué avant d'être gardé</small></h2>
+  <div class="row">
+    <div class="card"><div class="top"><span class="n">5</span><span class="t">Évaluer</span><span class="d">26 oct</span></div>
+      <p>16 questions + 2 hors cours + 10 reformulées. Un <span class="k">LLM juge</span> d'une autre famille (qwen) note fidélité, pertinence, exactitude.</p><span class="res">Gemini abandonné : 20 req./jour</span></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">6</span><span class="t">FALC strict (v2)</span><span class="d">26 oct</span></div>
+      <p>Le mode simplifié était long et inventait des définitions. 5 phrases max, 12 mots max.</p><span class="res">fidélité 0.70 → 0.95</span></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">7</span><span class="t">Recherche hybride</span><span class="d">27–28 oct</span></div>
+      <p>Sens (embeddings) + mots exacts (BM25), fusion RRF. Trouve « 5 à 10 quiz ».</p><span class="res">hit@1 0.56 → 0.75 · hit@5 = 1.00</span></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">8</span><span class="t">Citations (v3)</span><span class="d">27–28 oct</span></div>
+      <p>« [p. 8] » dans un PDF de 4 pages : en-tête « PASSAGE — page N » + garde-fou.</p><span class="res">citations valides 100 %</span></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">9</span><span class="t">Rien d'inventé (v4–v5)</span><span class="d">28–29 oct</span></div>
+      <p>Plus d'exemple inventé (« une vache… »), puis réponses complètes.</p><span class="res">fidélité FALC 1.00</span></div>
+  </div>
+</section>
+
+<section class="phase s">
+  <h2>C. Livrer et brancher <small>partager, intégrer à l'équipe, justifier les choix</small></h2>
+  <div class="row">
+    <div class="card"><div class="top"><span class="n">10</span><span class="t">GitHub + supports</span><span class="d">29–30 oct</span></div>
+      <p>Branche <span class="k">genai-rag</span> du dépôt de l'équipe (clés API exclues). Rapport, guide d'étude FR/EN, schémas.</p></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">11</span><span class="t">Brancher sur MLOps</span><span class="d">4 nov</span></div>
+      <p>Le pipeline RAG d'Airflow était simulé : remplacé par le vrai code, même manifeste. Correctif de 2 lignes vérifié sur leur code.</p><span class="res">refusé → accepté (1.00 ≥ 0.75)</span></div>
+    <div class="arr">→</div>
+    <div class="card"><div class="top"><span class="n">12</span><span class="t">Justifier 800 caractères</span><span class="d">13 nov</span></div>
+      <p>Test de 300 à 1 200 sans LLM : 800 est la plus petite taille qui trouve toujours le bon passage.</p><span class="res">400 et 600 : 1 question sur 10 ratée</span></div>
+  </div>
+</section>
+
+<div class="bottom">
+  <div class="panel"><h3>Résultat final (v5, recherche hybride)</h3>
+    <div class="tiles">
+      <div class="tile"><b>1.00</b><span>Fidélité au cours, standard et FALC</span></div>
+      <div class="tile"><b>100 %</b><span>Bon passage dans les 5 envoyés</span></div>
+      <div class="tile"><b>100 %</b><span>Citations valides</span></div>
+      <div class="tile"><b>100 %</b><span>Questions hors cours refusées</span></div>
+      <div class="tile"><b>19</b><span>mots par réponse FALC (contre 144 en v1)</span></div>
+      <div class="tile"><b>45</b><span>tests automatiques, tous verts</span></div>
+    </div></div>
+  <div class="panel"><h3>Fidélité en mode FALC</h3>
+    <div class="chart">
+      <div class="bar"><em>0.70</em><i style="height:70px"></i><span>v1</span><small>départ</small></div>
+      <div class="bar"><em>0.95</em><i style="height:95px"></i><span>v2</span><small>règles FALC</small></div>
+      <div class="bar"><em>0.90</em><i style="height:90px"></i><span>v3</span><small>citations, hybride</small></div>
+      <div class="bar"><em>1.00</em><i style="height:100px"></i><span>v4</span><small>sans exemples inventés</small></div>
+      <div class="bar"><em>1.00</em><i style="height:100px"></i><span>v5</span><small>réponses complètes</small></div>
+    </div>
+    <p style="margin:0;font-size:13px;color:var(--muted)">16 questions : un écart de 0.06 = une seule réponse. Seuls les écarts nets comptent.</p></div>
+  <div class="panel"><h3>Où trouver quoi</h3>
+    <ul class="files">
+      <li><b>src/tuteur/</b><span>le code (lecture, recherche, génération, évaluation, pipeline Airflow)</span></li>
+      <li><b>eval/</b><span>jeu de test et résultats de chaque version</span></li>
+      <li><b>docs/INTEGRATION_MLOPS.md</b><span>mode d'emploi pour l'équipe MLOps</span></li>
+      <li><b>rapport/</b><span>rapport, schémas et cette image</span></li>
+    </ul>
+    <div class="next"><b>Suite :</b> l'équipe MLOps applique le guide et lance le DAG ; agrandir le jeu de test ; préparer la soutenance.</div></div>
+</div>
+
+<footer><span>Dépôt : Nour-Ghribi/Tuteur_-ducatif_inclusif · branche genai-rag</span><span>Générateur gpt-oss-120b · juge qwen3.8-27b · embeddings multilingual-e5-small</span></footer>
+</div>
+</body>
+</html>
