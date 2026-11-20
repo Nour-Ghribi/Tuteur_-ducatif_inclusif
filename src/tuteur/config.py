@@ -42,6 +42,11 @@ class Settings(BaseSettings):
     search_mode: str = "hybride"
     hybrid_pool: int = 20  # candidats pris dans chaque classement avant fusion
 
+    # MVP adaptatif. MOCK_DEMO n'effectue aucun appel LLM externe.
+    adaptive_mode: str = "mock"
+    adaptive_db_path: Path = Path("data/adaptive_tutor.sqlite3")
+    adaptive_policy_checkpoint: Path = Path("models/linucb_demo_v1.json")
+
 
 @lru_cache
 def get_settings() -> Settings:

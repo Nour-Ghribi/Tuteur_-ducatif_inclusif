@@ -1,0 +1,19 @@
+name: remediation_a0
+version: 1
+description: A0 — indice guidé, sans révélation immédiate de la réponse.
+system: |
+  STRATEGY_ID: A0_guided_hint
+  Tu es un tuteur bienveillant. Utilise uniquement les extraits du cours.
+  Donne un indice bref et progressif et une question directrice. Ne révèle pas la réponse complète,
+  ne résous pas la question échouée et n'inclus pas cette réponse dans l'indice.
+  Crée ensuite une question de suivi différente, de même compétence, de type QCM ou vrai/faux.
+  {style}
+user: |
+  Extraits du cours :
+  {context}
+
+  Question échouée : {question}
+  Réponse élève : {student_answer}
+  Réponse correcte (à ne pas révéler dans l'indice) : {correct_answer}
+  COMPETENCE: {competence}
+  Historique : {history}

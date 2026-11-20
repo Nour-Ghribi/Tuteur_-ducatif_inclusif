@@ -90,3 +90,62 @@ class Tutor:
             history="; ".join(history) if history else "aucune",
         )
         return self.llm.structured(system, user, Remediation)
+
+    def adaptive_remediate(
+        self,
+        *,
+        strategy_id: str,
+        question: str,
+        student_answer: str,
+        correct_answer: str,
+        competence: str,
+        history: list[str] | None = None,
+        reading_level: str = "standard",
+    ):
+        """Generate one strategy-specific, grounded remediation without changing legacy APIs."""
+        from tuteur.adaptive.models import (
+            ACTION_IDS,
+            REMEDIATION_SCHEMAS,
+            GuidedHint,
+            normalize_skill_label,
+        )
+
+        if strategy_id not in ACTION_IDS:
+            raise ValueError(f"Unknown remediation strategy: {strategy_id}")
+        results = self.store.search(f"{question} {correct_answer} {competence}")
+        if not results:
+            raise ValueError("No retrieved course passage is available for remediation")
+        prompt_name = f"remediation_{strategy_id[:2].lower()}"
+        prompt = load_prompt(prompt_name)
+        system, user = prompt.render(
+            reading_level,
+            context=format_context(results, prompt.context_format),
+            question=question,
+            student_answer=student_answer,
+            correct_answer=correct_answer,
+            competence=competence,
+            history="; ".join(history) if history else "aucune",
+        )
+        schema = REMEDIATION_SCHEMAS[strategy_id]
+        output = self.llm.structured(system, user, schema)
+        allowed_pages = {int(result.metadata["page"]) for result in results}
+        if not set(output.source_pages) <= allowed_pages:
+            raise ValueError("Remediation cited a page outside retrieved course passages")
+        if normalize_skill_label(output.competence) != normalize_skill_label(competence):
+            raise ValueError("Follow-up competence differs from the failed question skill")
+        if normalize_skill_label(output.retry_question.competence) != normalize_skill_label(competence):
+            raise ValueError("Follow-up question does not preserve the stable skill")
+        def normalize_text(value: str) -> str:
+            return " ".join(value.casefold().split()).strip(" .?!")
+        if normalize_text(output.retry_question.question) == normalize_text(question):
+            raise ValueError("Follow-up question must differ from the failed question")
+        if output.retry_question.type not in {"qcm", "vrai_faux"}:
+            raise ValueError("MVP follow-up must be deterministically gradable")
+        if isinstance(output, GuidedHint):
+            answer = normalize_text(correct_answer)
+            combined = normalize_text(f"{output.hint} {output.guiding_question}")
+            # This is one guard among prompt constraints, structure and human-visible provenance;
+            # it is not claimed to prove semantic non-disclosure.
+            if len(answer) >= 3 and answer in combined:
+                raise ValueError("Guided hint appears to disclose the complete answer")
+        return output

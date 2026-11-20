@@ -1,5 +1,22 @@
 # Tuteur éducatif inclusif — module GenAI + RAG
 
+## MVP adaptatif GenAI/RAG + LinUCB
+
+Le MVP intégré ajoute une interface Streamlit, un historique SQLite, un état étudiant versionné
+de 19 dimensions et une politique LinUCB principale pour sélectionner A0–A4. Le checkpoint fourni
+a été réellement entraîné sur une simulation explicitement hypothétique ; il ne démontre aucune
+efficacité éducative réelle. Une baseline règle-based reste disponible uniquement comme repli visible.
+
+```powershell
+pip install -e ".[dev,mvp]"
+streamlit run app.py
+```
+
+La démonstration mock ne demande ni clé API ni réseau. Le mode réel réutilise le client LLM et le
+RAG configurables existants. Voir [`docs/MVP_LOCAL_DEMO.md`](docs/MVP_LOCAL_DEMO.md) pour les commandes
+Windows exactes et [`docs/LINUCB_SYNTHETIC_PROTOCOL.md`](docs/LINUCB_SYNTHETIC_PROTOCOL.md) pour le
+protocole, les résultats et leurs limites.
+
 Premier module du projet : transformer un cours (PDF, TXT, MD) en base RAG, puis générer
 réponses, quiz et remédiations adaptés — avec un niveau de lecture **simplifié (FALC)** pour l'inclusion.
 

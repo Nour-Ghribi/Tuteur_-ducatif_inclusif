@@ -1,0 +1,75 @@
+{
+  "protocol_version": "linucb-synthetic-demo-protocol-v1",
+  "config_sha256": "87aaa73a0a5173ab5d658fc15d75240540f6a1e08f503213b966142b1c96bd5f",
+  "checkpoint": "models\\linucb_demo_v1.json",
+  "checkpoint_sha256": "0c03099eb7eba5ca7a65c01687e488a6f01e8199c1e2e7caf761ea2c2f181a35",
+  "synthetic": true,
+  "notice": "Action effects and rewards are explicitly hypothetical; no EdNet or real-student intervention effect was used or established.",
+  "training_budget": 15000,
+  "evaluation_contexts": 5000,
+  "train_action_counts": [
+    1397,
+    689,
+    6119,
+    4791,
+    2004
+  ],
+  "checkpoint_restore_action_parity": true,
+  "metrics": {
+    "linucb": {
+      "expected_reward": 0.5779492271775986,
+      "mean_regret": 0.02592703565056662,
+      "action_distribution": [
+        0.0976,
+        0.016,
+        0.4862,
+        0.2612,
+        0.139
+      ]
+    },
+    "rule_based": {
+      "expected_reward": 0.5604041144381073,
+      "mean_regret": 0.04347214839005782,
+      "action_distribution": [
+        0.034,
+        0.2086,
+        0.2592,
+        0.1716,
+        0.3266
+      ]
+    },
+    "random": {
+      "expected_reward": 0.5096157432630178,
+      "mean_regret": 0.09426051956514744,
+      "action_distribution": [
+        0.2124,
+        0.2012,
+        0.2036,
+        0.1816,
+        0.2012
+      ]
+    },
+    "best_constant": {
+      "expected_reward": 0.5691121646994323,
+      "mean_regret": 0.03476409812873295,
+      "action_distribution": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "oracle_upper_bound": {
+      "expected_reward": 0.6038762628281652,
+      "mean_regret": 0.0,
+      "action_distribution": [
+        0.0852,
+        0.004,
+        0.3394,
+        0.4314,
+        0.14
+      ]
+    }
+  }
+}
