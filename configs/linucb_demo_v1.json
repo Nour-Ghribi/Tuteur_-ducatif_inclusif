@@ -1,0 +1,16 @@
+{
+  "protocol_version": "linucb-synthetic-demo-protocol-v1",
+  "frozen_before_evaluation": true,
+  "training_seed": 20261120,
+  "evaluation_seed": 20261220,
+  "training_budget": 15000,
+  "evaluation_contexts": 5000,
+  "ridge": 10.0,
+  "exploration": 0.75,
+  "recovery_weight": 1.0,
+  "action_costs": [0.01, 0.01, 0.03, 0.02, 0.03],
+  "reward_definition": "binary synthetic recovery minus action cost",
+  "scenario": "hypothetical platform-v1; action effects are designed assumptions, not EdNet or real-student measurements",
+  "checkpoint": "models/linucb_demo_v1.json",
+  "evaluation_report": "results/linucb_demo_v1_evaluation.json"
+}

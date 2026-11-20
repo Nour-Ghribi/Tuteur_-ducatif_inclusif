@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Ajouts de novembre</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* 1600 px : 2 ajouts empilés. 1) Airflow : simulé contre réel, étape par étape, puis la décision de l'évaluation. 2) Taille des passages : tableau de résultats + conclusion. */
+:root {
+  --bg: #f6f8f7; --card: #ffffff; --ink: #15211d; --muted: #56665f; --line: #d3ddd8;
+  --ship: #a2611a; --ship-soft: #f8ecdc;
+  --real: #1f7a4d; --real-soft: #e1f1e8;
+  --sim: #7a8781; --sim-soft: #eef1ef;
+  --blue: #2c4f8f; --blue-soft: #e5ecf8;
+  --bad: #b23b3b; --bad-soft: #fbeaea;
+  --warn: #b7791f; --warn-soft: #fbf0dc;
+  --display: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.33; }
+.page { width: 1600px; padding: 36px 40px 30px; display: grid; gap: 18px; }
+header { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
+h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 38px; line-height: 1.05; }
+header p { margin: 8px 0 0; color: var(--muted); font-size: 18px; max-width: 1050px; }
+.stamp { font-family: var(--mono); font-size: 14px; color: var(--muted); text-align: right; white-space: nowrap; }
+.stamp b { display: block; font-family: var(--display); font-size: 26px; color: var(--ink); }
+
+.sec { border-radius: 14px; padding: 16px 18px 18px; border: 1px solid var(--line); display: grid; gap: 12px; }
+.sec h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 23px; display: flex; gap: 12px; align-items: baseline; }
+.sec h2 .n { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: #fff; font-family: var(--mono); font-size: 16px; }
+.sec h2 small { font-family: var(--body); font-weight: 600; font-size: 15px; color: var(--muted); }
+.one { background: var(--ship-soft); } .one h2 { color: var(--ship); } .one .n { background: var(--ship); }
+.two { background: var(--blue-soft); } .two h2 { color: var(--blue); } .two .n { background: var(--blue); }
+.why { margin: 0; font-size: 16px; max-width: 1400px; }
+
+/* comparaison des étapes */
+.steps { display: grid; grid-template-columns: 130px repeat(8, minmax(0, 1fr)); gap: 6px; }
+.steps .h { font-family: var(--display); font-weight: 800; font-size: 14.5px; text-align: center; padding: 6px 4px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; display: grid; place-items: center; line-height: 1.1; }
+.steps .h i { font-style: normal; font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-weight: 500; }
+.steps .lab { font-weight: 700; font-size: 15px; display: grid; align-content: center; gap: 2px; padding-left: 4px; }
+.steps .lab span { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.cell { border-radius: 8px; padding: 7px 8px; font-size: 13.5px; line-height: 1.25; }
+.cell.sim { background: var(--sim-soft); color: var(--sim); border: 1px dashed #c3cbc7; }
+.cell.real { background: var(--real-soft); color: var(--ink); border: 1px solid #b9dcc6; }
+.cell b { font-weight: 700; }
+
+.lower { display: grid; grid-template-columns: 1.15fr 1fr 0.95fr; gap: 12px; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 11px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; }
+.panel h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 18px; }
+.panel p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.decision { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dec { border-radius: 9px; padding: 9px 11px; display: grid; gap: 3px; }
+.dec b { font-family: var(--display); font-size: 22px; }
+.dec span { font-size: 13.5px; }
+.dec.no { background: var(--bad-soft); border: 1px solid #efc5c5; } .dec.no b { color: var(--bad); }
+.dec.yes { background: var(--real-soft); border: 1px solid #b9dcc6; } .dec.yes b { color: var(--real); }
+pre { margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.45; background: #1d2621; color: #dfe9e4; border-radius: 8px; padding: 9px 11px; white-space: pre-wrap; }
+pre .add { color: #8fe0b0; }
+.files { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; }
+.files li { display: grid; gap: 1px; }
+.files b { font-family: var(--mono); font-size: 12.5px; font-weight: 500; background: var(--ship-soft); border-radius: 4px; padding: 2px 6px; justify-self: start; }
+.files span { color: var(--muted); }
+
+/* taille des passages */
+.chunkgrid { display: grid; grid-template-columns: 1.55fr 1fr; gap: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+td { padding: 7px 8px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+tr.pick td { background: var(--blue-soft); font-weight: 700; }
+tr.pick td:first-child { border-left: 4px solid var(--blue); }
+.chip { display: inline-block; font-family: var(--mono); font-size: 13px; border-radius: 5px; padding: 2px 7px; }
+.chip.ok { background: var(--real-soft); color: var(--real); }
+.chip.ko { background: var(--warn-soft); color: var(--warn); font-weight: 700; }
+.share { display: flex; align-items: center; gap: 8px; }
+.share i { display: block; height: 12px; border-radius: 3px; background: var(--blue); opacity: .75; }
+.share span { font-family: var(--mono); font-size: 13px; min-width: 38px; }
+.concl { display: grid; gap: 10px; align-content: start; }
+.c { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 3px; }
+.c b { font-family: var(--display); font-size: 17px; }
+.c span { font-size: 14.5px; color: var(--muted); }
+.c.main { border: 2px solid var(--blue); }
+.cmd { font-family: var(--mono); font-size: 12.5px; background: var(--card); border: 1px solid var(--line); border-radius: 7px; padding: 7px 10px; }
+
+.foot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.foot div { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.foot b { font-family: var(--display); font-size: 24px; line-height: 1; }
+.foot span { font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div>
+    <h1>Ce qu'on a ajouté en novembre : le vrai RAG dans Airflow, et 800 caractères justifié</h1>
+    <p>Deux ajouts à la partie GenAI + RAG, tous deux sur la branche <b>genai-rag</b>, sans toucher aux branches des coéquipiers.</p>
+  </div>
+  <div class="stamp"><b>4 nov · 13 nov 2026</b>3 nouveaux tests · 42 → 45 tests</div>
+</header>
+
+<section class="sec one">
+  <h2><span class="n">1</span>Brancher le vrai pipeline RAG sur l'orchestration MLOps <small>4 novembre</small></h2>
+  <p class="why">Le problème : dans la branche <b>mlops</b>, le pipeline RAG lancé par Airflow était <b>simulé</b> (faux embeddings, faux quiz). Ton vrai code n'était utilisé nulle part. On a écrit une version réelle qui garde <b>les mêmes 8 tâches, les mêmes fichiers et le même manifeste</b> : leur DAG n'a qu'à changer son import.</p>
+  <div class="steps">
+    <div></div>
+    <div class="h">Charger<br><i>load_course</i></div>
+    <div class="h">Extraire<br><i>clean_content</i></div>
+    <div class="h">Découper<br><i>chunk_content</i></div>
+    <div class="h">Embeddings<br><i>create_embeddings</i></div>
+    <div class="h">Indexer<br><i>index_vectors</i></div>
+    <div class="h">Générer le quiz<br><i>generate_quiz</i></div>
+    <div class="h">Évaluer<br><i>evaluate_quiz</i></div>
+    <div class="h">MLflow + manifeste<br><i>register_in_mlflow</i></div>
+
+    <div class="lab">Avant<span>simulé, branche mlops</span></div>
+    <div class="cell sim">1 fichier texte de démo</div>
+    <div class="cell sim">espaces nettoyés</div>
+    <div class="cell sim">320 caractères, sans chevauchement</div>
+    <div class="cell sim">faux vecteurs sha256, 12 nombres</div>
+    <div class="cell sim">fichier JSON</div>
+    <div class="cell sim">3 consignes fixes, pas de LLM</div>
+    <div class="cell sim">score synthétique</div>
+    <div class="cell sim">paramètres « mock »</div>
+
+    <div class="lab">Maintenant<span>réel, tuteur.pipeline</span></div>
+    <div class="cell real"><b>tous les PDF, MD, TXT</b> du dossier inputs/</div>
+    <div class="cell real"><b>PyMuPDF</b>, page par page</div>
+    <div class="cell real"><b>800 car., chevauchement 150</b>, page gardée</div>
+    <div class="cell real"><b>multilingual-e5</b>, 384 nombres</div>
+    <div class="cell real"><b>ChromaDB + BM25</b> (recherche hybride)</div>
+    <div class="cell real"><b>Tutor.quiz</b> : LLM + JSON vérifié</div>
+    <div class="cell real"><b>pages citées valides + hit@5</b>, sans LLM</div>
+    <div class="cell real">vrais paramètres, <b>is_simulated : false</b></div>
+  </div>
+
+  <div class="lower">
+    <div class="panel"><h3>Leur évaluation accepte-t-elle le vrai pipeline ?</h3>
+      <p>Testé en exécutant <b>leur propre code</b> d'évaluation sur un manifeste produit par le vrai pipeline (seuil RAG : 0.75).</p>
+      <div class="decision">
+        <div class="dec no"><b>Refusé</b><span>sans correctif : leur code cherche un score « synthétique » qu'un vrai pipeline n'a pas</span></div>
+        <div class="dec yes"><b>Accepté</b><span>avec 2 lignes ajoutées : score 1.00 ≥ 0.75. Leur version simulée marche toujours.</span></div>
+      </div></div>
+    <div class="panel"><h3>Le correctif de 2 lignes (leur fichier)</h3>
+<pre>score_key = "synthetic_quality_score" if pipeline == "rag" else …
+<span class="add">if pipeline == "rag" and "quality_score" in metrics:
+    score_key = "quality_score"</span>
+"evaluation_is_synthetic": metrics.get(…) is True
+    <span class="add">or manifest.get("is_simulated") is False,</span></pre>
+      <p>Écrit dans le guide, à appliquer par l'équipe MLOps.</p></div>
+    <div class="panel"><h3>Fichiers livrés</h3>
+      <ul class="files">
+        <li><b>src/tuteur/pipeline.py</b><span>les 8 étapes réelles</span></li>
+        <li><b>integration/airflow/rag_pipeline.py</b><span>DAG prêt à copier (même nom)</span></li>
+        <li><b>docs/INTEGRATION_MLOPS.md</b><span>mode d'emploi pour l'équipe</span></li>
+        <li><b>tests/test_pipeline.py</b><span>pipeline complet, faux LLM et faux MLflow</span></li>
+      </ul></div>
+  </div>
+</section>
+
+<section class="sec two">
+  <h2><span class="n">2</span>Justifier la taille des passages par une mesure <small>13 novembre</small></h2>
+  <p class="why">La question probable du professeur : « pourquoi 800 caractères ? ». Avant, la réponse était « valeur raisonnable ». Maintenant : la commande <b>tuteur eval --decoupage</b> redécoupe et réindexe les 2 cours à chaque taille, puis mesure la recherche seule, <b>sans LLM ni quota</b>.</p>
+  <div class="chunkgrid">
+    <div class="panel">
+      <table>
+        <tr><th>Taille</th><th>Passages</th><th>hit@5 référence (16)</th><th>hit@5 reformulées (10)</th><th>hit@1 reformulées</th><th>Part du cours dans les 5 envoyés</th></tr>
+        <tr><td>300</td><td>50</td><td><span class="chip ok">1.00</span></td><td><span class="chip ok">1.00</span></td><td><span class="chip ko">0.30</span></td><td><div class="share"><i style="width:22px"></i><span>10 %</span></div></td></tr>
+        <tr><td>400</td><td>34</td><td><span class="chip ok">1.00</span></td><td><span class="chip ko">0.90</span></td><td>0.50</td><td><div class="share"><i style="width:33px"></i><span>15 %</span></div></td></tr>
+        <tr><td>600</td><td>24</td><td><span class="chip ok">1.00</span></td><td><span class="chip ko">0.90</span></td><td>0.60</td><td><div class="share"><i style="width:47px"></i><span>21 %</span></div></td></tr>
+        <tr class="pick"><td>800 ✓</td><td>19</td><td><span class="chip ok">1.00</span></td><td><span class="chip ok">1.00</span></td><td>0.70</td><td><div class="share"><i style="width:58px"></i><span>26 %</span></div></td></tr>
+        <tr><td>1000</td><td>15</td><td><span class="chip ok">1.00</span></td><td><span class="chip ok">1.00</span></td><td>0.70</td><td><div class="share"><i style="width:73px"></i><span>33 %</span></div></td></tr>
+        <tr><td>1200</td><td>11</td><td><span class="chip ok">1.00</span></td><td><span class="chip ok">1.00</span></td><td>0.90</td><td><div class="share"><i style="width:100px"></i><span>45 %</span></div></td></tr>
+      </table>
+      <div class="cmd">tuteur eval --decoupage 300 400 600 800 1000 1200 --cours photosynthese.md Projet_Tuteur_Inclusif.pdf</div>
+    </div>
+    <div class="concl">
+      <div class="c"><b>Trop petit (300–600)</b><span>À 400 et 600, une question reformulée sur 10 rate son passage. À 300, le bon passage arrive mais rarement en premier.</span></div>
+      <div class="c"><b>Trop grand (1000–1200)</b><span>Les 5 passages envoyés couvrent jusqu'à 45 % du cours : la recherche devient presque automatique, et le LLM reçoit 4 800 caractères au lieu de 3 000.</span></div>
+      <div class="c main"><b>800 : la plus petite taille qui trouve toujours le bon passage</b><span>Le réglage est gardé, maintenant justifié. À 800, le test redonne exactement les chiffres de l'évaluation principale.</span></div>
+      <div class="c"><b>Prudence</b><span>2 petits cours : un écart de 0.06 ou 0.10 = une seule question.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  <div><b>45</b><span>tests automatiques, tous verts (42 avant)</span></div>
+  <div><b>0</b><span>appel LLM pour ces deux mesures : rapide, sans quota</span></div>
+  <div><b>2 lignes</b><span>à ajouter par l'équipe MLOps pour accepter le vrai RAG</span></div>
+  <div><b>genai-rag</b><span>tout est poussé ; README et guide d'étude mis à jour</span></div>
+</div>
+
+</div>
+</body>
+</html>

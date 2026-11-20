@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tutor architecture</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Architecture of the inclusive tutor, 1600 px wide: real-time flow + monitoring on top, batch pipelines in the middle, CI/CD at the bottom. */
+:root {
+  --ink: #17212b; --muted: #4f5d6b; --line: #c9d3dd; --card: #ffffff; --page: #ffffff;
+  --blue: #1f5fbf; --blue-soft: #e6f0fb;
+  --green: #1d7a46; --green-soft: #e6f4ea;
+  --amber: #b86b00; --amber-soft: #fdf3e1;
+  --purple: #6b3fb0; --purple-soft: #f1ebfa;
+  --red: #c0392b; --red-soft: #fcebea;
+  --teal: #0f7c75; --teal-soft: #e3f4f2;
+  --slate-soft: #eef2f6;
+  --body: "Source Sans 3", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.3; }
+.page { width: 1600px; overflow: hidden; padding: 16px; display: grid; gap: 14px; }
+.sec { border-radius: 10px; padding: 12px 14px 14px; border: 1px solid var(--line); position: relative; }
+.sec > h2 { margin: 0 0 10px; font-size: 24px; font-weight: 800; }
+.sec > h2 small { font-size: 17px; font-weight: 700; color: var(--ink); }
+.box { min-width: 0; background: var(--card); border: 2px solid var(--line); border-radius: 9px; padding: 10px 12px; }
+.title { font-weight: 800; font-size: 18px; }
+.port { font-family: var(--mono); font-size: 13px; }
+.sub { color: var(--muted); font-size: 13.5px; font-family: var(--body); }
+.badge { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 800; font-size: 15px; flex: none; background: var(--blue); }
+.badge.g { background: var(--green); }
+.lbl { font-size: 14px; text-align: center; line-height: 1.2; }
+.arr { position: relative; height: 0; border-top: 3px solid var(--c, var(--blue)); }
+.arr::after { content: ""; position: absolute; right: -2px; top: -8px; border: 7px solid transparent; border-left: 11px solid var(--c, var(--blue)); border-right: 0; }
+.arr.left::after { right: auto; left: -2px; border-left: 0; border-right: 11px solid var(--c, var(--blue)); }
+.arr.dashed { border-top-style: dashed; }
+
+/* top row */
+.top { display: grid; grid-template-columns: 980px 1fr; gap: 14px; }
+.rt { background: var(--blue-soft); }
+.rtgrid { display: grid; grid-template-columns: 175px 1fr 250px; gap: 10px; align-items: start; }
+.student { border-color: var(--blue); text-align: center; display: grid; gap: 8px; justify-items: center; padding-block: 14px; }
+.avatar { width: 70px; height: 70px; border-radius: 50%; background: var(--blue-soft); border: 2px solid var(--blue); display: grid; place-items: center; font-weight: 800; color: var(--blue); font-size: 22px; }
+.flowcol { display: grid; gap: 10px; padding-top: 12px; }
+.flowrow { display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: center; }
+.example { border: 1px solid var(--line); border-radius: 7px; background: #fff; padding: 8px 10px; font-size: 13.5px; display: grid; gap: 3px; }
+.fastapi { border-color: var(--teal); background: var(--teal-soft); display: grid; gap: 8px; }
+.fastapi .head { display: flex; gap: 10px; align-items: center; }
+.logo { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px; flex: none; }
+.step { display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 6px 8px; font-size: 14px; }
+.step.hl { background: var(--purple-soft); border-color: var(--purple); }
+
+.mon { background: var(--green-soft); }
+.mongrid { display: grid; grid-template-columns: 1fr 250px; gap: 10px; }
+.tools { display: grid; gap: 10px; }
+.tool { display: flex; gap: 10px; align-items: center; }
+.otel { border-color: var(--red); background: var(--red-soft); }
+.mlf { border-color: var(--purple); background: var(--purple-soft); }
+.prom { border-color: var(--red); background: var(--red-soft); }
+.graf { border-color: var(--amber); background: var(--amber-soft); }
+.promrow { display: grid; grid-template-columns: 1.1fr 22px 1fr; align-items: center; gap: 4px; }
+.tells { border: 2px dashed var(--green); border-radius: 9px; padding: 10px 12px; background: #fff; display: grid; gap: 6px; align-content: start; }
+.tells ul { margin: 0; padding-left: 18px; font-size: 14px; }
+.dash { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #1d2733; border-radius: 6px; padding: 6px; }
+.dash div { background: #2a3644; border-radius: 4px; height: 46px; padding: 3px 5px; color: #cfd8e3; font-size: 10px; position: relative; overflow: hidden; }
+.dash svg { position: absolute; left: 4px; right: 4px; bottom: 3px; width: calc(100% - 8px); height: 28px; }
+
+/* connectors between real-time and monitoring */
+.links { position: absolute; left: 980px; top: 0; width: 14px; }
+
+/* batch */
+.batch { background: var(--amber-soft); }
+.bgrid { display: grid; grid-template-columns: 250px 110px 1fr 40px 230px; gap: 0; align-items: center; }
+.dvc { border-color: var(--purple); background: var(--purple-soft); display: grid; gap: 8px; }
+.ds { background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: center; font-size: 14px; }
+.cyl { width: 26px; height: 30px; border: 2px solid var(--blue); border-radius: 50% / 18%; background: var(--blue-soft); }
+.mid { display: grid; gap: 70px; padding-inline: 8px; }
+.airflow { border: 2px solid var(--amber); border-radius: 10px; padding: 10px; background: #fffaf2; display: grid; gap: 8px; }
+.airflow .head { display: flex; gap: 10px; align-items: center; justify-content: center; }
+.pipes { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 10px; align-items: start; }
+.pipe { border: 2px solid var(--c); background: var(--s); border-radius: 9px; padding: 8px; display: grid; gap: 5px; }
+.pipe h3 { margin: 0; text-align: center; color: var(--c); font-size: 18px; font-weight: 800; }
+.pipe h3 small { display: block; color: var(--muted); font-size: 13px; font-weight: 600; }
+.pipe ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; counter-reset: s; }
+.pipe li { counter-increment: s; background: #fff; border: 1px solid var(--line); border-radius: 5px; padding: 4px 8px; font-size: 13.5px; }
+.pipe li::before { content: counter(s) ". "; font-weight: 700; }
+.pipe li .k { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.manifest { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: center; background: var(--purple-soft); border: 1px solid var(--purple); border-radius: 7px; padding: 6px 8px; font-size: 13.5px; justify-self: center; min-width: 70%; }
+.doc { width: 22px; height: 28px; border: 2px solid var(--purple); border-radius: 3px; background: #fff; }
+.rag { --c: var(--blue); --s: var(--blue-soft); }
+.rl { --c: var(--red); --s: var(--red-soft); }
+.ev { --c: var(--green); --s: var(--green-soft); }
+.mine { font-size: 12px; font-weight: 800; color: #fff; background: var(--blue); border-radius: 10px; padding: 1px 8px; justify-self: center; }
+.evid { border-color: var(--purple); background: var(--purple-soft); display: grid; gap: 8px; }
+.evid .inner { background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; font-size: 14px; }
+.evid ul { margin: 2px 0 0; padding-left: 18px; }
+.down { text-align: center; color: var(--blue); font-weight: 800; font-size: 18px; line-height: 1; }
+
+/* manifest link */
+.uplink { display: flex; align-items: center; gap: 10px; margin: -4px 0 -4px 520px; }
+.vline { width: 0; height: 46px; border-left: 3px solid var(--amber); position: relative; }
+.vline::before { content: ""; position: absolute; left: -9px; top: -4px; border: 7px solid transparent; border-bottom: 11px solid var(--amber); border-top: 0; }
+
+/* ci */
+.ci { background: var(--slate-soft); }
+.cigrid { display: flex; align-items: center; gap: 0; }
+.ci .box { flex: 1 1 0; display: flex; gap: 8px; align-items: center; font-size: 14.5px; padding: 8px 10px; min-height: 62px; }
+.ci .ico { width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 13px; flex: none; background: var(--ink); }
+.ci .gap { flex: 0 0 26px; padding-inline: 3px; }
+.pass { border-color: var(--green) !important; background: var(--green-soft) !important; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top">
+  <section class="sec rt">
+    <h2>1. Real-time Flow <small>(Student asks for a quiz)</small></h2>
+    <div class="rtgrid">
+      <div class="box student"><div class="title">Student / User</div><div class="avatar">S</div><div style="font-size:16px">“Give me a<br>photosynthesis quiz”</div></div>
+
+      <div class="flowcol">
+        <div class="flowrow"><span class="badge">1</span><div><div style="font-size:15px">HTTP request <span class="sub">(topic = photosynthesis, level = simplified)</span></div><div class="arr" style="margin-top:8px"></div></div></div>
+        <div class="flowrow"><span class="badge g">5</span><div><div style="font-size:15px">HTTP response <span class="sub">(3 questions with answers, cited pages, next activity)</span></div><div class="arr left dashed" style="--c:var(--green);margin-top:8px"></div></div></div>
+        <div class="example"><b>Example response</b>
+          <span>1. Where does photosynthesis happen? <span class="sub">[p. 1]</span></span>
+          <span>2. True or false: chlorophyll reflects green light.</span>
+          <span>3. Which gas does the plant release?</span></div>
+      </div>
+
+      <div class="box fastapi">
+        <div class="head"><span class="logo" style="background:var(--teal)">API</span><div><div class="title">FastAPI</div><div class="port">:8000</div></div></div>
+        <div class="step"><span class="badge">2</span>Pydantic request validation</div>
+        <div class="step hl"><span class="badge">3</span><span><b>Tutor.quiz()</b>: hybrid search + gpt-oss-120b (or <b>remediate()</b>, or RL recommendation)</span></div>
+        <div class="step"><span class="badge">4</span>Validate JSON (4 choices…) and prepare response</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec mon">
+    <h2 style="text-align:center">4. Monitoring &amp; Observability <small><br>(How is the service performing?)</small></h2>
+    <div class="mongrid">
+      <div class="tools">
+        <div class="lbl" style="text-align:left">← FastAPI sends HTTP traces (request + response spans)</div>
+        <div class="box tool otel"><span class="logo" style="background:var(--red)">OT</span><div><div class="title">OpenTelemetry</div><div class="port">:4318 <span class="sub">(OTLP HTTP)</span></div></div></div>
+        <div class="lbl" style="text-align:left">← Logs quiz-generation trace (prompt version, outputs, metadata)</div>
+        <div class="box tool mlf"><span class="logo" style="background:var(--purple)">ML</span><div><div class="title">MLflow</div><div class="port">:5000 <span class="sub">(experiments, artifacts, GenAI traces)</span></div></div></div>
+        <div class="lbl" style="text-align:left">← Exposes metrics (/metrics endpoint)</div>
+        <div class="promrow">
+          <div class="box tool prom" style="padding:8px"><span class="logo" style="background:var(--red);width:30px;height:30px;font-size:12px">P</span><div><div class="title" style="font-size:14.5px">Prometheus</div><div class="port">:9090</div><div class="sub">scrapes metrics</div></div></div>
+          <div class="arr" style="--c:var(--green)"></div>
+          <div class="box tool graf" style="padding:8px"><span class="logo" style="background:var(--amber);width:30px;height:30px;font-size:12px">G</span><div><div class="title" style="font-size:16px">Grafana</div><div class="port">:3000</div><div class="sub">dashboards</div></div></div>
+        </div>
+      </div>
+      <div class="tells"><b>Prometheus tells us:</b>
+        <ul><li>Request count</li><li>Latency / response time</li><li>Status codes (200, 400, 500)</li><li>Error count</li></ul>
+        <div class="dash">
+          <div>Request rate<svg viewBox="0 0 100 28"><polyline fill="none" stroke="#5cc58f" stroke-width="2" points="0,22 12,18 22,20 34,12 46,15 58,8 70,11 82,5 100,7"/></svg></div>
+          <div>Latency<svg viewBox="0 0 100 28"><polyline fill="none" stroke="#86a8e6" stroke-width="2" points="0,20 14,16 26,19 38,10 50,14 62,6 76,12 88,8 100,11"/></svg></div>
+          <div>Status codes<svg viewBox="0 0 100 28"><g fill="#5cc58f"><rect x="4" y="16" width="8" height="12"/><rect x="18" y="10" width="8" height="18"/><rect x="32" y="13" width="8" height="15"/><rect x="46" y="6" width="8" height="22"/><rect x="60" y="11" width="8" height="17"/><rect x="74" y="4" width="8" height="24"/><rect x="88" y="9" width="8" height="19"/></g></svg></div>
+          <div>Error count<svg viewBox="0 0 100 28"><g fill="#e0675a"><rect x="4" y="22" width="8" height="6"/><rect x="18" y="18" width="8" height="10"/><rect x="32" y="24" width="8" height="4"/><rect x="46" y="14" width="8" height="14"/><rect x="60" y="20" width="8" height="8"/><rect x="74" y="10" width="8" height="18"/><rect x="88" y="21" width="8" height="7"/></g></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="uplink"><div class="vline"></div><div class="lbl" style="text-align:left">FastAPI reads the latest <b>validated</b> artifact manifest<br><span class="sub">(at startup and periodically)</span></div></div>
+
+<section class="sec batch">
+  <h2>2. Batch Pipelines <small>(run independently, prepare and validate artifacts)</small></h2>
+  <div class="bgrid">
+    <div class="box dvc">
+      <div style="text-align:center"><span class="logo" style="background:var(--purple);display:inline-grid;width:40px;height:40px">DVC</span><div class="sub" style="font-size:14px;margin-top:4px">(versioned datasets)</div></div>
+      <div class="ds"><span class="cyl"></span><span><b>Course documents</b><br><span class="sub">PDF / Markdown, e.g. photosynthesis course</span></span></div>
+      <div class="ds"><span class="cyl"></span><span><b>Synthetic interaction dataset</b><br><span class="sub">e.g. student interactions</span></span></div>
+      <div class="ds"><span class="cyl"></span><span><b>RAG evaluation set</b><br><span class="sub">16 + 2 questions, 10 paraphrases, 4 errors</span></span></div>
+    </div>
+    <div class="mid">
+      <div><div class="lbl">Provide versioned datasets</div><div class="arr" style="margin-top:6px"></div></div>
+      <div><div class="arr"></div></div>
+    </div>
+    <div class="airflow">
+      <div class="head"><span class="logo" style="background:var(--amber)">AF</span><div><span class="title">Apache Airflow</span> <span class="port">:8080</span><div class="sub">(orchestrates batch pipelines)</div></div></div>
+      <div class="pipes">
+        <div class="pipe rag">
+          <h3>RAG Pipeline <small>(index the course, create quiz content)</small></h3>
+          <span class="mine">GenAI + RAG part</span>
+          <ol>
+            <li>Load course files <span class="k">PDF / MD from DVC</span></li>
+            <li>Read pages, extract text + images <span class="k">PyMuPDF</span></li>
+            <li>Chunking <span class="k">800 chars, overlap 150</span></li>
+            <li>Embeddings <span class="k">multilingual-e5-small</span></li>
+            <li>Vector + keyword index <span class="k">ChromaDB + BM25</span></li>
+            <li>Quiz generation <span class="k">hybrid search (RRF) + gpt-oss-120b, prompts v5</span></li>
+            <li>Evaluation <span class="k">LLM judge, hit@5, citations, readability</span></li>
+            <li>Log to MLflow</li>
+            <li>Produce RAG manifest</li>
+          </ol>
+          <div class="manifest"><span class="doc"></span><span><b>rag/latest.json</b><br>(RAG manifest)</span></div>
+        </div>
+        <div class="pipe rl">
+          <h3>RL Pipeline <small>(learn activity recommendations)</small></h3>
+          <ol>
+            <li>Synthetic interaction data</li>
+            <li>Preprocessing</li>
+            <li>Observations and rewards</li>
+            <li>Mock policy training</li>
+            <li>Synthetic evaluation</li>
+            <li>Log to MLflow</li>
+            <li>Produce RL manifest</li>
+          </ol>
+          <div class="manifest"><span class="doc"></span><span><b>rl/latest.json</b><br>(RL manifest)</span></div>
+        </div>
+        <div class="pipe ev">
+          <h3>Evaluation Pipeline <small>(validate and compare)</small></h3>
+          <ol>
+            <li>Read latest RAG manifest</li>
+            <li>Read latest RL manifest</li>
+            <li>File and version checks</li>
+            <li>Compare with thresholds <span class="k">e.g. faithfulness ≥ 0.95</span></li>
+            <li>Generate validation report</li>
+            <li>Log to MLflow</li>
+            <li>Publish final manifest <span class="k">(approved or refused)</span></li>
+          </ol>
+          <div class="manifest"><span class="doc"></span><span><b>registry/validation/latest.json</b><br>(validated manifest)</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding-inline:6px"><div class="arr"></div></div>
+    <div class="box evid">
+      <div style="display:flex;gap:10px;align-items:center"><span class="logo" style="background:var(--purple)">EV</span><div><div class="title">Evidently AI</div><div class="sub">(data-drift detection)</div></div></div>
+      <div class="inner"><b>Compare datasets:</b><ul><li>Reference dataset</li><li>Current dataset</li></ul></div>
+      <div class="down">↓</div>
+      <div class="inner" style="display:flex;gap:8px;align-items:center"><span class="doc"></span><span>Data-drift report<br>(HTML / JSON)</span></div>
+      <div class="down">↓</div>
+      <div class="inner">Log report to <b style="color:var(--purple)">MLflow</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec ci">
+  <h2>5. CI/CD <small>(GitHub Actions)</small></h2>
+  <div class="cigrid">
+    <div class="box"><span class="ico">GH</span><span>1. Developer pushes code / opens PR</span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box"><span class="ico" style="background:var(--blue)">⚙</span><span>2. Install dependencies</span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box"><span class="ico" style="background:var(--muted)">R</span><span>3. Ruff<br><span class="sub">code quality</span></span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box"><span class="ico" style="background:var(--teal)">T</span><span>4. Pytest<br><span class="sub">42 RAG tests + others</span></span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box"><span class="ico" style="background:var(--muted)">P</span><span>5. pip check<br><span class="sub">dependencies</span></span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box"><span class="ico" style="background:var(--blue)">D</span><span>6. Docker build<br><span class="sub">build image</span></span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box"><span class="ico" style="background:var(--green)">✓</span><span>7. Smoke test<br><span class="sub">test FastAPI</span></span></div><div class="gap"><div class="arr"></div></div>
+    <div class="box pass"><span class="ico" style="background:var(--green)">PR</span><span><b>Pass or Fail</b><br><span class="sub">PR status</span></span></div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

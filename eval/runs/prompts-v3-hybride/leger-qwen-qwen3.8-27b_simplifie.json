@@ -1,0 +1,110 @@
+{
+  "photo-01": {
+    "faithfulness": 0.5,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les chloroplastes sont de petits organites verts.",
+      "Les chloroplastes des feuilles vertes captent la lumière."
+    ]
+  },
+  "photo-02": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-03": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-04": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les stomates ouvrent pour laisser entrer le CO2."
+    ]
+  },
+  "photo-05": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "L'équation de la photosynthèse est CO2 + H2O + lumière → glucose + O2"
+    ]
+  },
+  "photo-06": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-07": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-08": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-09": {
+    "faithfulness": 0.75,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Une vache mange de l’herbe et reçoit du dioxygène."
+    ]
+  },
+  "photo-10": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-01": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-02": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-03": {
+    "faithfulness": 0.6,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Il s'appuie sur les réponses de l'élève.",
+      "Exemple : après une mauvaise réponse, le tuteur propose un quiz plus simple."
+    ]
+  },
+  "projet-04": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-05": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-06": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  }
+}

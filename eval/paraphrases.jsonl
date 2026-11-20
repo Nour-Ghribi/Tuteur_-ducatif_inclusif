@@ -1,0 +1,10 @@
+{"id": "para-01", "source": "photosynthese.md", "question": "Par quels petits trous l'air arrive-t-il à l'intérieur d'une feuille ?", "evidence": "stomates"}
+{"id": "para-02", "source": "photosynthese.md", "question": "C'est quoi le truc vert qui attrape le soleil dans les plantes ?", "evidence": "chlorophylle"}
+{"id": "para-03", "source": "photosynthese.md", "question": "Est-ce qu'un arbre respire aussi quand il fait noir ?", "evidence": "jour et nuit"}
+{"id": "para-04", "source": "photosynthese.md", "question": "Que fabrique un végétal grâce au soleil pour se nourrir ?", "evidence": "glucose"}
+{"id": "para-05", "source": "photosynthese.md", "question": "Sans les végétaux, est-ce que les lions auraient de quoi manger ?", "evidence": "chaînes alimentaires"}
+{"id": "para-06", "source": "photosynthese.md", "question": "Comment le liquide du sol monte-t-il jusqu'au végétal ?", "evidence": "racines"}
+{"id": "para-07", "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf", "question": "Avec quoi garde-t-on l'historique des jeux de données ?", "evidence": "DVC"}
+{"id": "para-08", "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf", "question": "Comment le système aide-t-il un élève qui ne distingue pas le rouge du vert ?", "evidence": "daltonis"}
+{"id": "para-09", "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf", "question": "Quels tableaux de bord pour surveiller l'application en production ?", "evidence": "Grafana"}
+{"id": "para-10", "source": "Projet_Tuteur_Inclusif_Style_LaTeX.pdf", "question": "Quelles bases de données d'élèves réels peut-on réutiliser ?", "evidence": "ASSISTments"}
