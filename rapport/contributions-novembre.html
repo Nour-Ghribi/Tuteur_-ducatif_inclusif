@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Contributions GenAI RAG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Diapositive 16:9 (1920 × 1080) : bandeau titre, deux contributions côte à côte, pied de page méthodologique. */
+:root {
+  --bg: #ffffff; --ink: #14202b; --muted: #5b6875; --faint: #8a96a2; --line: #dde3e9; --panel: #f7f9fb;
+  --navy: #1f3a5f; --navy-soft: #e8eef6;
+  --teal: #1b7f6b; --teal-soft: #e3f3ef;
+  --amber: #b8742a; --red: #b54848; --red-soft: #f8e9e9;
+  --serif: "IBM Plex Serif", Georgia, serif;
+  --sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.38; }
+.slide { width: 1920px; height: 1080px; display: grid; grid-template-rows: auto 1fr auto; }
+header { background: var(--navy); color: #fff; padding: 30px 56px 26px; display: flex; justify-content: space-between; align-items: end; gap: 40px; }
+header .kicker { font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: #b9c8db; font-weight: 600; }
+header h1 { margin: 6px 0 0; font-family: var(--serif); font-weight: 600; font-size: 40px; line-height: 1.12; }
+header .meta { text-align: right; font-size: 15px; color: #c9d5e3; white-space: nowrap; line-height: 1.5; }
+header .meta b { color: #fff; font-weight: 600; }
+
+main { padding: 28px 56px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; min-height: 0; }
+.col { display: grid; grid-template-rows: auto auto auto auto; align-content: start; gap: 18px; min-height: 0; }
+.h2 { display: flex; gap: 14px; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.h2 .num { font-family: var(--serif); font-size: 30px; color: var(--navy); }
+.h2 h2 { margin: 0; font-size: 25px; font-weight: 700; }
+.h2 .date { margin-left: auto; font-size: 14px; color: var(--faint); font-family: var(--mono); }
+.lede { margin: 0; color: var(--muted); font-size: 17px; }
+.lede b { color: var(--ink); font-weight: 600; }
+
+/* DAG */
+.fig { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; display: grid; gap: 12px; align-content: start; }
+.figcap { font-size: 13.5px; color: var(--faint); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.dag { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px 26px; position: relative; }
+.task { background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 4px; padding: 13px 12px; display: grid; gap: 3px; position: relative; }
+.task .tn { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.task .tt { font-weight: 700; font-size: 17px; }
+.task .ti { font-size: 14.5px; color: var(--muted); line-height: 1.3; }
+.task:not(:nth-child(4n))::after { content: "→"; position: absolute; right: -21px; top: 50%; transform: translateY(-50%); color: var(--navy); font-weight: 700; }
+.task:nth-child(4)::before { content: "↓"; position: absolute; bottom: -24px; left: 50%; color: var(--navy); font-weight: 700; }
+.row2 { direction: rtl; margin-top: 10px; }
+.row2 .task::after { content: "←" !important; right: auto !important; left: -21px; }
+.row2 .task:nth-child(4)::after, .row2 .task::before { content: none !important; }
+.row2 .task { direction: ltr; }
+
+
+.replaces { font-size: 14px; color: var(--muted); }
+.replaces s { color: var(--faint); }
+
+.verify { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.verify > div { padding: 11px 14px; display: grid; gap: 3px; align-content: start; }
+.verify .q { background: var(--panel); font-size: 15px; }
+.verify .q b { font-size: 16px; }
+.verify .no { background: var(--red-soft); border-left: 1px solid var(--line); }
+.verify .yes { background: var(--teal-soft); border-left: 1px solid var(--line); }
+.verify .v { font-weight: 700; font-size: 19px; }
+.verify .no .v { color: var(--red); } .verify .yes .v { color: var(--teal); }
+.verify span { font-size: 14px; color: var(--muted); }
+
+/* graphique */
+.chart > svg { width: 100%; height: auto; display: block; }
+.legend svg { width: 26px; height: 8px; flex: none; }
+svg text { font-family: var(--sans); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.findings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.find { border-left: 3px solid var(--line); padding: 2px 0 2px 12px; display: grid; gap: 3px; }
+.find b { font-size: 16px; }
+.find span { font-size: 14.5px; color: var(--muted); }
+.find.key { border-left-color: var(--teal); }
+.find.key b { color: var(--teal); }
+
+footer { border-top: 1px solid var(--line); padding: 12px 56px 16px; display: flex; justify-content: space-between; gap: 30px; font-size: 13.5px; color: var(--muted); }
+footer code { font-family: var(--mono); font-size: 12.5px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; }
+</style>
+</head>
+<body>
+<div class="slide">
+
+<header>
+  <div>
+    <div class="kicker">Tuteur éducatif inclusif · Module GenAI + RAG · Avancement</div>
+    <h1>Intégration à la chaîne MLOps et justification expérimentale du découpage</h1>
+  </div>
+  <div class="meta"><b>Novembre 2026</b><br>Branche <b>genai-rag</b> · 45 tests automatiques</div>
+</header>
+
+<main>
+  <!-- Contribution 1 -->
+  <section class="col">
+    <div class="h2"><span class="num">1</span><h2>Pipeline RAG réel dans l'orchestration Airflow</h2><span class="date">4 nov.</span></div>
+    <p class="lede">Le DAG RAG de l'équipe MLOps reposait sur des étapes <b>simulées</b>. Il est remplacé par le pipeline réel du module, avec <b>la même interface</b> : mêmes tâches, mêmes artefacts, même manifeste <span style="font-family:var(--mono);font-size:15px">registry/rag/latest.json</span>.</p>
+    <div class="fig">
+      <div class="figcap">Figure 1 · DAG Airflow du pipeline RAG (8 tâches)</div>
+      <div class="dag">
+        <div class="task"><span class="tn">01</span><span class="tt">Chargement</span><span class="ti">Cours PDF, MD, TXT</span></div>
+        <div class="task"><span class="tn">02</span><span class="tt">Extraction</span><span class="ti">PyMuPDF, page par page</span></div>
+        <div class="task"><span class="tn">03</span><span class="tt">Découpage</span><span class="ti">800 car., chevauchement 150</span></div>
+        <div class="task"><span class="tn">04</span><span class="tt">Embeddings</span><span class="ti">multilingual-e5-small (384 d)</span></div>
+      </div>
+      <div class="dag row2">
+        <div class="task"><span class="tn">05</span><span class="tt">Indexation</span><span class="ti">ChromaDB + BM25</span></div>
+        <div class="task"><span class="tn">06</span><span class="tt">Génération</span><span class="ti">Quiz par LLM, JSON validé</span></div>
+        <div class="task"><span class="tn">07</span><span class="tt">Évaluation</span><span class="ti">Pages citées, hit@5</span></div>
+        <div class="task"><span class="tn">08</span><span class="tt">Traçabilité</span><span class="ti">MLflow + manifeste</span></div>
+      </div>
+      <div class="replaces">Remplace : <s>embeddings sha256 (12 d)</s> · <s>index JSON</s> · <s>quiz à consignes fixes</s> · <s>score synthétique</s></div>
+    </div>
+    <div style="display:grid;gap:10px;align-content:start">
+      <div class="figcap">Tableau 1 · Compatibilité avec le pipeline d'évaluation MLOps (seuil RAG = 0.75)</div>
+      <div class="verify">
+        <div class="q"><b>Décision sur le manifeste réel</b><span>obtenue en exécutant le code d'évaluation de la branche mlops</span></div>
+        <div class="no"><span class="v">Refusé</span><span>Code actuel : n'accepte qu'un score « synthétique »</span></div>
+        <div class="yes"><span class="v">Accepté · 1.00</span><span>Après un correctif de 2 lignes, documenté ; le mode simulé reste valide</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contribution 2 -->
+  <section class="col">
+    <div class="h2"><span class="num">2</span><h2>Étude de sensibilité : taille des passages</h2><span class="date">13 nov.</span></div>
+    <p class="lede">Six tailles de 300 à 1 200 caractères (chevauchement proportionnel), évaluées sur la <b>recherche seule</b>, sans appel au LLM. 16 questions de référence et 10 questions reformulées en langage d'élève, recherche hybride.</p>
+    <div class="fig chart">
+      <div class="figcap">Figure 2 · Qualité de la recherche selon la taille des passages</div>
+      <svg viewBox="0 0 860 330" role="img" aria-label="hit@5 et hit@1 selon la taille des passages, 800 retenu">
+        <!-- zone 800 -->
+        <rect x="454" y="18" width="70" height="252" fill="var(--teal-soft)"/>
+        <text x="489" y="262" text-anchor="middle" font-size="13" font-weight="600" fill="var(--teal)">retenu</text>
+        <!-- grille : y = 270 - v*240 -->
+        <g stroke="var(--line)" stroke-width="1">
+          <line x1="70" y1="270" x2="840" y2="270"/><line x1="70" y1="222" x2="840" y2="222"/><line x1="70" y1="174" x2="840" y2="174"/>
+          <line x1="70" y1="126" x2="840" y2="126"/><line x1="70" y1="78" x2="840" y2="78"/><line x1="70" y1="30" x2="840" y2="30"/>
+        </g>
+        <g font-size="13" fill="var(--faint)" text-anchor="end">
+          <text x="60" y="274">0.0</text><text x="60" y="226">0.2</text><text x="60" y="178">0.4</text><text x="60" y="130">0.6</text><text x="60" y="82">0.8</text><text x="60" y="34">1.0</text>
+        </g>
+        <!-- x : 300→100, 1200→800 ; x = 100 + (t-300)*0.7778 -->
+        <g font-size="14" fill="var(--ink)" text-anchor="middle">
+          <text x="100" y="295">300</text><text x="178" y="295">400</text><text x="333" y="295">600</text><text x="489" y="295" font-weight="700">800</text><text x="644" y="295">1 000</text><text x="800" y="295">1 200</text>
+        </g>
+        <text x="455" y="322" text-anchor="middle" font-size="13" fill="var(--faint)">taille des passages (caractères)</text>
+        <!-- part du cours dans les 5 envoyés (pointillé) -->
+        <polyline fill="none" stroke="var(--faint)" stroke-width="2" stroke-dasharray="5 5" points="100,246 178,234 333,219.6 489,207.6 644,190.8 800,162"/>
+        <!-- hit@1 reformulées -->
+        <polyline fill="none" stroke="var(--amber)" stroke-width="3" points="100,198 178,150 333,126 489,102 644,102 800,54"/>
+        <!-- hit@5 reformulées -->
+        <polyline fill="none" stroke="var(--teal)" stroke-width="3" points="100,30 178,54 333,54 489,30 644,30 800,30"/>
+        <!-- hit@5 référence -->
+        <polyline fill="none" stroke="var(--navy)" stroke-width="3" stroke-dasharray="1 0" points="100,30 178,30 333,30 489,30 644,30 800,30" opacity=".55"/>
+        <g fill="var(--teal)"><circle cx="100" cy="30" r="4.5"/><circle cx="178" cy="54" r="4.5"/><circle cx="333" cy="54" r="4.5"/><circle cx="489" cy="30" r="5.5"/><circle cx="644" cy="30" r="4.5"/><circle cx="800" cy="30" r="4.5"/></g>
+        <g fill="var(--amber)"><circle cx="100" cy="198" r="4.5"/><circle cx="178" cy="150" r="4.5"/><circle cx="333" cy="126" r="4.5"/><circle cx="489" cy="102" r="5.5"/><circle cx="644" cy="102" r="4.5"/><circle cx="800" cy="54" r="4.5"/></g>
+        <g font-size="13" font-weight="600">
+          <text x="178" y="72" text-anchor="middle" fill="var(--teal)">0.90</text>
+          <text x="333" y="72" text-anchor="middle" fill="var(--teal)">0.90</text>
+          <text x="100" y="216" text-anchor="middle" fill="var(--amber)">0.30</text>
+          <text x="489" y="122" text-anchor="middle" fill="var(--amber)">0.70</text>
+          <text x="800" y="182" text-anchor="end" fill="var(--faint)" font-weight="500">45 %</text>
+          <text x="100" y="264" text-anchor="middle" fill="var(--faint)" font-weight="500">10 %</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><svg width="26" height="8"><line x1="0" y1="4" x2="26" y2="4" stroke="#1f3a5f" stroke-width="3" opacity=".55"/></svg>hit@5, questions de référence</span>
+        <span><svg width="26" height="8"><line x1="0" y1="4" x2="26" y2="4" stroke="#1b7f6b" stroke-width="3"/></svg>hit@5, questions reformulées</span>
+        <span><svg width="26" height="8"><line x1="0" y1="4" x2="26" y2="4" stroke="#b8742a" stroke-width="3"/></svg>hit@1, questions reformulées</span>
+        <span><svg width="26" height="8"><line x1="0" y1="4" x2="26" y2="4" stroke="#8a96a2" stroke-width="2" stroke-dasharray="5 5"/></svg>part du cours couverte par les 5 passages envoyés</span>
+      </div>
+    </div>
+    <div class="findings">
+      <div class="find"><b>≤ 600 : rappel incomplet</b><span>À 400 et 600, une question reformulée sur 10 n'atteint pas le LLM ; à 300, le bon passage est rarement classé premier.</span></div>
+      <div class="find"><b>≥ 1 000 : mesure peu discriminante</b><span>Les 5 passages couvrent jusqu'à 45 % du corpus, et le contexte passe de 3 000 à 4 800 caractères.</span></div>
+      <div class="find key"><b>800 retenu</b><span>Plus petite taille atteignant hit@5 = 1.00 sur les deux jeux. Corpus réduit : 1 question = 0.06 à 0.10.</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Reproductibilité : <code>tuteur eval --decoupage 300 400 600 800 1000 1200</code> · <code>pytest tests/test_pipeline.py</code> · guide d'intégration <code>docs/INTEGRATION_MLOPS.md</code></span>
+  <span>LLM gpt-oss-120b (Groq) · embeddings multilingual-e5-small · recherche hybride dense + BM25 (RRF)</span>
+</footer>
+
+</div>
+</body>
+</html>
