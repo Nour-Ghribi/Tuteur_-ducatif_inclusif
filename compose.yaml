@@ -34,19 +34,43 @@ x-airflow-common: &airflow-common
   user: "${AIRFLOW_UID:-50000}:0"
 
 services:
+  # ---------------------------------------------------------------------------
+  # Main API — MLOps scaffold + agentic tutor router
+  # ---------------------------------------------------------------------------
   api:
     build:
       context: .
       dockerfile: Dockerfile
     image: tuteur-inclusif-api:local
     environment:
-      APP_NAME: "${APP_NAME:-Tuteur éducatif inclusif API}"
+      APP_NAME: "${APP_NAME:-Tuteur éducatif inclusif}"
       APP_ENV: "${APP_ENV:-development}"
+      # --- Agentic layer ---
+      TUTOR_ENVIRONMENT: "${TUTOR_ENVIRONMENT:-development}"
+      TUTOR_GENAI_BACKEND: "${TUTOR_GENAI_BACKEND:-mock}"
+      TUTOR_ALLOW_MOCKS: "${TUTOR_ALLOW_MOCKS:-true}"
+      # Real service URLs (leave empty to use mocks)
+      TUTOR_RAG_SERVICE_URL: "${TUTOR_RAG_SERVICE_URL:-}"
+      TUTOR_GENAI_SERVICE_URL: "${TUTOR_GENAI_SERVICE_URL:-}"
+      TUTOR_RL_SERVICE_URL: "http://rl:8001"
+      TUTOR_INCLUSION_SERVICE_URL: "${TUTOR_INCLUSION_SERVICE_URL:-}"
+      TUTOR_SERVICE_API_KEY: "${TUTOR_SERVICE_API_KEY:-}"
+      # LLM (used when TUTOR_GENAI_BACKEND=tuteur)
+      LLM_BASE_URL: "${LLM_BASE_URL:-http://localhost:11434/v1}"
+      LLM_MODEL: "${LLM_MODEL:-qwen2.5:7b}"
+      LLM_API_KEY: "${LLM_API_KEY:-ollama}"
+      # Vision model for image description (optional)
+      TUTOR_VISION_MODEL: "${TUTOR_VISION_MODEL:-}"
+      TUTOR_VISION_BASE_URL: "${TUTOR_VISION_BASE_URL:-}"
+      TUTOR_VISION_API_KEY: "${TUTOR_VISION_API_KEY:-}"
+      # Dev auth tokens (development only)
+      TUTOR_DEV_AUTH_TOKENS: "${TUTOR_DEV_AUTH_TOKENS:-}"
+      # CORS
+      CORS_ORIGINS: "${CORS_ORIGINS:-http://localhost:5173,http://localhost:3000}"
+      # --- MLOps ---
       MLFLOW_TRACKING_URI: "http://mlflow:5000"
       MLFLOW_EXPERIMENT_NAME: "${MLFLOW_EXPERIMENT_NAME:-tuteur-inclusif-demo}"
       MLFLOW_ENABLE_ASYNC_TRACE_LOGGING: "false"
-      # Keep MLflow traces in the MLflow experiment. OpenTelemetry uses its own
-      # exporter below and must not redirect MLflow's exporter to OTLP.
       MLFLOW_ENABLE_OTLP_EXPORTER: "false"
       VALIDATION_MANIFEST_PATH: /app/shared/registry/validation/latest.json
       OTEL_TRACES_ENABLED: "${OTEL_TRACES_ENABLED:-true}"
@@ -57,7 +81,12 @@ services:
       - "${API_PORT:-8000}:8000"
     volumes:
       - ./app:/app/app:ro
+      - ./backend/agentic/src:/app/backend/agentic/src:ro
+      - ./src:/app/src:ro
       - ./orchestration/shared:/app/shared:ro
+      - tutor_chroma:/app/data/chroma
+      - tutor_images:/app/data/images
+      - tutor_images_adapted:/app/data/images_adapted
     healthcheck:
       test:
         - CMD
@@ -69,11 +98,46 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-      start_period: 5s
+      start_period: 10s
     restart: unless-stopped
     depends_on:
       mlflow:
         condition: service_healthy
+      rl:
+        condition: service_healthy
+
+  # ---------------------------------------------------------------------------
+  # RL recommendation microservice
+  # ---------------------------------------------------------------------------
+  rl:
+    build:
+      context: .
+      dockerfile: backend/rl/Dockerfile
+    image: tuteur-inclusif-rl:local
+    environment:
+      RL_POLICY_CHECKPOINT: "${RL_POLICY_CHECKPOINT:-}"
+      RL_SERVICE_API_KEY: "${TUTOR_SERVICE_API_KEY:-}"
+      RL_HOST: "0.0.0.0"
+      RL_PORT: "8001"
+    ports:
+      - "${RL_PORT:-8001}:8001"
+    volumes:
+      - ./backend/rl:/app/backend/rl:ro
+      - ./src:/app/src:ro
+      - tutor_rl_checkpoints:/app/data/checkpoints
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=2)
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
 
   mlflow:
     build:
@@ -302,4 +366,8 @@ volumes:
   grafana_data:
   airflow_postgres_data:
   airflow_logs:
+  tutor_chroma:
+  tutor_images:
+  tutor_images_adapted:
+  tutor_rl_checkpoints:
 
