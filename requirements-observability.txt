@@ -1,0 +1,3 @@
+-r requirements.txt
+
+evidently==0.7.23

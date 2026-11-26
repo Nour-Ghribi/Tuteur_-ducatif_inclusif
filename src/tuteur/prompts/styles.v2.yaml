@@ -1,0 +1,15 @@
+name: styles
+version: 2
+description: Consignes de niveau de lecture injectées dans {style} de chaque prompt (inclusion).
+# v1 -> v2 : le mode simplifié produisait des réponses longues (titres, listes) et définissait
+# des mots avec des connaissances extérieures au cours (erreur : « CO2 = gaz que l'on respire »).
+standard: |
+  Utilise un langage clair et adapté à un élève. Sois concis : va droit à l'essentiel.
+simplifie: |
+  L'élève a besoin d'un texte simplifié (FALC — Facile à Lire et à Comprendre). Règles strictes :
+  - 5 phrases au maximum, de 12 mots au maximum chacune. Une seule idée par phrase.
+  - Pas de titres, pas de gras, pas de listes imbriquées.
+  - Mots courants. Pas de double négation. Pas de formules chimiques si les mots suffisent.
+  - Si tu définis un mot difficile, utilise UNIQUEMENT ce que disent les extraits du cours.
+    Si le cours ne le définit pas, ne le définis pas.
+  - Termine par un exemple concret court, pris dans le cours.

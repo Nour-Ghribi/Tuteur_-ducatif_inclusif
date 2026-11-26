@@ -1,0 +1,5 @@
+runs/
+registry/
+policies/
+!inputs/
+!inputs/**

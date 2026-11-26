@@ -1,0 +1,117 @@
+{
+  "request_id": "dca08cef1e4847d5b7495ebeacd3d372",
+  "workflow": "answer",
+  "intent": "answer",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "quiz_feedback",
+        "question_id": "005b0310bb5b4516-q1",
+        "is_correct": false,
+        "score": 0.0,
+        "correct_option_id": "a",
+        "explanation": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique.",
+        "observed_errors": [
+          "selected_incorrect_option"
+        ]
+      },
+      {
+        "type": "callout",
+        "tone": "info",
+        "message_code": "remediation_intro",
+        "text": null
+      },
+      {
+        "type": "callout",
+        "tone": "info",
+        "message_code": "misconception_hypothesis",
+        "text": "[simulated] photosynthèse"
+      },
+      {
+        "type": "text",
+        "text": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique. Elle se déroule dans les chloroplastes. Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+      },
+      {
+        "type": "quiz",
+        "title": "photosynthèse",
+        "questions": [
+          {
+            "question_id": "dca08cef1e4847d5-q1",
+            "item_type": "mcq",
+            "prompt": "Selon le cours, quelle affirmation est correcte ?",
+            "options": [
+              {
+                "option_id": "a",
+                "text": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+              },
+              {
+                "option_id": "b",
+                "text": "Affirmation simulée incorrecte 1"
+              },
+              {
+                "option_id": "c",
+                "text": "Affirmation simulée incorrecte 2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "recommendation_card",
+        "recommendation_id": "rec-8e2230982c26",
+        "activity_type": "revision",
+        "difficulty": "easy",
+        "topic": "photosynthèse",
+        "rationale": null,
+        "source": "policy"
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "context_provided",
+      "sources": [
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c0",
+          "page": 1
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c2",
+          "page": 2
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c3",
+          "page": 2
+        },
+        {
+          "doc_id": "respiration",
+          "chunk_id": "demo-bio-101-c4",
+          "page": 3
+        }
+      ],
+      "verification": {
+        "checks_run": [
+          "structure",
+          "grounding_pages"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "rag",
+        "rl"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

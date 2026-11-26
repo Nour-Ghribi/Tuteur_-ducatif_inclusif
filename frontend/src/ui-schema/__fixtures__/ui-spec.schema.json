@@ -1,0 +1,1320 @@
+{
+  "$defs": {
+    "ActivityType": {
+      "enum": [
+        "quiz",
+        "exercise",
+        "flashcards",
+        "explanation",
+        "revision",
+        "mini_game"
+      ],
+      "title": "ActivityType",
+      "type": "string"
+    },
+    "Bar": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "minimum": 0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "label",
+        "value"
+      ],
+      "title": "Bar",
+      "type": "object"
+    },
+    "BarChartBlock": {
+      "additionalProperties": false,
+      "description": "Rendered with a mandatory table alternative for screen readers.",
+      "properties": {
+        "type": {
+          "const": "bar_chart",
+          "default": "bar_chart",
+          "title": "Type",
+          "type": "string"
+        },
+        "title_code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Title Code",
+          "type": "string"
+        },
+        "value_unit": {
+          "enum": [
+            "ratio",
+            "count"
+          ],
+          "title": "Value Unit",
+          "type": "string"
+        },
+        "bars": {
+          "items": {
+            "$ref": "#/$defs/Bar"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Bars",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title_code",
+        "value_unit",
+        "bars"
+      ],
+      "title": "BarChartBlock",
+      "type": "object"
+    },
+    "BulletListBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bullet_list",
+          "default": "bullet_list",
+          "title": "Type",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "maxLength": 500,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "BulletListBlock",
+      "type": "object"
+    },
+    "CalloutBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "callout",
+          "default": "callout",
+          "title": "Type",
+          "type": "string"
+        },
+        "tone": {
+          "default": "info",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ],
+          "title": "Tone",
+          "type": "string"
+        },
+        "message_code": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_.:-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Message Code"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "maxLength": 1000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        }
+      },
+      "title": "CalloutBlock",
+      "type": "object"
+    },
+    "ComparisonRowView": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Criterion",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "maxLength": 500,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 2,
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "criterion",
+        "values"
+      ],
+      "title": "ComparisonRowView",
+      "type": "object"
+    },
+    "ComparisonTableBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "comparison_table",
+          "default": "comparison_table",
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "columns": {
+          "items": {
+            "maxLength": 120,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 2,
+          "title": "Columns",
+          "type": "array"
+        },
+        "rows": {
+          "items": {
+            "$ref": "#/$defs/ComparisonRowView"
+          },
+          "maxItems": 15,
+          "minItems": 1,
+          "title": "Rows",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "columns",
+        "rows"
+      ],
+      "title": "ComparisonTableBlock",
+      "type": "object"
+    },
+    "ConceptCardsBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "concept_cards",
+          "default": "concept_cards",
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "concepts": {
+          "items": {
+            "$ref": "#/$defs/ConceptView"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Concepts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "concepts"
+      ],
+      "title": "ConceptCardsBlock",
+      "type": "object"
+    },
+    "ConceptMapBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "concept_map",
+          "default": "concept_map",
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "central_node_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Central Node Id",
+          "type": "string"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/MapNodeView"
+          },
+          "maxItems": 40,
+          "minItems": 2,
+          "title": "Nodes",
+          "type": "array"
+        },
+        "edges": {
+          "items": {
+            "$ref": "#/$defs/MapEdgeView"
+          },
+          "maxItems": 80,
+          "title": "Edges",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "central_node_id",
+        "nodes"
+      ],
+      "title": "ConceptMapBlock",
+      "type": "object"
+    },
+    "ConceptView": {
+      "additionalProperties": false,
+      "properties": {
+        "term": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Term",
+          "type": "string"
+        },
+        "definition": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Definition",
+          "type": "string"
+        },
+        "example": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Example"
+        }
+      },
+      "required": [
+        "term",
+        "definition"
+      ],
+      "title": "ConceptView",
+      "type": "object"
+    },
+    "Difficulty": {
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ],
+      "title": "Difficulty",
+      "type": "string"
+    },
+    "FallbackBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "fallback",
+          "default": "fallback",
+          "title": "Type",
+          "type": "string"
+        },
+        "reason_code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        }
+      },
+      "required": [
+        "reason_code"
+      ],
+      "title": "FallbackBlock",
+      "type": "object"
+    },
+    "FlashcardDeckBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "flashcard_deck",
+          "default": "flashcard_deck",
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "cards": {
+          "items": {
+            "$ref": "#/$defs/FlashcardView"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Cards",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "cards"
+      ],
+      "title": "FlashcardDeckBlock",
+      "type": "object"
+    },
+    "FlashcardView": {
+      "additionalProperties": false,
+      "properties": {
+        "front": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Front",
+          "type": "string"
+        },
+        "back": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Back",
+          "type": "string"
+        }
+      },
+      "required": [
+        "front",
+        "back"
+      ],
+      "title": "FlashcardView",
+      "type": "object"
+    },
+    "HeadingBlock": {
+      "additionalProperties": false,
+      "description": "Generated headings carry ``text``; system headings carry a localizable ``text_code``.",
+      "properties": {
+        "type": {
+          "const": "heading",
+          "default": "heading",
+          "title": "Type",
+          "type": "string"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "text_code": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_.:-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text Code"
+        },
+        "level": {
+          "default": 2,
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        }
+      },
+      "title": "HeadingBlock",
+      "type": "object"
+    },
+    "ImageBlock": {
+      "additionalProperties": false,
+      "description": "Course figure. ``alt_text`` is mandatory; ``adapted`` marks a colour-vision variant.",
+      "properties": {
+        "type": {
+          "const": "image",
+          "default": "image",
+          "title": "Type",
+          "type": "string"
+        },
+        "asset_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "alt_text": {
+          "anyOf": [
+            {
+              "maxLength": 300,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alt Text"
+        },
+        "long_description": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Long Description"
+        },
+        "adapted": {
+          "default": false,
+          "title": "Adapted",
+          "type": "boolean"
+        },
+        "description_source": {
+          "default": "model",
+          "enum": [
+            "model",
+            "placeholder"
+          ],
+          "title": "Description Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asset_id"
+      ],
+      "title": "ImageBlock",
+      "type": "object"
+    },
+    "MapEdgeView": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Target",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        }
+      },
+      "required": [
+        "source",
+        "target"
+      ],
+      "title": "MapEdgeView",
+      "type": "object"
+    },
+    "MapNodeView": {
+      "additionalProperties": false,
+      "properties": {
+        "node_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "node_id",
+        "label"
+      ],
+      "title": "MapNodeView",
+      "type": "object"
+    },
+    "Metric": {
+      "additionalProperties": false,
+      "properties": {
+        "label_code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Label Code",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "enum": [
+            "count",
+            "ratio",
+            "seconds"
+          ],
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label_code",
+        "value",
+        "unit"
+      ],
+      "title": "Metric",
+      "type": "object"
+    },
+    "MetricGridBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "metric_grid",
+          "default": "metric_grid",
+          "title": "Type",
+          "type": "string"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "title": "Metrics",
+          "type": "array"
+        }
+      },
+      "required": [
+        "metrics"
+      ],
+      "title": "MetricGridBlock",
+      "type": "object"
+    },
+    "ProgressBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "progress",
+          "default": "progress",
+          "title": "Type",
+          "type": "string"
+        },
+        "label_code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Label Code",
+          "type": "string"
+        },
+        "value": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "label_code",
+        "value"
+      ],
+      "title": "ProgressBlock",
+      "type": "object"
+    },
+    "QuizBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "quiz",
+          "default": "quiz",
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/$defs/QuizQuestionView"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Questions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "questions"
+      ],
+      "title": "QuizBlock",
+      "type": "object"
+    },
+    "QuizFeedbackBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "quiz_feedback",
+          "default": "quiz_feedback",
+          "title": "Type",
+          "type": "string"
+        },
+        "question_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Question Id",
+          "type": "string"
+        },
+        "is_correct": {
+          "title": "Is Correct",
+          "type": "boolean"
+        },
+        "score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Score",
+          "type": "number"
+        },
+        "correct_option_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_.:-]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Correct Option Id"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Explanation"
+        },
+        "observed_errors": {
+          "items": {
+            "maxLength": 300,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "title": "Observed Errors",
+          "type": "array"
+        }
+      },
+      "required": [
+        "question_id",
+        "is_correct",
+        "score"
+      ],
+      "title": "QuizFeedbackBlock",
+      "type": "object"
+    },
+    "QuizOptionView": {
+      "additionalProperties": false,
+      "properties": {
+        "option_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Option Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "option_id",
+        "text"
+      ],
+      "title": "QuizOptionView",
+      "type": "object"
+    },
+    "QuizQuestionView": {
+      "additionalProperties": false,
+      "description": "A question as shown to the learner. It never carries the answer key.",
+      "properties": {
+        "question_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Question Id",
+          "type": "string"
+        },
+        "item_type": {
+          "enum": [
+            "mcq",
+            "true_false",
+            "short_answer"
+          ],
+          "title": "Item Type",
+          "type": "string"
+        },
+        "prompt": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Prompt",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/QuizOptionView"
+          },
+          "maxItems": 6,
+          "title": "Options",
+          "type": "array"
+        }
+      },
+      "required": [
+        "question_id",
+        "item_type",
+        "prompt"
+      ],
+      "title": "QuizQuestionView",
+      "type": "object"
+    },
+    "RecommendationCardBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "recommendation_card",
+          "default": "recommendation_card",
+          "title": "Type",
+          "type": "string"
+        },
+        "recommendation_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Recommendation Id",
+          "type": "string"
+        },
+        "activity_type": {
+          "$ref": "#/$defs/ActivityType"
+        },
+        "difficulty": {
+          "$ref": "#/$defs/Difficulty"
+        },
+        "topic": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Topic",
+          "type": "string"
+        },
+        "rationale": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rationale"
+        },
+        "source": {
+          "default": "policy",
+          "enum": [
+            "policy",
+            "fallback"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "recommendation_id",
+        "activity_type",
+        "difficulty",
+        "topic"
+      ],
+      "title": "RecommendationCardBlock",
+      "type": "object"
+    },
+    "SourceRef": {
+      "properties": {
+        "doc_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Doc Id",
+          "type": "string"
+        },
+        "chunk_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.:-]+$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        }
+      },
+      "required": [
+        "doc_id",
+        "chunk_id"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "StepView": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "detail": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "detail"
+      ],
+      "title": "StepView",
+      "type": "object"
+    },
+    "StepsBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "steps",
+          "default": "steps",
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/StepView"
+          },
+          "maxItems": 15,
+          "minItems": 1,
+          "title": "Steps",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "steps"
+      ],
+      "title": "StepsBlock",
+      "type": "object"
+    },
+    "TextBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "text",
+          "default": "text",
+          "title": "Type",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "TextBlock",
+      "type": "object"
+    },
+    "UIMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "grounding": {
+          "default": "not_applicable",
+          "enum": [
+            "context_provided",
+            "no_context",
+            "not_applicable"
+          ],
+          "title": "Grounding",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 20,
+          "title": "Sources",
+          "type": "array"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VerificationReport"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "simulated": {
+          "default": false,
+          "title": "Simulated",
+          "type": "boolean"
+        },
+        "simulated_services": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.:-]+$",
+            "type": "string"
+          },
+          "title": "Simulated Services",
+          "type": "array"
+        },
+        "fallback_used": {
+          "default": false,
+          "title": "Fallback Used",
+          "type": "boolean"
+        },
+        "warnings": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.:-]+$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Warnings",
+          "type": "array"
+        },
+        "prompt_version": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompt Version"
+        },
+        "model_id": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Id"
+        }
+      },
+      "title": "UIMeta",
+      "type": "object"
+    },
+    "VerificationReport": {
+      "additionalProperties": false,
+      "description": "What was actually checked. ``passed`` only covers the checks listed in ``checks_run``.",
+      "properties": {
+        "checks_run": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.:-]+$",
+            "type": "string"
+          },
+          "title": "Checks Run",
+          "type": "array"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "issues": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.:-]+$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Issues",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.:-]+$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "passed"
+      ],
+      "title": "VerificationReport",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "blocks": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "bar_chart": "#/$defs/BarChartBlock",
+            "bullet_list": "#/$defs/BulletListBlock",
+            "callout": "#/$defs/CalloutBlock",
+            "comparison_table": "#/$defs/ComparisonTableBlock",
+            "concept_cards": "#/$defs/ConceptCardsBlock",
+            "concept_map": "#/$defs/ConceptMapBlock",
+            "fallback": "#/$defs/FallbackBlock",
+            "flashcard_deck": "#/$defs/FlashcardDeckBlock",
+            "heading": "#/$defs/HeadingBlock",
+            "image": "#/$defs/ImageBlock",
+            "metric_grid": "#/$defs/MetricGridBlock",
+            "progress": "#/$defs/ProgressBlock",
+            "quiz": "#/$defs/QuizBlock",
+            "quiz_feedback": "#/$defs/QuizFeedbackBlock",
+            "recommendation_card": "#/$defs/RecommendationCardBlock",
+            "steps": "#/$defs/StepsBlock",
+            "text": "#/$defs/TextBlock"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/HeadingBlock"
+          },
+          {
+            "$ref": "#/$defs/TextBlock"
+          },
+          {
+            "$ref": "#/$defs/BulletListBlock"
+          },
+          {
+            "$ref": "#/$defs/CalloutBlock"
+          },
+          {
+            "$ref": "#/$defs/FlashcardDeckBlock"
+          },
+          {
+            "$ref": "#/$defs/QuizBlock"
+          },
+          {
+            "$ref": "#/$defs/QuizFeedbackBlock"
+          },
+          {
+            "$ref": "#/$defs/ConceptCardsBlock"
+          },
+          {
+            "$ref": "#/$defs/StepsBlock"
+          },
+          {
+            "$ref": "#/$defs/ComparisonTableBlock"
+          },
+          {
+            "$ref": "#/$defs/ConceptMapBlock"
+          },
+          {
+            "$ref": "#/$defs/ProgressBlock"
+          },
+          {
+            "$ref": "#/$defs/RecommendationCardBlock"
+          },
+          {
+            "$ref": "#/$defs/MetricGridBlock"
+          },
+          {
+            "$ref": "#/$defs/BarChartBlock"
+          },
+          {
+            "$ref": "#/$defs/ImageBlock"
+          },
+          {
+            "$ref": "#/$defs/FallbackBlock"
+          }
+        ]
+      },
+      "maxItems": 40,
+      "minItems": 1,
+      "title": "Blocks",
+      "type": "array"
+    },
+    "meta": {
+      "$ref": "#/$defs/UIMeta"
+    }
+  },
+  "required": [
+    "blocks"
+  ],
+  "title": "UISpec",
+  "type": "object"
+}

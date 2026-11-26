@@ -1,0 +1,91 @@
+[
+  {
+    "id": "rem-01",
+    "question": "Que rejette la photosynthèse dans l'atmosphère ?",
+    "diagnostic": "Tu as confondu ce que la plante libère avec la respiration. La photosynthèse produit du dioxygène, pas du dioxyde de carbone. La respiration consomme du dioxygène et rejette du dioxyde de carbone. Le cours indique que la plante rejette du dioxygène. Exemple : la plante libère O2 pendant la journée.",
+    "explanation": "La photosynthèse crée du dioxygène, pas du dioxyde de carbone. La respiration utilise du dioxygène et rend du dioxyde de carbone. Le cours montre que la plante rejette du dioxygène. Exemple : la plante libère O2 le jour.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La photosynthèse libère du dioxygène dans l'atmosphère.",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "La photosynthèse produit du dioxygène, comme le cours le dit.",
+      "difficulty": "facile",
+      "competence": "Comprendre les produits de la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9110604280174088,
+    "words": 37,
+    "words_per_sentence": 7.4,
+    "kandel_moles": 84.11602702702704
+  },
+  {
+    "id": "rem-02",
+    "question": "Quand la photosynthèse a-t-elle lieu ?",
+    "diagnostic": "Tu penses que la photosynthèse se passe jour et nuit. En fait, elle ne se produit qu'avec lumière. La respiration, elle, se fait jour et nuit. Les deux processus sont différents. Cette confusion est fréquente.",
+    "explanation": "La photosynthèse a lieu seulement quand la lumière atteint les chloroplastes. Elle utilise lumière, eau et CO2 pour fabriquer du glucose. En même temps, elle libère du dioxygène dans l'air. La respiration consomme du dioxygène et produit du CO2 jour et nuit. Ainsi, la photosynthèse ne se produit pas la nuit.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "La photosynthèse se produit uniquement lorsqu'il y a de la lumière.",
+      "choices": [
+        "Vrai",
+        "Faux"
+      ],
+      "answer": "Vrai",
+      "explanation": "Elle a besoin de lumière, donc pas la nuit.",
+      "difficulty": "facile",
+      "competence": "Moment de la photosynthèse",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9036312818729468,
+    "words": 51,
+    "words_per_sentence": 10.2,
+    "kandel_moles": 78.30974509803922
+  },
+  {
+    "id": "rem-03",
+    "question": "Par où le CO2 entre-t-il dans la feuille ?",
+    "diagnostic": "L'élève a confondu l'entrée du CO2 avec l'absorption d'eau par les racines.",
+    "explanation": "Le CO2 entre dans la feuille par les stomates, de petits orifices sur la surface. Exemple : les stomates laissent passer le CO2 de l'air.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "Le dioxyde de carbone entre dans la feuille par les stomates.",
+      "choices": [],
+      "answer": "Vrai",
+      "explanation": "Les stomates sont les ouvertures qui laissent passer le CO2.",
+      "difficulty": "facile",
+      "competence": "Comprendre le point d'entrée du CO2",
+      "source_pages": [
+        1
+      ]
+    },
+    "similarity": 0.9031294671558572,
+    "words": 24,
+    "words_per_sentence": 8.0,
+    "kandel_moles": 88.48
+  },
+  {
+    "id": "rem-04",
+    "question": "Pourquoi les feuilles sont-elles vertes ?",
+    "diagnostic": "Vous avez confondu absorption et réflexion de la lumière verte.",
+    "explanation": "La chlorophylle capte la lumière rouge et bleue. Elle renvoie la lumière verte. C’est pourquoi les feuilles paraissent vertes.",
+    "exercise": {
+      "type": "vrai_faux",
+      "question": "Vrai ou faux : la chlorophylle absorbe la lumière verte.",
+      "choices": [],
+      "answer": "Faux",
+      "explanation": "La chlorophylle renvoie la lumière verte, elle ne l’absorbe pas.",
+      "difficulty": "facile",
+      "competence": "Comprendre absorption vs réflexion de la lumière",
+      "source_pages": []
+    },
+    "similarity": 0.8864303888436056,
+    "words": 19,
+    "words_per_sentence": 6.333333333333333,
+    "kandel_moles": 92.10850877192983
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "request_id": "cb6c1ec56da749c7ae69ea3c3ef843ce",
+  "workflow": "experience",
+  "intent": "steps",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "steps",
+        "title": "photosynthèse",
+        "steps": [
+          {
+            "title": "Étape 1",
+            "detail": "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique."
+          },
+          {
+            "title": "Étape 2",
+            "detail": "Elle se déroule dans les chloroplastes."
+          },
+          {
+            "title": "Étape 3",
+            "detail": "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+          },
+          {
+            "title": "Étape 4",
+            "detail": "Les produits sont le glucose et le dioxygène."
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "context_provided",
+      "sources": [
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c0",
+          "page": 1
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c2",
+          "page": 2
+        }
+      ],
+      "verification": {
+        "checks_run": [
+          "structure"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "rag"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

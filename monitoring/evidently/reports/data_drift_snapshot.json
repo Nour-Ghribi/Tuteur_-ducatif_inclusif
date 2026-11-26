@@ -1,0 +1,249 @@
+{
+  "metrics": [
+    {
+      "id": "4eb6d7e60040cd1f75be33b35d028aaa",
+      "metric_name": "DriftedColumnsCount(columns=session_duration_minutes,quiz_score,interaction_count,difficulty,accessibility_mode,drift_share=0.4)",
+      "config": {
+        "type": "evidently:metric_v2:DriftedColumnsCount",
+        "columns": [
+          "session_duration_minutes",
+          "quiz_score",
+          "interaction_count",
+          "difficulty",
+          "accessibility_mode"
+        ],
+        "drift_share": 0.4
+      },
+      "value": {
+        "count": 4.0,
+        "share": 0.8
+      }
+    },
+    {
+      "id": "ea6f9fcb8400f0cd28c49108587c2fac",
+      "metric_name": "ValueDrift(column=session_duration_minutes,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "session_duration_minutes",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.6314609320381457e-70
+    },
+    {
+      "id": "c8fa89dd61c0aca4f644cf56533e669e",
+      "metric_name": "ValueDrift(column=quiz_score,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "quiz_score",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.701913467404464e-45
+    },
+    {
+      "id": "217bc9004f9e9353f4abb28eb05b467e",
+      "metric_name": "ValueDrift(column=interaction_count,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "interaction_count",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 7.92155857098811e-80
+    },
+    {
+      "id": "c64d9fe32e372f88895861279bf8e223",
+      "metric_name": "ValueDrift(column=difficulty,method=chi-square p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "difficulty",
+        "method": "chi-square p_value",
+        "threshold": 0.05
+      },
+      "value": 1.1461888876071518e-38
+    },
+    {
+      "id": "29d552aa660d073d86d717055fad8748",
+      "metric_name": "ValueDrift(column=accessibility_mode,method=chi-square p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "accessibility_mode",
+        "method": "chi-square p_value",
+        "threshold": 0.05
+      },
+      "value": 0.254756616721271
+    }
+  ],
+  "tests": [
+    {
+      "id": "lt",
+      "name": "Share of Drifted Columns: Less 0.400",
+      "description": "Share of Drifted Columns: Actual value 0.800 >= 0.400",
+      "metric_config": {
+        "metric_id": "4eb6d7e60040cd1f75be33b35d028aaa",
+        "params": {
+          "type": "evidently:metric_v2:DriftedColumnsCount",
+          "columns": [
+            "session_duration_minutes",
+            "quiz_score",
+            "interaction_count",
+            "difficulty",
+            "accessibility_mode"
+          ],
+          "drift_share": 0.4
+        }
+      },
+      "test_config": {
+        "type": "evidently:test_v2:LessThanMetricTest",
+        "is_critical": true,
+        "alias": null,
+        "label_filters": null,
+        "threshold": 0.4
+      },
+      "status": "FAIL",
+      "bound_test": {
+        "type": "evidently:bound_test:CountBoundTest",
+        "test": {
+          "type": "evidently:test_v2:LessThanMetricTest",
+          "is_critical": true,
+          "alias": null,
+          "label_filters": null,
+          "threshold": 0.4
+        },
+        "metric_fingerprint": "4eb6d7e60040cd1f75be33b35d028aaa",
+        "is_count": false
+      }
+    },
+    {
+      "id": "drift",
+      "name": "Value Drift for column session_duration_minutes",
+      "description": "Drift score is 0.00. The drift detection method is K-S p_value. The drift threshold is 0.05.",
+      "metric_config": {
+        "metric_id": "ea6f9fcb8400f0cd28c49108587c2fac",
+        "params": {
+          "type": "evidently:metric_v2:ValueDrift",
+          "column": "session_duration_minutes",
+          "method": "K-S p_value",
+          "threshold": 0.05
+        }
+      },
+      "test_config": {},
+      "status": "FAIL",
+      "bound_test": {
+        "type": "evidently:bound_test:ValueDriftBoundTest",
+        "test": {
+          "type": "evidently:test_v2:ValueDriftTest",
+          "is_critical": true,
+          "alias": null,
+          "label_filters": null
+        },
+        "metric_fingerprint": "ea6f9fcb8400f0cd28c49108587c2fac"
+      }
+    },
+    {
+      "id": "drift",
+      "name": "Value Drift for column quiz_score",
+      "description": "Drift score is 0.00. The drift detection method is K-S p_value. The drift threshold is 0.05.",
+      "metric_config": {
+        "metric_id": "c8fa89dd61c0aca4f644cf56533e669e",
+        "params": {
+          "type": "evidently:metric_v2:ValueDrift",
+          "column": "quiz_score",
+          "method": "K-S p_value",
+          "threshold": 0.05
+        }
+      },
+      "test_config": {},
+      "status": "FAIL",
+      "bound_test": {
+        "type": "evidently:bound_test:ValueDriftBoundTest",
+        "test": {
+          "type": "evidently:test_v2:ValueDriftTest",
+          "is_critical": true,
+          "alias": null,
+          "label_filters": null
+        },
+        "metric_fingerprint": "c8fa89dd61c0aca4f644cf56533e669e"
+      }
+    },
+    {
+      "id": "drift",
+      "name": "Value Drift for column interaction_count",
+      "description": "Drift score is 0.00. The drift detection method is K-S p_value. The drift threshold is 0.05.",
+      "metric_config": {
+        "metric_id": "217bc9004f9e9353f4abb28eb05b467e",
+        "params": {
+          "type": "evidently:metric_v2:ValueDrift",
+          "column": "interaction_count",
+          "method": "K-S p_value",
+          "threshold": 0.05
+        }
+      },
+      "test_config": {},
+      "status": "FAIL",
+      "bound_test": {
+        "type": "evidently:bound_test:ValueDriftBoundTest",
+        "test": {
+          "type": "evidently:test_v2:ValueDriftTest",
+          "is_critical": true,
+          "alias": null,
+          "label_filters": null
+        },
+        "metric_fingerprint": "217bc9004f9e9353f4abb28eb05b467e"
+      }
+    },
+    {
+      "id": "drift",
+      "name": "Value Drift for column difficulty",
+      "description": "Drift score is 0.00. The drift detection method is chi-square p_value. The drift threshold is 0.05.",
+      "metric_config": {
+        "metric_id": "c64d9fe32e372f88895861279bf8e223",
+        "params": {
+          "type": "evidently:metric_v2:ValueDrift",
+          "column": "difficulty",
+          "method": "chi-square p_value",
+          "threshold": 0.05
+        }
+      },
+      "test_config": {},
+      "status": "FAIL",
+      "bound_test": {
+        "type": "evidently:bound_test:ValueDriftBoundTest",
+        "test": {
+          "type": "evidently:test_v2:ValueDriftTest",
+          "is_critical": true,
+          "alias": null,
+          "label_filters": null
+        },
+        "metric_fingerprint": "c64d9fe32e372f88895861279bf8e223"
+      }
+    },
+    {
+      "id": "drift",
+      "name": "Value Drift for column accessibility_mode",
+      "description": "Drift score is 0.25. The drift detection method is chi-square p_value. The drift threshold is 0.05.",
+      "metric_config": {
+        "metric_id": "29d552aa660d073d86d717055fad8748",
+        "params": {
+          "type": "evidently:metric_v2:ValueDrift",
+          "column": "accessibility_mode",
+          "method": "chi-square p_value",
+          "threshold": 0.05
+        }
+      },
+      "test_config": {},
+      "status": "SUCCESS",
+      "bound_test": {
+        "type": "evidently:bound_test:ValueDriftBoundTest",
+        "test": {
+          "type": "evidently:test_v2:ValueDriftTest",
+          "is_critical": true,
+          "alias": null,
+          "label_filters": null
+        },
+        "metric_fingerprint": "29d552aa660d073d86d717055fad8748"
+      }
+    }
+  ]
+}

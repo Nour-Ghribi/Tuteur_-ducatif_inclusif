@@ -1,0 +1,34 @@
+{
+  "request_id": "e693742b7bf648b28203a796a719147d",
+  "workflow": "learning_path",
+  "intent": "learning_path",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "recommendation_card",
+        "recommendation_id": "rec-4780619c63a1",
+        "activity_type": "revision",
+        "difficulty": "easy",
+        "topic": "photosynthèse",
+        "rationale": null,
+        "source": "policy"
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "not_applicable",
+      "sources": [],
+      "verification": null,
+      "simulated": true,
+      "simulated_services": [
+        "rl"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": null,
+      "model_id": null
+    }
+  }
+}

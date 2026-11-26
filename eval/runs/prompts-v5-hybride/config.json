@@ -1,0 +1,13 @@
+{
+  "label": "prompts-v5-hybride",
+  "generator": "openai/gpt-oss-120b",
+  "prompts": [
+    "answer@v3",
+    "quiz@v2",
+    "remediation@v2",
+    "styles@v5"
+  ],
+  "top_k": 5,
+  "search_mode": "hybride",
+  "started": "2026-10-28T21:37:24"
+}

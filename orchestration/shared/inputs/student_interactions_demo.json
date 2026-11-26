@@ -1,0 +1,10 @@
+[
+  {"interaction_id": "synthetic-001", "score": 0.35, "attempts": 3, "difficulty": "moyen"},
+  {"interaction_id": "synthetic-002", "score": 0.82, "attempts": 1, "difficulty": "moyen"},
+  {"interaction_id": "synthetic-003", "score": 0.61, "attempts": 2, "difficulty": "facile"},
+  {"interaction_id": "synthetic-004", "score": 0.93, "attempts": 1, "difficulty": "difficile"},
+  {"interaction_id": "synthetic-005", "score": 0.48, "attempts": 2, "difficulty": "moyen"},
+  {"interaction_id": "synthetic-006", "score": 0.76, "attempts": 1, "difficulty": "facile"},
+  {"interaction_id": "synthetic-007", "score": 0.57, "attempts": 2, "difficulty": "moyen"},
+  {"interaction_id": "synthetic-008", "score": 0.88, "attempts": 1, "difficulty": "difficile"}
+]

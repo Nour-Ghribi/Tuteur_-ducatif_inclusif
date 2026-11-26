@@ -1,0 +1,52 @@
+· retrieval (déjà calculé)
+· retrieval_paraphrases (déjà calculé)
+· answers_standard (déjà calculé)
+· leger-qwen-qwen3.8-27b_standard (déjà calculé)
+· answers_simplifie
+Could not reach the Hub (Cannot reach https://huggingface.co/api/models/intfloat/multilingual-e5-small: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable.). Using cached commit hash for 'intfloat/multilingual-e5-small'.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  58%|█████▊    | 115/199 [00:00<00:00, 1014.93it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 1156.49it/s]
+· leger-qwen-qwen3.8-27b_simplifie (16 réponses à juger)
+· remediation
+# Évaluation prompts-v2-hybride (juge leger) — 2026-10-28T18:07:21
+générateur=openai/gpt-oss-120b  juge=qwen/qwen3.8-27b  prompts=answer@v2, quiz@v2, remediation@v2, styles@v2
+
+## retrieval
+  hit@1                            0.750
+  hit@3                            1.000
+  hit@5                            1.000
+  mrr                              0.865
+  source@1                         1.000
+## retrieval_paraphrases
+  hit@1                            0.700
+  hit@3                            1.000
+  hit@5                            1.000
+  mrr                              0.833
+  source@1                         1.000
+## standard
+  faithfulness                     1.000
+  answer_relevancy                 1.000
+  answer_correctness               1.000
+  citation_rate                    0.938
+  citation_validity                0.944
+  citation_hit_pdf                 0.833
+  words_mean                       33.188
+  words_per_sentence_mean          14.344
+  kandel_moles_mean                69.198
+  refusal_rate_out_of_scope        1.000
+## simplifie
+  faithfulness                     0.834
+  answer_relevancy                 1.000
+  answer_correctness               1.000
+  citation_rate                    1.000
+  citation_validity                0.971
+  citation_hit_pdf                 0.667
+  words_mean                       41.562
+  words_per_sentence_mean          7.338
+  kandel_moles_mean                80.844
+  refusal_rate_out_of_scope        1.000
+## remediation
+  exercise_similarity_mean         0.908
+  exercise_near_duplicate_rate     0.250
+  explanation_words_mean           33.000
+
+✓ Résultats détaillés : eval\results\prompts-v2-hybride-leger.json

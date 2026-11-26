@@ -1,0 +1,218 @@
+{
+  "date": "2026-11-13T15:04:23",
+  "courses": [
+    "Projet_Tuteur_Inclusif_Style_LaTeX.pdf",
+    "photosynthese.md"
+  ],
+  "questions": {
+    "reference": 16,
+    "paraphrases": 10
+  },
+  "k": 5,
+  "rows": [
+    {
+      "chunk_size": 300,
+      "chunk_overlap": 56,
+      "chunks": 50,
+      "mean_chunk_chars": 236,
+      "reference.dense": {
+        "hit@1": 0.4375,
+        "hit@3": 0.9375,
+        "hit@5": 0.9375,
+        "mrr": 0.6875,
+        "source@1": 1
+      },
+      "paraphrases.dense": {
+        "hit@1": 0.5,
+        "hit@3": 0.7,
+        "hit@5": 1,
+        "mrr": 0.67,
+        "source@1": 1
+      },
+      "reference.hybride": {
+        "hit@1": 0.5,
+        "hit@3": 0.875,
+        "hit@5": 1,
+        "mrr": 0.715625,
+        "source@1": 1
+      },
+      "paraphrases.hybride": {
+        "hit@1": 0.3,
+        "hit@3": 0.9,
+        "hit@5": 1,
+        "mrr": 0.6033333333333333,
+        "source@1": 1
+      }
+    },
+    {
+      "chunk_size": 400,
+      "chunk_overlap": 75,
+      "chunks": 34,
+      "mean_chunk_chars": 337,
+      "reference.dense": {
+        "hit@1": 0.6875,
+        "hit@3": 0.9375,
+        "hit@5": 0.9375,
+        "mrr": 0.8125,
+        "source@1": 1
+      },
+      "paraphrases.dense": {
+        "hit@1": 0.5,
+        "hit@3": 0.8,
+        "hit@5": 0.9,
+        "mrr": 0.675,
+        "source@1": 1
+      },
+      "reference.hybride": {
+        "hit@1": 0.8125,
+        "hit@3": 0.9375,
+        "hit@5": 1,
+        "mrr": 0.8875,
+        "source@1": 1
+      },
+      "paraphrases.hybride": {
+        "hit@1": 0.5,
+        "hit@3": 0.8,
+        "hit@5": 0.9,
+        "mrr": 0.6583333333333333,
+        "source@1": 1
+      }
+    },
+    {
+      "chunk_size": 600,
+      "chunk_overlap": 112,
+      "chunks": 24,
+      "mean_chunk_chars": 476,
+      "reference.dense": {
+        "hit@1": 0.6875,
+        "hit@3": 0.875,
+        "hit@5": 0.875,
+        "mrr": 0.7708333333333334,
+        "source@1": 1
+      },
+      "paraphrases.dense": {
+        "hit@1": 0.7,
+        "hit@3": 0.8,
+        "hit@5": 1,
+        "mrr": 0.795,
+        "source@1": 1
+      },
+      "reference.hybride": {
+        "hit@1": 0.75,
+        "hit@3": 0.9375,
+        "hit@5": 1,
+        "mrr": 0.859375,
+        "source@1": 1
+      },
+      "paraphrases.hybride": {
+        "hit@1": 0.6,
+        "hit@3": 0.8,
+        "hit@5": 0.9,
+        "mrr": 0.72,
+        "source@1": 1
+      }
+    },
+    {
+      "chunk_size": 800,
+      "chunk_overlap": 150,
+      "chunks": 19,
+      "mean_chunk_chars": 599,
+      "reference.dense": {
+        "hit@1": 0.5625,
+        "hit@3": 0.9375,
+        "hit@5": 0.9375,
+        "mrr": 0.75,
+        "source@1": 1
+      },
+      "paraphrases.dense": {
+        "hit@1": 0.8,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.8833333333333333,
+        "source@1": 1
+      },
+      "reference.hybride": {
+        "hit@1": 0.75,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.8645833333333334,
+        "source@1": 1
+      },
+      "paraphrases.hybride": {
+        "hit@1": 0.7,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.8333333333333334,
+        "source@1": 1
+      }
+    },
+    {
+      "chunk_size": 1000,
+      "chunk_overlap": 188,
+      "chunks": 15,
+      "mean_chunk_chars": 744,
+      "reference.dense": {
+        "hit@1": 0.6875,
+        "hit@3": 0.9375,
+        "hit@5": 1,
+        "mrr": 0.8177083333333334,
+        "source@1": 1
+      },
+      "paraphrases.dense": {
+        "hit@1": 0.7,
+        "hit@3": 0.9,
+        "hit@5": 1,
+        "mrr": 0.8083333333333333,
+        "source@1": 1
+      },
+      "reference.hybride": {
+        "hit@1": 0.875,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.9375,
+        "source@1": 1
+      },
+      "paraphrases.hybride": {
+        "hit@1": 0.7,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.8333333333333334,
+        "source@1": 1
+      }
+    },
+    {
+      "chunk_size": 1200,
+      "chunk_overlap": 225,
+      "chunks": 11,
+      "mean_chunk_chars": 967,
+      "reference.dense": {
+        "hit@1": 0.6875,
+        "hit@3": 0.875,
+        "hit@5": 1,
+        "mrr": 0.8125,
+        "source@1": 1
+      },
+      "paraphrases.dense": {
+        "hit@1": 0.9,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.9333333333333333,
+        "source@1": 1
+      },
+      "reference.hybride": {
+        "hit@1": 0.75,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.8645833333333334,
+        "source@1": 1
+      },
+      "paraphrases.hybride": {
+        "hit@1": 0.9,
+        "hit@3": 1,
+        "hit@5": 1,
+        "mrr": 0.95,
+        "source@1": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+name: styles
+version: 4
+description: Consignes de niveau de lecture injectées dans {style} de chaque prompt (inclusion).
+# v2 -> v4 (pas de v3 : le snapshot --prompts 3 garde styles v2) : « Termine par un exemple
+# concret » poussait le modèle à inventer des exemples hors cours (« une vache mange de l'herbe
+# et reçoit du dioxygène ») — l'essentiel des affirmations non supportées en mode simplifié.
+standard: |
+  Utilise un langage clair et adapté à un élève. Sois concis : va droit à l'essentiel.
+simplifie: |
+  L'élève a besoin d'un texte simplifié (FALC — Facile à Lire et à Comprendre). Règles strictes :
+  - 5 phrases au maximum, de 12 mots au maximum chacune. Une seule idée par phrase.
+  - Pas de titres, pas de gras, pas de listes imbriquées.
+  - Mots courants. Pas de double négation. Pas de formules chimiques si les mots suffisent.
+  - Si tu définis un mot difficile, utilise UNIQUEMENT ce que disent les extraits du cours.
+    Si le cours ne le définit pas, ne le définis pas.
+  - Simplifier, c'est dire la même chose avec des mots plus simples, jamais ajouter une idée.
+    Chaque phrase doit pouvoir être retrouvée dans les extraits du cours.
+  - Exemple : seulement si les extraits en donnent un ; reprends-le tel quel. Sinon, n'en donne pas.
+    N'invente aucun exemple, aucune comparaison, aucune situation.

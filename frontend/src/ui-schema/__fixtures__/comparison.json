@@ -1,0 +1,75 @@
+{
+  "request_id": "ac4736b110004e81a33367a4f9b81fb7",
+  "workflow": "experience",
+  "intent": "comparison",
+  "status": "ok",
+  "ui": {
+    "schema_version": "1.0",
+    "blocks": [
+      {
+        "type": "comparison_table",
+        "title": "photosynthèse",
+        "columns": [
+          "A",
+          "B"
+        ],
+        "rows": [
+          {
+            "criterion": "Notion 1",
+            "values": [
+              "La photosynthèse est le processus par lequel les plantes vertes transforment l'énergie lumineuse en énergie chimique.",
+              "Elle se déroule dans les chloroplastes."
+            ]
+          },
+          {
+            "criterion": "Notion 2",
+            "values": [
+              "Elle se déroule dans les chloroplastes.",
+              "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau."
+            ]
+          },
+          {
+            "criterion": "Notion 3",
+            "values": [
+              "Les réactifs de la photosynthèse sont le dioxyde de carbone et l'eau.",
+              "Les produits sont le glucose et le dioxygène."
+            ]
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "language": null,
+      "grounding": "context_provided",
+      "sources": [
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c0",
+          "page": 1
+        },
+        {
+          "doc_id": "photosynthese",
+          "chunk_id": "demo-bio-101-c2",
+          "page": 2
+        }
+      ],
+      "verification": {
+        "checks_run": [
+          "structure"
+        ],
+        "passed": true,
+        "issues": [],
+        "notes": []
+      },
+      "simulated": true,
+      "simulated_services": [
+        "genai",
+        "rag"
+      ],
+      "fallback_used": false,
+      "warnings": [],
+      "prompt_version": "mock-0.1",
+      "model_id": "mock-template"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+defaults:
+  glob_disable_ordering: false
+  ttl: 0
+
+mappings:
+  - match: "airflow.ti_successes"
+    name: "airflow_task_successes_total"
+  - match: "airflow.ti_failures"
+    name: "airflow_task_failures_total"
+  - match: "airflow.task.duration"
+    name: "airflow_task_duration_seconds"
+    observer_type: histogram
+    histogram_options:
+      buckets: [0.1, 0.5, 1, 5, 15, 60, 300]
+  - match: "airflow.dagrun.duration.success"
+    name: "airflow_dagrun_success_duration_seconds"
+    observer_type: histogram
+    histogram_options:
+      buckets: [1, 5, 15, 60, 300, 900]
+  - match: "airflow.dagrun.duration.failed"
+    name: "airflow_dagrun_failed_duration_seconds"
+    observer_type: histogram
+    histogram_options:
+      buckets: [1, 5, 15, 60, 300, 900]
+  - match: "airflow.scheduler_heartbeat"
+    name: "airflow_scheduler_heartbeat_total"
+  - match: "airflow.dag_processor_heartbeat"
+    name: "airflow_dag_processor_heartbeat_total"
+  - match: "."
+    match_type: regex
+    action: drop
+    name: "dropped"

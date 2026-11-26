@@ -1,0 +1,119 @@
+{
+  "photo-01": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-02": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Par exemple, une feuille au soleil apparaît verte."
+    ]
+  },
+  "photo-03": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-04": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les stomates sont situés sur la surface des feuilles."
+    ]
+  },
+  "photo-05": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-06": {
+    "faithfulness": 0.75,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Une feuille suit cette équation chaque jour."
+    ]
+  },
+  "photo-07": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Contrairement à la photosynthèse, elle n’a besoin que d’oxygène."
+    ]
+  },
+  "photo-08": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "photo-09": {
+    "faithfulness": 0.6,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Les herbivores sont mangés par les carnivores, qui nourrissent les humains",
+      "Une plante libère O₂ et produit sucre pour les insectes"
+    ]
+  },
+  "photo-10": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-01": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-02": {
+    "faithfulness": 0.25,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "DVC garde les versions de chaque fichier de données.",
+      "Il permet de retrouver un état antérieur facilement.",
+      "On versionne le dataset ASSISTments avec DVC."
+    ]
+  },
+  "projet-03": {
+    "faithfulness": 0.75,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Le choix se fait après chaque réponse de l'élève."
+    ]
+  },
+  "projet-04": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Le dataset ASSISTments 2017 aide à personnaliser les quiz."
+    ]
+  },
+  "projet-05": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": []
+  },
+  "projet-06": {
+    "faithfulness": 0.8,
+    "answer_relevancy": 1.0,
+    "answer_correctness": 1.0,
+    "unsupported_claims": [
+      "Le système compte les quiz automatiquement."
+    ]
+  }
+}

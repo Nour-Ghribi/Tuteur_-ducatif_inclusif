@@ -1,0 +1,305 @@
+x-airflow-common: &airflow-common
+  build:
+    context: .
+    dockerfile: orchestration/Dockerfile
+    args:
+      AIRFLOW_VERSION: "3.3.2"
+  image: tuteur-inclusif-airflow:3.3.2
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://airflow:${AIRFLOW_DB_PASSWORD:-airflow}@airflow-postgres/airflow"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: "http://airflow-api-server:8080/execution/"
+    AIRFLOW__API_AUTH__JWT_SECRET: "${AIRFLOW_JWT_SECRET:-local-demo-jwt-secret-change-before-sharing}"
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+    AIRFLOW__METRICS__STATSD_ON: "true"
+    AIRFLOW__METRICS__STATSD_HOST: airflow-statsd
+    AIRFLOW__METRICS__STATSD_PORT: "9125"
+    AIRFLOW__METRICS__STATSD_PREFIX: airflow
+    AIRFLOW__METRICS__STATSD_DATADOG_ENABLED: "true"
+    AIRFLOW__METRICS__STATSD_DISABLED_TAGS: ""
+    MLFLOW_TRACKING_URI: "http://mlflow:5000"
+    MLFLOW_EXPERIMENT_NAME: "${AIRFLOW_MLFLOW_EXPERIMENT_NAME:-tuteur-inclusif-airflow-demo}"
+    PIPELINE_SHARED_DIR: /opt/airflow/shared
+    RAG_QUALITY_THRESHOLD: "${RAG_QUALITY_THRESHOLD:-0.75}"
+    RL_POLICY_THRESHOLD: "${RL_POLICY_THRESHOLD:-0.45}"
+    PYTHONPATH: /opt/airflow
+  volumes:
+    - ./orchestration/dags:/opt/airflow/dags:ro
+    - ./orchestration/tuteur_pipelines:/opt/airflow/tuteur_pipelines:ro
+    - ./orchestration/shared:/opt/airflow/shared
+    - airflow_logs:/opt/airflow/logs
+  user: "${AIRFLOW_UID:-50000}:0"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tuteur-inclusif-api:local
+    environment:
+      APP_NAME: "${APP_NAME:-Tuteur éducatif inclusif API}"
+      APP_ENV: "${APP_ENV:-development}"
+      MLFLOW_TRACKING_URI: "http://mlflow:5000"
+      MLFLOW_EXPERIMENT_NAME: "${MLFLOW_EXPERIMENT_NAME:-tuteur-inclusif-demo}"
+      MLFLOW_ENABLE_ASYNC_TRACE_LOGGING: "false"
+      # Keep MLflow traces in the MLflow experiment. OpenTelemetry uses its own
+      # exporter below and must not redirect MLflow's exporter to OTLP.
+      MLFLOW_ENABLE_OTLP_EXPORTER: "false"
+      VALIDATION_MANIFEST_PATH: /app/shared/registry/validation/latest.json
+      OTEL_TRACES_ENABLED: "${OTEL_TRACES_ENABLED:-true}"
+      OTEL_TRACES_EXPORTER: "${OTEL_TRACES_EXPORTER:-console}"
+      OTEL_SERVICE_NAME: "${OTEL_SERVICE_NAME:-tuteur-inclusif-api}"
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:-http://otel-collector:4318/v1/traces}"
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./app:/app/app:ro
+      - ./orchestration/shared:/app/shared:ro
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    depends_on:
+      mlflow:
+        condition: service_healthy
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tuteur-inclusif-api:local
+    command:
+      - mlflow
+      - server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - sqlite:////mlflow/data/mlflow.db
+      - --artifacts-destination
+      - file:///mlflow/artifacts
+      - --allowed-hosts
+      - mlflow:5000,localhost:5000,127.0.0.1:5000
+    ports:
+      - "${MLFLOW_PORT:-5000}:5000"
+    volumes:
+      - mlflow_data:/mlflow/data
+      - mlflow_artifacts:/mlflow/artifacts
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=2)
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9090/-/healthy"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+      airflow-statsd:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:13.2.3
+    environment:
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_ADMIN_USER:-admin}"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_ADMIN_PASSWORD:-admin}"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./monitoring/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+    depends_on:
+      prometheus:
+        condition: service_healthy
+
+  airflow-postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: "${AIRFLOW_DB_PASSWORD:-airflow}"
+      POSTGRES_DB: airflow
+    volumes:
+      - airflow_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - >-
+        mkdir -p /opt/airflow/logs /opt/airflow/shared &&
+        chown -R "${AIRFLOW_UID:-50000}:0" /opt/airflow/logs /opt/airflow/shared &&
+        /entrypoint airflow version
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: "true"
+      _AIRFLOW_WWW_USER_CREATE: "true"
+      _AIRFLOW_WWW_USER_USERNAME: "${AIRFLOW_ADMIN_USER:-airflow}"
+      _AIRFLOW_WWW_USER_PASSWORD: "${AIRFLOW_ADMIN_PASSWORD:-airflow}"
+    user: "0:0"
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+    restart: "no"
+
+  airflow-api-server:
+    <<: *airflow-common
+    command: api-server
+    ports:
+      - "${AIRFLOW_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8080/api/v2/monitor/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD-SHELL", "airflow jobs check --job-type SchedulerJob --hostname \"$${HOSTNAME}\""]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+      airflow-api-server:
+        condition: service_healthy
+    restart: unless-stopped
+
+  airflow-dag-processor:
+    <<: *airflow-common
+    command: dag-processor
+    healthcheck:
+      test: ["CMD-SHELL", "airflow jobs check --job-type DagProcessorJob --hostname \"$${HOSTNAME}\""]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+      airflow-api-server:
+        condition: service_healthy
+    restart: unless-stopped
+
+  airflow-statsd:
+    image: prom/statsd-exporter:v0.31.0
+    command:
+      - --statsd.listen-udp=:9125
+      - --web.listen-address=:9102
+      - --statsd.mapping-config=/etc/statsd-exporter/mappings.yml
+    volumes:
+      - ./orchestration/statsd-exporter.yml:/etc/statsd-exporter/mappings.yml:ro
+    healthcheck:
+      test: ["CMD", "/bin/statsd_exporter", "--version"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.162.0
+    profiles: ["observability"]
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./monitoring/opentelemetry/collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "${OTEL_GRPC_PORT:-4317}:4317"
+      - "${OTEL_HTTP_PORT:-4318}:4318"
+      - "${OTEL_HEALTH_PORT:-13133}:13133"
+    healthcheck:
+      test: ["CMD", "/otelcol-contrib", "--version"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  evidently-report:
+    build:
+      context: .
+      dockerfile: monitoring/evidently/Dockerfile
+    image: tuteur-inclusif-evidently:0.7.23
+    profiles: ["reports"]
+    volumes:
+      - ./monitoring/evidently:/workspace/monitoring/evidently
+    restart: "no"
+
+volumes:
+  mlflow_data:
+  mlflow_artifacts:
+  prometheus_data:
+  grafana_data:
+  airflow_postgres_data:
+  airflow_logs:
+

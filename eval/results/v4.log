@@ -1,0 +1,55 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+· retrieval
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  16%|█▌        | 32/199 [00:00<00:00, 289.10it/s]Loading weights:  34%|███▎      | 67/199 [00:00<00:00, 315.56it/s]Loading weights:  64%|██████▍   | 127/199 [00:00<00:00, 439.92it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 547.72it/s]
+· retrieval_paraphrases
+· answers_standard
+· leger-qwen-qwen3.8-27b_standard (16 réponses à juger)
+· answers_simplifie
+· leger-qwen-qwen3.8-27b_simplifie (16 réponses à juger)
+  ! juge indisponible pour photo-10 (RateLimitError)
+  ! juge indisponible pour projet-01 (RateLimitError)
+  ! 6 scores manquants en mode simplifie : relancer la même commande plus tard
+· remediation
+# Évaluation prompts-v4-hybride (juge leger) — 2026-10-28T19:34:52  (INCOMPLÈTE)
+générateur=openai/gpt-oss-120b  juge=qwen/qwen3.8-27b  prompts=answer@v3, quiz@v2, remediation@v2, styles@v4
+
+## retrieval
+  hit@1                            0.750
+  hit@3                            1.000
+  hit@5                            1.000
+  mrr                              0.865
+  source@1                         1.000
+## retrieval_paraphrases
+  hit@1                            0.700
+  hit@3                            1.000
+  hit@5                            1.000
+  mrr                              0.833
+  source@1                         1.000
+## standard
+  faithfulness                     1.000
+  answer_relevancy                 1.000
+  answer_correctness               1.000
+  citation_rate                    1.000
+  citation_validity                1.000
+  citation_hit_pdf                 1.000
+  words_mean                       27.438
+  words_per_sentence_mean          13.887
+  kandel_moles_mean                66.287
+  refusal_rate_out_of_scope        1.000
+## simplifie
+  faithfulness                     1.000
+  answer_relevancy                 0.964
+  answer_correctness               0.964
+  citation_rate                    1.000
+  citation_validity                1.000
+  citation_hit_pdf                 1.000
+  words_mean                       19.625
+  words_per_sentence_mean          9.099
+  kandel_moles_mean                77.217
+  refusal_rate_out_of_scope        1.000
+## remediation
+  exercise_similarity_mean         0.895
+  exercise_near_duplicate_rate     0.000
+  explanation_words_mean           36.500
+
+✓ Résultats détaillés : eval\results\prompts-v4-hybride-leger.json
