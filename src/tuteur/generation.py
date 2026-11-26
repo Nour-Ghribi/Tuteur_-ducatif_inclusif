@@ -21,13 +21,25 @@ class Tutor:
         self.store = store or VectorStore()
         self.llm = llm or LLM()
 
-    def ask(self, question: str, reading_level: str = "standard", k: int | None = None) -> Answer:
+    def ask(
+        self,
+        question: str,
+        reading_level: str = "standard",
+        language: str = "fr",
+        school_level: str = "middle",
+        k: int | None = None,
+    ) -> Answer:
         results = self.store.search(question, k=k)
         prompt = load_prompt("answer")
         context = format_context(results, prompt.context_format)
-        system, user = prompt.render(reading_level, context=context, question=question)
+        system, user = prompt.render(
+            reading_level,
+            language=language,
+            school_level=school_level,
+            context=context,
+            question=question,
+        )
         raw = self.llm.chat(system, user)
-        # Garde-fou : une page citée qui n'est pas celle d'un passage fourni est retirée avant affichage.
         pages = {r.metadata["page"] for r in results}
         return Answer(
             text=strip_invalid_citations(raw, pages),
@@ -50,6 +62,8 @@ class Tutor:
         difficulty: Difficulty = "moyen",
         types: tuple[str, ...] = ("qcm", "vrai_faux", "flashcard"),
         reading_level: str = "standard",
+        language: str = "fr",
+        school_level: str = "middle",
     ) -> Quiz:
         """Quiz sur un thème (recherche sémantique) ou sur des pages précises d'un document (chapitre)."""
         if doc_id and pages:
@@ -64,6 +78,8 @@ class Tutor:
         prompt = load_prompt("quiz")
         system, user = prompt.render(
             reading_level,
+            language=language,
+            school_level=school_level,
             context=format_context(results, prompt.context_format),
             n=n,
             difficulty=difficulty,
@@ -78,11 +94,15 @@ class Tutor:
         correct_answer: str,
         history: list[str] | None = None,
         reading_level: str = "standard",
+        language: str = "fr",
+        school_level: str = "middle",
     ) -> Remediation:
         results = self.store.search(f"{question} {correct_answer}")
         prompt = load_prompt("remediation")
         system, user = prompt.render(
             reading_level,
+            language=language,
+            school_level=school_level,
             context=format_context(results, prompt.context_format),
             question=question,
             student_answer=student_answer,
@@ -101,6 +121,8 @@ class Tutor:
         competence: str,
         history: list[str] | None = None,
         reading_level: str = "standard",
+        language: str = "fr",
+        school_level: str = "middle",
     ):
         """Generate one strategy-specific, grounded remediation without changing legacy APIs."""
         from tuteur.adaptive.models import (
@@ -119,6 +141,8 @@ class Tutor:
         prompt = load_prompt(prompt_name)
         system, user = prompt.render(
             reading_level,
+            language=language,
+            school_level=school_level,
             context=format_context(results, prompt.context_format),
             question=question,
             student_answer=student_answer,

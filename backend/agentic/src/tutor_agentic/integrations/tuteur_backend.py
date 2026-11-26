@@ -131,6 +131,11 @@ class TuteurGenerationAdapter(_TuteurAdapter):
         invalid: list[int] = []
         prompt_version: str | None = None
 
+        # Language and school level from the request preferences
+        lang = request.preferences.language or "fr"
+        # school_level comes from the request context field if present, else default
+        school_level = getattr(request.preferences, "school_level", "middle") or "middle"
+
         if task is GenerationTask.QUIZ:
             quiz = tutor.quiz(
                 topic=request.topic,
@@ -138,6 +143,8 @@ class TuteurGenerationAdapter(_TuteurAdapter):
                 difficulty=difficulty,
                 types=("qcm", "vrai_faux"),
                 reading_level=level,
+                language=lang,
+                school_level=school_level,
             )
             items = [to_quiz_item(i, f"q{n}") for n, i in enumerate(quiz.items, 1)]
             content = QuizContent(title=title, items=items)
@@ -149,12 +156,17 @@ class TuteurGenerationAdapter(_TuteurAdapter):
                 difficulty=difficulty,
                 types=("flashcard",),
                 reading_level=level,
+                language=lang,
+                school_level=school_level,
             )
             content = FlashcardsContent(title=title, cards=[to_flashcard(i) for i in quiz.items])
             pages = sorted({p for i in quiz.items for p in i.source_pages})
         elif task is GenerationTask.EXPLANATION:
             answer = tutor.ask(
-                question_for(request.topic, request.learner_request), reading_level=level
+                question_for(request.topic, request.learner_request),
+                reading_level=level,
+                language=lang,
+                school_level=school_level,
             )
             paragraphs = [p.strip() for p in answer.text.split("\n\n") if p.strip()] or [
                 answer.text.strip()
@@ -175,6 +187,8 @@ class TuteurGenerationAdapter(_TuteurAdapter):
                 r.correct_answer,
                 history=r.history or None,
                 reading_level=level,
+                language=lang,
+                school_level=school_level,
             )
             content = RemediationContent(
                 diagnostic=cut(rem.diagnostic, 1000) if rem.diagnostic else None,

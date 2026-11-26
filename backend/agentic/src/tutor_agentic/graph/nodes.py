@@ -75,11 +75,25 @@ class GraphDependencies:
     telemetry: Telemetry
 
 
-def _language(state: TutorState) -> str | None:
+def _language(state: TutorState) -> str:
+    """Resolved language: request field → profile preference → default 'fr'."""
+    # 1. Explicit language on the current request
     for key in ("experience", "answer_submission", "recommendation_request", "report_request"):
         if (request := state.get(key)) is not None:
-            return request.language
-    return None
+            if request.language:
+                return request.language
+    # 2. Language stored in state from the student profile
+    if lang := state.get("student_language"):
+        return lang
+    # 3. Hard default
+    return "fr"
+
+
+def _school_level(state: TutorState) -> str:
+    """Resolved school level for prompt tone, from TutorState (loaded from profile)."""
+    if sl := state.get("school_level"):
+        return sl.value if hasattr(sl, "value") else str(sl)
+    return "middle"
 
 
 def _preferences(state: TutorState) -> AccessibilityPreferences:
@@ -214,6 +228,7 @@ class TutorNodes:
                 reading_level="simplified" if prefs.simplified_language else "standard",
                 max_segment_chars=400 if prefs.short_segments else 1200,
                 language=_language(state),
+                school_level=_school_level(state),
             ),
             n_items=plan.n_items,
             difficulty=plan.difficulty,

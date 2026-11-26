@@ -66,7 +66,10 @@ class ContextPassage(StrictModel):
 class GenerationPreferences(StrictModel):
     reading_level: Literal["simplified", "standard"] = "standard"
     max_segment_chars: int = Field(1200, ge=150, le=4000)
-    language: LanguageTag | None = None  # None: follow the course language
+    language: LanguageTag | None = None   # None: follow the course language
+    school_level: Literal[
+        "primary", "middle", "high", "university", "adult_learning"
+    ] = "middle"                          # from student profile, feeds prompt tone
 
 
 class TopicAggregate(ContractModel):
