@@ -18,6 +18,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from ..auth import Authenticator, Principal
 from ..errors import TutorError
+from ..profiles import create_profile_router
 from ..schemas.common import Identifier
 from ..schemas.requests import (
     ActivityOutcome,
@@ -48,6 +49,12 @@ def create_tutor_router(service: TutorService, authenticator: Authenticator) -> 
         return authenticator.authenticate(credentials.credentials if credentials else None)
 
     CurrentPrincipal = Annotated[Principal, Depends(current_principal)]
+
+    # --- Profile routes (student onboarding + teacher read) ------------------
+    router.include_router(
+        create_profile_router(service.profiles, authenticator),
+        responses=_ERRORS,
+    )
 
     @router.post(
         "/tutor/experiences", response_model=TutorResponse, tags=["tutor"], responses=_ERRORS

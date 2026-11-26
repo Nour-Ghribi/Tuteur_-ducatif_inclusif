@@ -108,3 +108,27 @@ class SourceRef(ContractModel):
     doc_id: Identifier
     chunk_id: Identifier
     page: int | None = Field(None, ge=1)
+
+
+# ---------------------------------------------------------------------------
+# Re-export profile enums so graph nodes can import from one place
+# ---------------------------------------------------------------------------
+# These are defined in profiles.models to avoid a circular import; we import
+# them here so callers can do: from tutor_agentic.schemas.common import SchoolLevel
+from tutor_agentic.profiles.models import (  # noqa: E402  (import at bottom is intentional)
+    AgeGroup,
+    CognitiveNeed,
+    HearingNeed,
+    MotorNeed,
+    SchoolLevel,
+    VisionNeed,
+)
+
+__all__ = [
+    "AgeGroup",
+    "CognitiveNeed",
+    "HearingNeed",
+    "MotorNeed",
+    "SchoolLevel",
+    "VisionNeed",
+]

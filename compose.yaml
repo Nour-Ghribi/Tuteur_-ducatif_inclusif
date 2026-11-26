@@ -55,6 +55,7 @@ services:
       TUTOR_RL_SERVICE_URL: "http://rl:8001"
       TUTOR_INCLUSION_SERVICE_URL: "${TUTOR_INCLUSION_SERVICE_URL:-}"
       TUTOR_SERVICE_API_KEY: "${TUTOR_SERVICE_API_KEY:-}"
+      TUTOR_PROFILE_DB_PATH: "/app/data/profiles.db"
       # LLM (used when TUTOR_GENAI_BACKEND=tuteur)
       LLM_BASE_URL: "${LLM_BASE_URL:-http://localhost:11434/v1}"
       LLM_MODEL: "${LLM_MODEL:-qwen2.5:7b}"

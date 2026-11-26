@@ -17,6 +17,7 @@ from .integrations.contracts import (
     RemediationInput,
     RetrievedChunk,
 )
+from .profiles.models import CognitiveNeed, SchoolLevel
 from .routing.intents import IntentDecision
 from .schemas.common import ActivityType, Difficulty, Workflow
 from .schemas.content import EducationalContent, GenerationTask, QuizItem
@@ -97,6 +98,11 @@ class TutorState(TypedDict, total=False):
     history: HistorySnapshot
     evidence_count: int  # wrong answers on this competence, including the current one
     remediation_input: RemediationInput
+
+    # --- server-side student profile (loaded before graph, never from client) ---
+    school_level: SchoolLevel | None      # feeds prompt tone + difficulty baseline
+    cognitive_need: CognitiveNeed | None  # feeds prompt tone
+    student_language: str | None          # preferred language from profile (e.g. "ar", "fr")
 
     # --- decisions and intermediate results ---
     intent: IntentDecision

@@ -17,8 +17,17 @@ from .graph import GraphDependencies, build_tutor_graph, ui_planner
 from .history import Attempt, InMemoryStudentHistory, StudentHistoryStore
 from .integrations import AdapterSet, build_adapters
 from .integrations.contracts import OutcomeReport
+from .profiles import (
+    InMemoryProfileStore,
+    ProfileStore,
+    SQLiteProfileStore,
+    merge_with_request,
+    needs_to_preferences,
+    SCHOOL_LEVEL_DIFFICULTY,
+)
+from .profiles.models import StudentProfile
 from .routing import IntentRouter
-from .schemas.common import Workflow
+from .schemas.common import AccessibilityPreferences, Difficulty, Workflow
 from .schemas.requests import (
     ActivityOutcome,
     AnswerSubmission,
@@ -42,12 +51,14 @@ class TutorService:
         telemetry: Telemetry,
         store: IssuedActivityStore | None = None,
         history: StudentHistoryStore | None = None,
+        profiles: ProfileStore | None = None,
     ) -> None:
         self._settings = settings
         self._adapters = adapters
         self._telemetry = telemetry
         self._store = store or InMemoryIssuedActivityStore(ttl_s=settings.issued_item_ttl_s)
         self._history = history or InMemoryStudentHistory()
+        self._profiles: ProfileStore = profiles or InMemoryProfileStore()
         router = IntentRouter(adapters.intent_classifier, settings.intent_classifier_min_confidence)
         self._graph = build_tutor_graph(
             GraphDependencies(
@@ -61,15 +72,65 @@ class TutorService:
     ) -> TutorService:
         settings = settings or get_settings()
         telemetry = telemetry or Telemetry()
+        # Use SQLite profile store if a DB path is configured, else in-memory
+        profile_db = getattr(settings, "profile_db_path", None)
+        profiles: ProfileStore = (
+            SQLiteProfileStore(profile_db) if profile_db else InMemoryProfileStore()
+        )
         return cls(
             settings=settings,
             adapters=build_adapters(settings, telemetry, tutor=tutor),
             telemetry=telemetry,
+            profiles=profiles,
         )
 
     @property
     def graph(self):
         return self._graph
+
+    @property
+    def profiles(self) -> ProfileStore:
+        return self._profiles
+
+    # --- profile helpers -----------------------------------------------------------------------
+
+    def _load_profile(self, subject_ref: str | None) -> StudentProfile | None:
+        if subject_ref is None:
+            return None
+        return self._profiles.get(subject_ref)
+
+    def _merge_preferences(
+        self, profile: StudentProfile | None, request_prefs: AccessibilityPreferences
+    ) -> AccessibilityPreferences:
+        """Merges server-side profile preferences with per-request client preferences.
+
+        Client preferences can tighten (turn more things on) but cannot disable
+        what a declared need requires (e.g. a dyslexic student's simplified_language
+        stays True even if the client sends simplified_language=False).
+        """
+        if profile is None:
+            return request_prefs
+        merged_dict = merge_with_request(
+            profile.rendering_preferences,
+            request_prefs.model_dump(),
+        )
+        return AccessibilityPreferences(**merged_dict)
+
+    def _profile_state_extras(self, profile: StudentProfile | None) -> dict:
+        """Extracts profile fields that go into TutorState."""
+        if profile is None:
+            return {}
+        return {
+            "school_level": profile.school_level,
+            "cognitive_need": profile.cognitive_need,
+            "student_language": profile.language_preference,
+        }
+
+    def _baseline_difficulty(self, profile: StudentProfile | None) -> Difficulty | None:
+        if profile is None:
+            return None
+        raw = SCHOOL_LEVEL_DIFFICULTY.get(profile.school_level, "medium")
+        return Difficulty(raw)
 
     # --- use cases -----------------------------------------------------------------------------
 
@@ -78,12 +139,25 @@ class TutorService:
     ) -> TutorResponse:
         principal.require_role("student", "teacher")
         student_ref = principal.subject_ref if principal.role == "student" else None
+        profile = self._load_profile(student_ref)
+
+        # Merge profile preferences with client's per-request preferences
+        merged_prefs = self._merge_preferences(profile, request.preferences)
+        request = request.model_copy(update={"preferences": merged_prefs})
+
+        # Use profile language as fallback when the request carries no language
+        if request.language is None and profile is not None:
+            request = request.model_copy(
+                update={"language": profile.language_preference}
+            )
+
         state = await self._run(
             Workflow.EXPERIENCE,
             principal,
             experience=request,
             student_ref=student_ref,
             history=self._snapshot(student_ref, request.topic, None),
+            **self._profile_state_extras(profile),
         )
         self._persist(state, principal, request.course_id)
         return self._response(state)
@@ -95,6 +169,11 @@ class TutorService:
         issued = self._store.get_question(submission.question_id, principal.subject_ref)
         if issued is None:
             raise NotFound("Unknown or expired question.")
+
+        profile = self._load_profile(principal.subject_ref)
+        merged_prefs = self._merge_preferences(profile, submission.preferences)
+        submission = submission.model_copy(update={"preferences": merged_prefs})
+
         competence = issued.item.skill
         prior_wrong = self._history.wrong_on_competence(principal.subject_ref, competence)
         state = await self._run(
@@ -105,9 +184,10 @@ class TutorService:
             student_ref=principal.subject_ref,
             history=self._snapshot(principal.subject_ref, issued.topic, competence),
             evidence_count=prior_wrong + 1,
+            **self._profile_state_extras(profile),
         )
         evaluation = state.get("evaluation")
-        if evaluation is not None:  # only graded answers enter the history and consume the question
+        if evaluation is not None:
             self._store.discard_question(submission.question_id, principal.subject_ref)
             self._history.record(
                 principal.subject_ref,
@@ -127,12 +207,17 @@ class TutorService:
         self, principal: Principal, request: RecommendationRequest
     ) -> TutorResponse:
         principal.require_role("student")
+        profile = self._load_profile(principal.subject_ref)
+        merged_prefs = self._merge_preferences(profile, request.preferences)
+        request = request.model_copy(update={"preferences": merged_prefs})
+
         state = await self._run(
             Workflow.LEARNING_PATH,
             principal,
             recommendation_request=request,
             student_ref=principal.subject_ref,
             history=self._snapshot(principal.subject_ref, request.topic, None),
+            **self._profile_state_extras(profile),
         )
         self._persist(state, principal, request.course_id)
         return self._response(state)
@@ -184,7 +269,6 @@ class TutorService:
         return asset
 
     def readiness(self) -> dict[str, Any]:
-        """For the team's /ready endpoint: reports which adapters are real, mocked or missing."""
         modes = self._adapters.modes()
         return {
             "environment": self._settings.environment,
