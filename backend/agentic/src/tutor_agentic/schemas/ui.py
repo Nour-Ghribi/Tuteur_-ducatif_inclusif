@@ -215,6 +215,44 @@ class FallbackBlock(StrictModel):
     text: bounded(2000) | None = None
 
 
+# ---------------------------------------------------------------------------
+# Engagement and badge blocks (Step 4)
+# ---------------------------------------------------------------------------
+
+class BadgeView(StrictModel):
+    badge_id: Identifier
+    label: bounded(120)
+    icon: bounded(60)
+    tier: Literal["bronze", "silver", "gold", "special"] = "bronze"
+    earned_at: bounded(30) | None = None   # ISO date string, shown in tooltip
+
+
+class BadgeShelfBlock(StrictModel):
+    """Horizontal row of earned badges for the student progress page."""
+    type: Literal["badge_shelf"] = "badge_shelf"
+    title_code: Identifier = "earned_badges"
+    badges: list[BadgeView] = Field(min_length=1, max_length=50)
+
+
+class BadgeToastBlock(StrictModel):
+    """Inline notification for newly earned badges (shown after a session)."""
+    type: Literal["badge_toast"] = "badge_toast"
+    badges: list[BadgeView] = Field(min_length=1, max_length=5)
+
+
+class EngagementAxisView(StrictModel):
+    label_code: Identifier          # "curiosity" | "persistence" | "autonomy"
+    score: float = Field(ge=0, le=1)
+    tier: Literal["low", "medium", "high"] = "medium"
+
+
+class EngagementBlock(StrictModel):
+    """Three-axis engagement display (radar / bar / list depending on frontend)."""
+    type: Literal["engagement"] = "engagement"
+    axes: list[EngagementAxisView] = Field(min_length=1, max_length=3)
+    sessions_used: int = Field(0, ge=0)   # for confidence display
+
+
 UIBlock = Annotated[
     HeadingBlock
     | TextBlock
@@ -232,6 +270,9 @@ UIBlock = Annotated[
     | MetricGridBlock
     | BarChartBlock
     | ImageBlock
+    | BadgeShelfBlock
+    | BadgeToastBlock
+    | EngagementBlock
     | FallbackBlock,
     Field(discriminator="type"),
 ]
@@ -254,6 +295,9 @@ ALLOWED_BLOCK_TYPES: frozenset[str] = frozenset(
         "metric_grid",
         "bar_chart",
         "image",
+        "badge_shelf",
+        "badge_toast",
+        "engagement",
         "fallback",
     }
 )

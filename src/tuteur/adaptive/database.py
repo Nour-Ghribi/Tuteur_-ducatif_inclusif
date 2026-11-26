@@ -75,7 +75,49 @@ CREATE TABLE IF NOT EXISTS recovery_outcomes (
   recovered INTEGER, observed_at TEXT, censor_reason TEXT,
   CHECK((status='observed' AND recovered IS NOT NULL AND observed_at IS NOT NULL) OR status!='observed')
 );
+CREATE TABLE IF NOT EXISTS engagement_snapshots (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_id  TEXT NOT NULL REFERENCES students(id),
+  computed_at TEXT NOT NULL,
+  curiosity_score   REAL NOT NULL DEFAULT 0.0,
+  persistence_score REAL NOT NULL DEFAULT 0.0,
+  autonomy_score    REAL NOT NULL DEFAULT 0.0,
+  sessions_used INTEGER NOT NULL DEFAULT 0,
+  attempts_used INTEGER NOT NULL DEFAULT 0
+);
+CREATE TABLE IF NOT EXISTS badge_events (
+  id          TEXT PRIMARY KEY,
+  student_id  TEXT NOT NULL REFERENCES students(id),
+  badge_id    TEXT NOT NULL,
+  tier        TEXT NOT NULL DEFAULT 'bronze',
+  earned_at   TEXT NOT NULL,
+  context_json TEXT,
+  UNIQUE(student_id, badge_id)
+);
 """
+
+# Applied once to existing DBs that pre-date these tables.
+_MIGRATIONS = [
+    """CREATE TABLE IF NOT EXISTS engagement_snapshots (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      student_id TEXT NOT NULL,
+      computed_at TEXT NOT NULL,
+      curiosity_score REAL NOT NULL DEFAULT 0.0,
+      persistence_score REAL NOT NULL DEFAULT 0.0,
+      autonomy_score REAL NOT NULL DEFAULT 0.0,
+      sessions_used INTEGER NOT NULL DEFAULT 0,
+      attempts_used INTEGER NOT NULL DEFAULT 0
+    )""",
+    """CREATE TABLE IF NOT EXISTS badge_events (
+      id TEXT PRIMARY KEY,
+      student_id TEXT NOT NULL,
+      badge_id TEXT NOT NULL,
+      tier TEXT NOT NULL DEFAULT 'bronze',
+      earned_at TEXT NOT NULL,
+      context_json TEXT,
+      UNIQUE(student_id, badge_id)
+    )""",
+]
 
 
 class SQLiteRepository:
@@ -84,6 +126,12 @@ class SQLiteRepository:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as connection:
             connection.executescript(SCHEMA)
+            # Apply additive migrations for DBs created before engagement tables
+            for migration in _MIGRATIONS:
+                try:
+                    connection.execute(migration)
+                except sqlite3.OperationalError:
+                    pass  # table already exists — safe to skip
 
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:
@@ -268,3 +316,82 @@ class SQLiteRepository:
     def fetchall(self, sql: str, params: tuple = ()) -> list[sqlite3.Row]:
         with self.connect() as db:
             return db.execute(sql, params).fetchall()
+
+    # ------------------------------------------------------------------
+    # Engagement snapshot persistence
+    # ------------------------------------------------------------------
+
+    def save_engagement_snapshot(self, snapshot: "EngagementSnapshot") -> None:  # type: ignore[name-defined]
+        """Append a new engagement snapshot row (history is kept for trend charts)."""
+        with self.connect() as db:
+            db.execute(
+                """INSERT INTO engagement_snapshots
+                   (student_id, computed_at, curiosity_score, persistence_score,
+                    autonomy_score, sessions_used, attempts_used)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    snapshot.student_id,
+                    snapshot.computed_at.isoformat(),
+                    snapshot.curiosity_score,
+                    snapshot.persistence_score,
+                    snapshot.autonomy_score,
+                    snapshot.sessions_used,
+                    snapshot.attempts_used,
+                ),
+            )
+
+    def latest_engagement_snapshot(self, student_id: str):
+        """Returns the most recent EngagementSnapshot row, or None."""
+        row = self.fetchone(
+            """SELECT * FROM engagement_snapshots
+               WHERE student_id = ?
+               ORDER BY computed_at DESC
+               LIMIT 1""",
+            (student_id,),
+        )
+        if row is None:
+            return None
+        from tuteur.adaptive.engagement.models import EngagementSnapshot
+        from datetime import datetime
+        return EngagementSnapshot(
+            student_id=row["student_id"],
+            computed_at=datetime.fromisoformat(row["computed_at"]),
+            curiosity_score=row["curiosity_score"],
+            persistence_score=row["persistence_score"],
+            autonomy_score=row["autonomy_score"],
+            sessions_used=row["sessions_used"],
+            attempts_used=row["attempts_used"],
+        )
+
+    def engagement_history(self, student_id: str, limit: int = 30) -> list:
+        """Returns the last N engagement snapshots for trend charts."""
+        rows = self.fetchall(
+            """SELECT * FROM engagement_snapshots
+               WHERE student_id = ?
+               ORDER BY computed_at DESC
+               LIMIT ?""",
+            (student_id, limit),
+        )
+        from tuteur.adaptive.engagement.models import EngagementSnapshot
+        from datetime import datetime
+        return [
+            EngagementSnapshot(
+                student_id=r["student_id"],
+                computed_at=datetime.fromisoformat(r["computed_at"]),
+                curiosity_score=r["curiosity_score"],
+                persistence_score=r["persistence_score"],
+                autonomy_score=r["autonomy_score"],
+                sessions_used=r["sessions_used"],
+                attempts_used=r["attempts_used"],
+            )
+            for r in rows
+        ]
+
+    def close_session(self, session_id: str, at: "datetime | None" = None) -> None:
+        """Mark a session as ended. Called by the service after the last activity."""
+        at = at or utc_now()
+        with self.connect() as db:
+            db.execute(
+                "UPDATE quiz_sessions SET ended_at = ? WHERE id = ? AND ended_at IS NULL",
+                (iso(at), session_id),
+            )

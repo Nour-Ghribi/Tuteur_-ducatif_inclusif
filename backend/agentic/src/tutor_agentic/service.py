@@ -17,6 +17,7 @@ from .graph import GraphDependencies, build_tutor_graph, ui_planner
 from .history import Attempt, InMemoryStudentHistory, StudentHistoryStore
 from .integrations import AdapterSet, build_adapters
 from .integrations.contracts import OutcomeReport
+from .engagement import EngagementService
 from .profiles import (
     InMemoryProfileStore,
     ProfileStore,
@@ -52,6 +53,7 @@ class TutorService:
         store: IssuedActivityStore | None = None,
         history: StudentHistoryStore | None = None,
         profiles: ProfileStore | None = None,
+        engagement: EngagementService | None = None,
     ) -> None:
         self._settings = settings
         self._adapters = adapters
@@ -59,6 +61,8 @@ class TutorService:
         self._store = store or InMemoryIssuedActivityStore(ttl_s=settings.issued_item_ttl_s)
         self._history = history or InMemoryStudentHistory()
         self._profiles: ProfileStore = profiles or InMemoryProfileStore()
+        ledger_path = getattr(settings, "ledger_db_path", None)
+        self._engagement = engagement or EngagementService(ledger_path)
         router = IntentRouter(adapters.intent_classifier, settings.intent_classifier_min_confidence)
         self._graph = build_tutor_graph(
             GraphDependencies(
@@ -77,11 +81,13 @@ class TutorService:
         profiles: ProfileStore = (
             SQLiteProfileStore(profile_db) if profile_db else InMemoryProfileStore()
         )
+        ledger_db = getattr(settings, "ledger_db_path", None)
         return cls(
             settings=settings,
             adapters=build_adapters(settings, telemetry, tutor=tutor),
             telemetry=telemetry,
             profiles=profiles,
+            engagement=EngagementService(ledger_db),
         )
 
     @property
@@ -200,6 +206,8 @@ class TutorService:
                     observed_errors=evaluation.observed_errors,
                 ),
             )
+            # Run engagement + badge evaluation after each graded answer
+            self._engagement.run_after_session(principal.subject_ref)
         self._persist(state, principal, issued.course_id)
         return self._response(state)
 
@@ -251,10 +259,17 @@ class TutorService:
         return self._response(state)
 
     def progress(self, principal: Principal) -> TutorResponse:
-        """The learner's own progress, from server-side history. No model call."""
+        """The learner's own progress: history snapshot + engagement scores + badges."""
         principal.require_role("student")
-        snapshot = self._history.snapshot(principal.subject_ref, topic=None, competence=None)
-        spec = UISpec(blocks=ui_planner.progress_blocks(snapshot), meta=UIMeta())
+        ref = principal.subject_ref
+        snapshot = self._history.snapshot(ref, topic=None, competence=None)
+
+        # Engagement scores (from ledger if available, else empty)
+        eng_snapshot = self._engagement.latest_snapshot(ref)
+        badges = self._engagement.earned_badges(ref)
+
+        blocks = ui_planner.progress_blocks(snapshot, eng_snapshot, badges)
+        spec = UISpec(blocks=blocks, meta=UIMeta())
         return TutorResponse(
             request_id=uuid.uuid4().hex,
             workflow=Workflow.PROGRESS,

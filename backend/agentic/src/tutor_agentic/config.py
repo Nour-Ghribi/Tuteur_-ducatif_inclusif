@@ -57,7 +57,8 @@ class Settings(BaseSettings):
     intent_classifier_min_confidence: float = Field(0.6, ge=0, le=1)
 
     issued_item_ttl_s: int = Field(3600, ge=60, le=86_400)
-    profile_db_path: Path | None = None  # SQLite path for student profiles; None = in-memory
+    profile_db_path: Path | None = None   # SQLite path for student profiles; None = in-memory
+    ledger_db_path: Path | None = None    # SQLite path for RL ledger + engagement; None = disabled
     dev_auth_tokens: dict[str, DevIdentity] = Field(default_factory=dict)
 
     @property

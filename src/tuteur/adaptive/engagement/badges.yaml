@@ -1,0 +1,188 @@
+# Badge definitions for the inclusive educational tutor.
+# Each badge has a declarative trigger; the BadgeEngine evaluates these
+# after every session against the student's ledger.
+#
+# trigger_type values:
+#   threshold      — a scalar metric (from EngagementSnapshot or ledger) >= trigger_value
+#   streak         — consecutive active session days >= trigger_value
+#   skill_accuracy — skill accuracy >= trigger_value with >= trigger_min_attempts
+#   first_time     — fires once when trigger_metric event first occurs (value ignored)
+
+badges:
+
+  # --- Milestone badges (attempts / sessions) ---
+
+  - id: first_step
+    label_fr: "Premier pas"
+    label_ar: "الخطوة الأولى"
+    label_en: "First Step"
+    icon: "footprints"
+    tier: bronze
+    description_fr: "Tu as répondu à ta première question !"
+    trigger_type: first_time
+    trigger_metric: attempts_total
+    trigger_value: 1
+
+  - id: ten_questions
+    label_fr: "Dix questions"
+    label_ar: "عشرة أسئلة"
+    label_en: "Ten Questions"
+    icon: "list-check"
+    tier: bronze
+    description_fr: "Tu as répondu à 10 questions."
+    trigger_type: threshold
+    trigger_metric: attempts_total
+    trigger_value: 10
+
+  - id: fifty_questions
+    label_fr: "Cinquante questions"
+    label_ar: "خمسون سؤالاً"
+    label_en: "Fifty Questions"
+    icon: "medal"
+    tier: silver
+    description_fr: "Tu as répondu à 50 questions."
+    trigger_type: threshold
+    trigger_metric: attempts_total
+    trigger_value: 50
+
+  - id: century
+    label_fr: "Centurion"
+    label_ar: "المئوي"
+    label_en: "Centurion"
+    icon: "trophy"
+    tier: gold
+    description_fr: "Tu as répondu à 100 questions !"
+    trigger_type: threshold
+    trigger_metric: attempts_total
+    trigger_value: 100
+
+  # --- Streak badges ---
+
+  - id: streak_3
+    label_fr: "3 jours d'affilée"
+    label_ar: "3 أيام متتالية"
+    label_en: "3-Day Streak"
+    icon: "flame"
+    tier: bronze
+    description_fr: "Tu as travaillé 3 jours de suite."
+    trigger_type: streak
+    trigger_metric: session_days
+    trigger_value: 3
+
+  - id: streak_7
+    label_fr: "Une semaine !"
+    label_ar: "أسبوع كامل!"
+    label_en: "Full Week!"
+    icon: "fire"
+    tier: silver
+    description_fr: "7 jours consécutifs — bravo !"
+    trigger_type: streak
+    trigger_metric: session_days
+    trigger_value: 7
+
+  - id: streak_30
+    label_fr: "Un mois entier"
+    label_ar: "شهر كامل"
+    label_en: "Full Month"
+    icon: "calendar-check"
+    tier: gold
+    description_fr: "30 jours consécutifs — tu es incroyable !"
+    trigger_type: streak
+    trigger_metric: session_days
+    trigger_value: 30
+
+  # --- Engagement badges ---
+
+  - id: curious_explorer
+    label_fr: "Explorateur curieux"
+    label_ar: "مستكشف فضولي"
+    label_en: "Curious Explorer"
+    icon: "compass"
+    tier: bronze
+    description_fr: "Tu poses beaucoup de questions et tu explores le cours."
+    trigger_type: threshold
+    trigger_metric: curiosity_score
+    trigger_value: 0.4
+
+  - id: very_curious
+    label_fr: "Très curieux"
+    label_ar: "فضولي جداً"
+    label_en: "Very Curious"
+    icon: "telescope"
+    tier: silver
+    description_fr: "Ta curiosité est remarquable !"
+    trigger_type: threshold
+    trigger_metric: curiosity_score
+    trigger_value: 0.7
+
+  - id: resilient
+    label_fr: "Résilient"
+    label_ar: "مثابر"
+    label_en: "Resilient"
+    icon: "shield"
+    tier: bronze
+    description_fr: "Tu continues même après les erreurs."
+    trigger_type: threshold
+    trigger_metric: persistence_score
+    trigger_value: 0.4
+
+  - id: champion_persistence
+    label_fr: "Champion de la persévérance"
+    label_ar: "بطل المثابرة"
+    label_en: "Persistence Champion"
+    icon: "shield-star"
+    tier: gold
+    description_fr: "Tu ne lâches jamais rien !"
+    trigger_type: threshold
+    trigger_metric: persistence_score
+    trigger_value: 0.75
+
+  - id: autonomous_learner
+    label_fr: "Apprenant autonome"
+    label_ar: "متعلم مستقل"
+    label_en: "Autonomous Learner"
+    icon: "lightbulb"
+    tier: silver
+    description_fr: "Tu choisis ton propre chemin d'apprentissage."
+    trigger_type: threshold
+    trigger_metric: autonomy_score
+    trigger_value: 0.6
+
+  # --- Skill mastery badges ---
+
+  - id: skill_master
+    label_fr: "Maître d'une notion"
+    label_ar: "متقن المفهوم"
+    label_en: "Skill Master"
+    icon: "graduation-cap"
+    tier: gold
+    description_fr: "Tu maîtrises une notion à 90% sur au moins 5 tentatives."
+    trigger_type: skill_accuracy
+    trigger_metric: skill_accuracy_prior
+    trigger_value: 0.9
+    trigger_min_attempts: 5
+
+  - id: skill_proficient
+    label_fr: "Bon niveau"
+    label_ar: "مستوى جيد"
+    label_en: "Proficient"
+    icon: "check-circle"
+    tier: silver
+    description_fr: "Tu maîtrises une notion à 75%."
+    trigger_type: skill_accuracy
+    trigger_metric: skill_accuracy_prior
+    trigger_value: 0.75
+    trigger_min_attempts: 3
+
+  # --- Recovery / remediation badges ---
+
+  - id: comeback_kid
+    label_fr: "Le retour du champion"
+    label_ar: "العودة القوية"
+    label_en: "Comeback Kid"
+    icon: "arrow-up-circle"
+    tier: silver
+    description_fr: "Tu as réussi après plusieurs échecs consécutifs."
+    trigger_type: threshold
+    trigger_metric: recovery_rate
+    trigger_value: 0.6

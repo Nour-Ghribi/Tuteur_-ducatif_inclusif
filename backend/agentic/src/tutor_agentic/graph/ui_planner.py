@@ -196,18 +196,74 @@ def report_blocks(data: LearningSummariesResponse) -> list[ui.UIBlock]:
     return blocks
 
 
-def progress_blocks(snapshot) -> list[ui.UIBlock]:
-    """Learner progress from the server-side history (no history -> an explicit empty state)."""
+def progress_blocks(snapshot, eng_snapshot=None, badges=None) -> list[ui.UIBlock]:
+    """Learner progress: history metrics + engagement scores + earned badges."""
     if not snapshot.attempts_total:
         return [ui.CalloutBlock(tone="info", message_code="no_progress_yet")]
+
     scores = snapshot.recent_scores
     blocks: list[ui.UIBlock] = [
         ui.MetricGridBlock(
-            metrics=[ui.Metric(label_code="attempts", value=snapshot.attempts_total, unit="count")]
+            metrics=[
+                ui.Metric(
+                    label_code="attempts", value=snapshot.attempts_total, unit="count"
+                )
+            ]
         ),
     ]
+
     if scores:
         blocks.append(
-            ui.ProgressBlock(label_code="recent_success", value=round(sum(scores) / len(scores), 3))
+            ui.ProgressBlock(
+                label_code="recent_success",
+                value=round(sum(scores) / len(scores), 3),
+            )
         )
+
+    # Engagement block (curiosity / persistence / autonomy)
+    if eng_snapshot is not None and eng_snapshot.attempts_used > 0:
+        blocks.append(
+            ui.EngagementBlock(
+                axes=[
+                    ui.EngagementAxisView(
+                        label_code="curiosity",
+                        score=eng_snapshot.curiosity_score,
+                        tier=eng_snapshot.curiosity_tier,
+                    ),
+                    ui.EngagementAxisView(
+                        label_code="persistence",
+                        score=eng_snapshot.persistence_score,
+                        tier=eng_snapshot.persistence_tier,
+                    ),
+                    ui.EngagementAxisView(
+                        label_code="autonomy",
+                        score=eng_snapshot.autonomy_score,
+                        tier=eng_snapshot.autonomy_tier,
+                    ),
+                ],
+                sessions_used=eng_snapshot.sessions_used,
+            )
+        )
+
+    # Badge shelf (most recent 10)
+    if badges:
+        from tuteur.adaptive.engagement.badge_engine import _load_definitions
+        defs = {d.id: d for d in _load_definitions()}
+        badge_views = []
+        for b in badges[:10]:
+            defn = defs.get(b.badge_id)
+            label = defn.label_fr if defn else b.badge_id
+            icon = defn.icon if defn else "star"
+            badge_views.append(
+                ui.BadgeView(
+                    badge_id=b.badge_id,
+                    label=label[:120],
+                    icon=icon[:60],
+                    tier=b.tier,
+                    earned_at=b.earned_at.strftime("%Y-%m-%d"),
+                )
+            )
+        if badge_views:
+            blocks.append(ui.BadgeShelfBlock(badges=badge_views))
+
     return blocks
