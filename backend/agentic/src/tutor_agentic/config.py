@@ -59,6 +59,17 @@ class Settings(BaseSettings):
     issued_item_ttl_s: int = Field(3600, ge=60, le=86_400)
     profile_db_path: Path | None = None   # SQLite path for student profiles; None = in-memory
     ledger_db_path: Path | None = None    # SQLite path for RL ledger + engagement; None = disabled
+
+    # TTS — text-to-speech for audio + karaoke (optional)
+    # Set tts_model to enable; leave empty to disable audio generation.
+    # Compatible: OpenAI TTS (tts-1), Kokoro (kokoro), any /v1/audio/speech endpoint.
+    tts_model: str = ""
+    tts_voice: str = "alloy"
+    tts_base_url: str = ""
+    tts_api_key: SecretStr | None = None
+    tts_speed: float = Field(1.0, ge=0.5, le=2.0)
+    tts_timeout_s: float = Field(30.0, gt=0, le=120)
+
     dev_auth_tokens: dict[str, DevIdentity] = Field(default_factory=dict)
 
     @property

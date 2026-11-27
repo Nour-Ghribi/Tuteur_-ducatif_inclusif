@@ -142,6 +142,16 @@ export const fr = {
   // observed errors: machine codes from the answer-key check; free text from the grader is shown as is
   "obs.selected_incorrect_option": "Tu as choisi une autre réponse que la bonne.",
   "obs.missing_key_terms": "Des mots-clés attendus ne figurent pas dans ta réponse.",
+  // audio player (Step 7)
+  "prefs.audio_section": "Audio et lecture",
+  "prefs.audio_enabled": "Lire le contenu à voix haute (audio)",
+  "prefs.audio_speed": "Vitesse de lecture",
+  "prefs.karaoke_mode": "Mode karaoké (mot mis en surbrillance pendant la lecture)",
+  "audio.loading": "Chargement de l'audio…",
+  "audio.failed": "L'audio n'a pas pu être chargé.",
+  "audio.player_label": "Lecteur audio du contenu",
+  "audio.speed": "Vitesse : {speed}×",
+  "warn.audio_generation_failed": "La génération audio a échoué pour cette réponse.",
   // activities
   "activity.quiz": "Quiz",
   "activity.exercise": "Exercice",

@@ -253,6 +253,33 @@ class EngagementBlock(StrictModel):
     sessions_used: int = Field(0, ge=0)   # for confidence display
 
 
+# ---------------------------------------------------------------------------
+# Audio block (Step 7)
+# ---------------------------------------------------------------------------
+
+class WordTimestampView(StrictModel):
+    word: bounded(100)
+    start_ms: int = Field(ge=0)
+    end_ms: int = Field(ge=0)
+
+
+class AudioBlock(StrictModel):
+    """TTS audio for a response, with optional karaoke word-level timestamps.
+
+    asset_id  — opaque id; fetched via GET /assets/{id} with the bearer token.
+    duration_ms — estimated total duration (used to size the progress bar).
+    word_timestamps — present only when karaoke=True in the student's profile.
+    speed — the speech rate at which the audio was generated (shown in the UI).
+    language — IETF tag of the audio language (for the browser's lang attribute).
+    """
+    type: Literal["audio"] = "audio"
+    asset_id: Identifier
+    duration_ms: int = Field(ge=0)
+    word_timestamps: list[WordTimestampView] = Field(default_factory=list, max_length=2000)
+    speed: float = Field(1.0, ge=0.5, le=2.0)
+    language: bounded(10) | None = None
+
+
 UIBlock = Annotated[
     HeadingBlock
     | TextBlock
@@ -273,6 +300,7 @@ UIBlock = Annotated[
     | BadgeShelfBlock
     | BadgeToastBlock
     | EngagementBlock
+    | AudioBlock
     | FallbackBlock,
     Field(discriminator="type"),
 ]
@@ -298,6 +326,7 @@ ALLOWED_BLOCK_TYPES: frozenset[str] = frozenset(
         "badge_shelf",
         "badge_toast",
         "engagement",
+        "audio",
         "fallback",
     }
 )

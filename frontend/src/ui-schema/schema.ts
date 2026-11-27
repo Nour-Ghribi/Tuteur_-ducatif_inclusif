@@ -123,6 +123,49 @@ export const FallbackBlock = z.object({
   text: text(2000).nullish(),
 });
 
+// --- Step 4: engagement + badge blocks ---
+export const BadgeView = z.object({
+  badge_id: id,
+  label: text(120),
+  icon: text(60),
+  tier: z.enum(["bronze", "silver", "gold", "special"]).default("bronze"),
+  earned_at: text(30).nullish(),
+});
+export const BadgeShelfBlock = z.object({
+  type: z.literal("badge_shelf"),
+  title_code: id.default("earned_badges"),
+  badges: z.array(BadgeView).min(1).max(50),
+});
+export const BadgeToastBlock = z.object({
+  type: z.literal("badge_toast"),
+  badges: z.array(BadgeView).min(1).max(5),
+});
+export const EngagementAxisView = z.object({
+  label_code: id,
+  score: z.number().min(0).max(1),
+  tier: z.enum(["low", "medium", "high"]).default("medium"),
+});
+export const EngagementBlock = z.object({
+  type: z.literal("engagement"),
+  axes: z.array(EngagementAxisView).min(1).max(3),
+  sessions_used: z.number().int().min(0).default(0),
+});
+
+// --- Step 7: audio + karaoke block ---
+export const WordTimestampView = z.object({
+  word: text(100),
+  start_ms: z.number().int().min(0),
+  end_ms: z.number().int().min(0),
+});
+export const AudioBlock = z.object({
+  type: z.literal("audio"),
+  asset_id: id,
+  duration_ms: z.number().int().min(0),
+  word_timestamps: z.array(WordTimestampView).max(2000).default([]),
+  speed: z.number().min(0.5).max(2.0).default(1.0),
+  language: text(10).nullish(),
+});
+
 export const UIBlock = z.discriminatedUnion("type", [
   HeadingBlock,
   TextBlock,
@@ -140,6 +183,10 @@ export const UIBlock = z.discriminatedUnion("type", [
   MetricGridBlock,
   BarChartBlock,
   ImageBlock,
+  BadgeShelfBlock,
+  BadgeToastBlock,
+  EngagementBlock,
+  AudioBlock,
   FallbackBlock,
 ]);
 export type UIBlock = z.infer<typeof UIBlock>;

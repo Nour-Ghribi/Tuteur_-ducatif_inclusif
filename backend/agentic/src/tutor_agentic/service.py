@@ -17,6 +17,7 @@ from .graph import GraphDependencies, build_tutor_graph, ui_planner
 from .history import Attempt, InMemoryStudentHistory, StudentHistoryStore
 from .integrations import AdapterSet, build_adapters
 from .integrations.contracts import OutcomeReport
+from .audio import make_tts_from_settings
 from .engagement import EngagementService
 from .profiles import (
     InMemoryProfileStore,
@@ -54,6 +55,7 @@ class TutorService:
         history: StudentHistoryStore | None = None,
         profiles: ProfileStore | None = None,
         engagement: EngagementService | None = None,
+        tts=None,  # TTSAdapter | None
     ) -> None:
         self._settings = settings
         self._adapters = adapters
@@ -66,7 +68,11 @@ class TutorService:
         router = IntentRouter(adapters.intent_classifier, settings.intent_classifier_min_confidence)
         self._graph = build_tutor_graph(
             GraphDependencies(
-                adapters=adapters, intent_router=router, settings=settings, telemetry=telemetry
+                adapters=adapters,
+                intent_router=router,
+                settings=settings,
+                telemetry=telemetry,
+                tts=tts,
             )
         )
 
@@ -82,12 +88,14 @@ class TutorService:
             SQLiteProfileStore(profile_db) if profile_db else InMemoryProfileStore()
         )
         ledger_db = getattr(settings, "ledger_db_path", None)
+        tts = make_tts_from_settings(settings)
         return cls(
             settings=settings,
             adapters=build_adapters(settings, telemetry, tutor=tutor),
             telemetry=telemetry,
             profiles=profiles,
             engagement=EngagementService(ledger_db),
+            tts=tts,
         )
 
     @property

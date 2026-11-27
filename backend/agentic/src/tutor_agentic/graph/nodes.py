@@ -55,6 +55,11 @@ from ..telemetry import VERIFICATION_RESULT, Telemetry
 from . import ui_planner
 from .verification import verify
 
+# Lazy import annotation to avoid circular at module load
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ..audio import TTSAdapter
+
 Update = dict[str, Any]
 MAX_IMAGES = 2
 
@@ -73,6 +78,7 @@ class GraphDependencies:
     intent_router: IntentRouter
     settings: Settings
     telemetry: Telemetry
+    tts: "TTSAdapter | None" = None   # optional TTS for audio generation
 
 
 def _language(state: TutorState) -> str:
@@ -593,6 +599,86 @@ class TutorNodes:
                 )
         return {"image_blocks": blocks, "warnings": warnings, "simulated_services": simulated}
 
+    # --- audio (Step 7) -----------------------------------------------------------------------
+
+    async def generate_audio(self, state: TutorState) -> Update:
+        """Generate TTS audio for the response blocks, if the student's profile requests it.
+
+        Runs only when:
+          1. A TTSAdapter is configured (TUTOR_TTS_MODEL is set).
+          2. The student's preferences have audio_enabled=True (from profile).
+          3. The workflow produced content (not a fallback).
+
+        The audio asset is registered in AssetRegistry and an AudioBlock is added
+        to the state; plan_ui inserts it at the top of the response.
+        """
+        if self._deps.tts is None:
+            return {}
+
+        # Check audio preference — stored in rendering_preferences via profile
+        prefs = _preferences(state)
+        audio_enabled = getattr(prefs, "audio_enabled", False)
+        if not audio_enabled:
+            return {}
+
+        # Only generate audio when we have real content blocks
+        ui_blocks = state.get("ui_blocks") or []
+        if not ui_blocks or state.get("fallback_used"):
+            return {}
+
+        # Extract plain text from UI blocks
+        from ..audio import extract_text_for_tts
+        text = extract_text_for_tts(ui_blocks)
+        if not text:
+            return {}
+
+        # Determine speed from preferences
+        speed = getattr(prefs, "audio_speed", 1.0) or 1.0
+        karaoke = getattr(prefs, "karaoke_mode", False)
+
+        try:
+            result = await asyncio.to_thread(
+                self._deps.tts.synthesize,
+                text,
+                speed=speed,
+                karaoke=karaoke,
+            )
+        except Exception as exc:
+            return {"warnings": ["audio_generation_failed"]}
+
+        # Register the audio as an asset
+        assets = self._deps.adapters.assets
+        if assets is None:
+            return {"warnings": ["audio_generation_failed"]}
+
+        import tempfile, os
+        with tempfile.NamedTemporaryFile(
+            suffix=".mp3", delete=False, dir=str(self._deps.settings.images_dir)
+        ) as f:
+            f.write(result.audio_bytes)
+            audio_path = f.name
+
+        from pathlib import Path as _Path
+        asset = assets.register(_Path(audio_path))
+
+        timestamps = [
+            ui.WordTimestampView(
+                word=w.word[:100],
+                start_ms=w.start_ms,
+                end_ms=w.end_ms,
+            )
+            for w in result.word_timestamps
+        ]
+
+        audio_block = ui.AudioBlock(
+            asset_id=asset.asset_id,
+            duration_ms=result.duration_ms,
+            word_timestamps=timestamps,
+            speed=speed,
+            language=_language(state),
+        )
+        return {"audio_block": audio_block}
+
     # --- presentation --------------------------------------------------------------------------
 
     def plan_ui(self, state: TutorState) -> Update:
@@ -627,6 +713,11 @@ class TutorNodes:
 
         if not blocks:
             blocks = [ui.FallbackBlock(reason_code="nothing_to_display")]
+
+        # Prepend audio block if TTS was generated (Step 7)
+        if (audio := state.get("audio_block")) is not None:
+            blocks = [audio, *blocks]
+
         return {"ui_blocks": blocks, "issued_questions": ui_planner.issued_items(content)}
 
     def recover(self, state: TutorState) -> Update:
