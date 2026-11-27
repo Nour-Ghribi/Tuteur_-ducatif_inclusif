@@ -42,6 +42,15 @@ class Settings(BaseSettings):
     search_mode: str = "hybride"
     hybrid_pool: int = 20  # candidats pris dans chaque classement avant fusion
 
+    # VLM for image description at ingestion time (optional).
+    # Set VISION_MODEL to enable; leave empty to skip image description.
+    # Any OpenAI-compatible vision API works: Ollama+LLaVA, Gemini, GPT-4o, Qwen2-VL…
+    vision_model: str = ""
+    vision_base_url: str = ""
+    vision_api_key: str = "none"
+    vision_language: str = "fr"      # language for VLM descriptions
+    vision_timeout_s: float = 60.0   # per-image timeout
+
     # MVP adaptatif. MOCK_DEMO n'effectue aucun appel LLM externe.
     adaptive_mode: str = "mock"
     adaptive_db_path: Path = Path("data/adaptive_tutor.sqlite3")

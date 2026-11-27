@@ -24,15 +24,27 @@ def cmd_ingest(args):
     from tuteur.chunking import chunk_document
     from tuteur.ingestion import load_document
     from tuteur.vectorstore import VectorStore
+    from tuteur.vision import make_describer_from_settings
 
     s = get_settings()
     store = VectorStore(s)
+    describer = make_describer_from_settings(s)
+    if describer:
+        print(f"🔍 VLM image description enabled: {s.vision_model}")
+    else:
+        print("ℹ️  VLM not configured — images will be indexed without descriptions (set VISION_MODEL to enable)")
+
     for path in args.paths:
-        doc = load_document(Path(path), images_dir=s.images_dir)
+        doc = load_document(Path(path), images_dir=s.images_dir, describer=describer)
         chunks = chunk_document(doc, s.chunk_size, s.chunk_overlap)
         store.add(chunks)
         n_img = sum(len(p.images) for p in doc.pages)
-        print(f"✓ {doc.source} (doc_id={doc.doc_id}) : {len(doc.pages)} pages, {len(chunks)} chunks, {n_img} images")
+        n_img_chunks = sum(1 for c in chunks if c.metadata.get("type") == "image_caption")
+        print(
+            f"✓ {doc.source} (doc_id={doc.doc_id}) : "
+            f"{len(doc.pages)} pages, {len(chunks)} chunks "
+            f"({n_img_chunks} image captions), {n_img} images"
+        )
 
 
 def cmd_docs(args):

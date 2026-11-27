@@ -92,16 +92,35 @@ def load_course(root: str | Path, run_id: str) -> str:
     return _write_json(destination.parent / "01_sources.json", {"files": copies})
 
 
-def extract_and_clean(sources_path: str) -> str:
-    """2. Texte page par page (PyMuPDF pour les PDF) ; les pages vides sont gardées pour que
-    les numéros de page restent ceux du document."""
+def extract_and_clean(sources_path: str, describe_images: bool = True) -> str:
+    """2. Texte page par page (PyMuPDF pour les PDF) ; description VLM des images si activée.
+
+    Les pages vides sont gardées pour que les numéros de page restent ceux du document.
+    Si VISION_MODEL est configuré et describe_images=True, chaque image extraite est décrite
+    par le VLM avant le découpage — les sidecars .txt sont écrits à côté des PNGs.
+    """
+    from tuteur.vision import make_describer_from_settings
+    settings = get_settings()
+    describer = make_describer_from_settings(settings) if describe_images else None
+
     documents = []
     for path in _read_json(sources_path)["files"]:
-        doc = load_document(Path(path))
+        doc = load_document(
+            Path(path),
+            images_dir=settings.images_dir,
+            describer=describer,
+        )
         documents.append({
             "doc_id": doc.doc_id,
             "source": doc.source,
-            "pages": [{"number": p.number, "text": p.text} for p in doc.pages],
+            "pages": [
+                {
+                    "number": p.number,
+                    "text": p.text,
+                    "images": [str(img) for img in p.images],
+                }
+                for p in doc.pages
+            ],
         })
     if not any(p["text"] for d in documents for p in d["pages"]):
         raise ValueError("Les cours ne contiennent aucun texte extractible (PDF scanné ?).")
@@ -109,14 +128,31 @@ def extract_and_clean(sources_path: str) -> str:
 
 
 def split_into_chunks(pages_path: str, chunk_size: int | None = None, chunk_overlap: int | None = None) -> str:
-    """3. Découpage en passages (800 caractères, chevauchement 150 par défaut), page gardée."""
+    """3. Découpage en passages (800 caractères, chevauchement 150 par défaut).
+
+    Text chunks + image description chunks (from VLM sidecars) are both included.
+    """
     settings = get_settings()
     size = chunk_size or settings.chunk_size
     overlap = settings.chunk_overlap if chunk_overlap is None else chunk_overlap
     chunks = []
     for d in _read_json(pages_path)["documents"]:
-        doc = Document(d["doc_id"], d["source"], [Page(p["number"], p["text"]) for p in d["pages"]])
-        chunks += [{"id": c.id, "text": c.text, "metadata": c.metadata} for c in chunk_document(doc, size, overlap)]
+        doc = Document(
+            d["doc_id"],
+            d["source"],
+            [
+                Page(
+                    p["number"],
+                    p["text"],
+                    images=[Path(img) for img in p.get("images", [])],
+                )
+                for p in d["pages"]
+            ],
+        )
+        chunks += [
+            {"id": c.id, "text": c.text, "metadata": c.metadata}
+            for c in chunk_document(doc, size, overlap, include_image_descriptions=True)
+        ]
     if not chunks:
         raise ValueError("Aucun passage n'a été produit.")
     payload = {"chunk_size": size, "chunk_overlap": overlap, "chunks": chunks}

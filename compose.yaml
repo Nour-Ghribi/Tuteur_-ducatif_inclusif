@@ -65,6 +65,12 @@ services:
       TUTOR_VISION_MODEL: "${TUTOR_VISION_MODEL:-}"
       TUTOR_VISION_BASE_URL: "${TUTOR_VISION_BASE_URL:-}"
       TUTOR_VISION_API_KEY: "${TUTOR_VISION_API_KEY:-}"
+      # Vision settings for the tuteur library RAG ingestion (can differ from agentic VLM)
+      VISION_MODEL: "${VISION_MODEL:-}"
+      VISION_BASE_URL: "${VISION_BASE_URL:-}"
+      VISION_API_KEY: "${VISION_API_KEY:-none}"
+      VISION_LANGUAGE: "${VISION_LANGUAGE:-fr}"
+      VISION_TIMEOUT_S: "${VISION_TIMEOUT_S:-60}"
       # Dev auth tokens (development only)
       TUTOR_DEV_AUTH_TOKENS: "${TUTOR_DEV_AUTH_TOKENS:-}"
       # CORS
