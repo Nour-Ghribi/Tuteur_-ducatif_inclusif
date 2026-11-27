@@ -222,6 +222,12 @@ export const fr = {
   "badge.tier.silver": "Argent",
   "badge.tier.gold": "Or",
   "badge.tier.special": "Spécial",
+  // video player (Step 10)
+  "video.loading": "Chargement de la vidéo…",
+  "video.failed": "La vidéo n'a pas pu être chargée.",
+  "video.player_label": "Vidéo résumé du cours",
+  "warn.video_generation_failed": "La génération vidéo a échoué pour cette réponse.",
+  "warn.video_unavailable": "La génération vidéo n'est pas disponible (Pillow/moviepy non installés).",
 } as const;
 
 export type MessageKey = keyof typeof fr;

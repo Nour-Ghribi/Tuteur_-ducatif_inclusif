@@ -280,6 +280,25 @@ class AudioBlock(StrictModel):
     language: bounded(10) | None = None
 
 
+# ---------------------------------------------------------------------------
+# Video block (Step 10)
+# ---------------------------------------------------------------------------
+
+class VideoBlock(StrictModel):
+    """Short summary video generated from educational content.
+
+    asset_id  — opaque id; fetched via GET /assets/{id} with the bearer token.
+    duration_s — total video duration in seconds.
+    slide_count — number of slides in the video.
+    topic — what the video is about (shown as caption).
+    """
+    type: Literal["video"] = "video"
+    asset_id: Identifier
+    duration_s: float = Field(ge=0)
+    slide_count: int = Field(ge=1)
+    topic: bounded(200)
+
+
 UIBlock = Annotated[
     HeadingBlock
     | TextBlock
@@ -301,6 +320,7 @@ UIBlock = Annotated[
     | BadgeToastBlock
     | EngagementBlock
     | AudioBlock
+    | VideoBlock
     | FallbackBlock,
     Field(discriminator="type"),
 ]
@@ -327,6 +347,7 @@ ALLOWED_BLOCK_TYPES: frozenset[str] = frozenset(
         "badge_toast",
         "engagement",
         "audio",
+        "video",
         "fallback",
     }
 )

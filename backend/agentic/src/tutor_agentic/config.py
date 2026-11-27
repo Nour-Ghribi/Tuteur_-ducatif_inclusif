@@ -72,6 +72,11 @@ class Settings(BaseSettings):
     tts_speed: float = Field(1.0, ge=0.5, le=2.0)
     tts_timeout_s: float = Field(30.0, gt=0, le=120)
 
+    # Video summary generation (optional — requires Pillow + moviepy)
+    # Set video_enabled=true to generate a short video after explanations.
+    video_enabled: bool = False
+    video_max_slides: int = Field(12, ge=2, le=20)
+
     dev_auth_tokens: dict[str, DevIdentity] = Field(default_factory=dict)
 
     @property

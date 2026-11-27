@@ -1,4 +1,4 @@
-/** English UI strings — mirror of fr.ts */
+﻿/** English UI strings â€” mirror of fr.ts */
 export const en = {
   "app.title": "Inclusive Educational Tutor",
   "app.skip": "Skip to main content",
@@ -14,11 +14,11 @@ export const en = {
   "form.course": "Course",
   "form.topic": "Topic (optional)",
   "form.message": "What do you want to do?",
-  "form.message.placeholder": "E.g. «Make flashcards about photosynthesis»",
+  "form.message.placeholder": "E.g. Â«Make flashcards about photosynthesisÂ»",
   "form.format": "Requested format",
   "form.format.auto": "Let the tutor choose",
   "form.send": "Send",
-  "form.sending": "Sending…",
+  "form.sending": "Sendingâ€¦",
   "form.progress": "My progress",
   "format.explanation": "Explanation",
   "format.quiz": "Quiz",
@@ -77,7 +77,7 @@ export const en = {
   "step.n_of": "Step {n} of {total}",
   "quiz.your_answer": "Your answer",
   "quiz.submit": "Submit",
-  "quiz.sending": "Checking…",
+  "quiz.sending": "Checkingâ€¦",
   "quiz.type_mcq": "Choose an answer",
   "feedback.correct": "Correct answer",
   "feedback.incorrect": "That is not the correct answer",
@@ -85,8 +85,8 @@ export const en = {
   "feedback.observed": "What was observed",
   "feedback.explanation": "Explanation",
   "map.alt": "Relationships between concepts",
-  "map.relation": "{source} — {label} → {target}",
-  "map.relation.plain": "{source} → {target}",
+  "map.relation": "{source} â€” {label} â†’ {target}",
+  "map.relation.plain": "{source} â†’ {target}",
   "map.text_alt": "Text version of the map",
   "table.compare": "Comparison",
   "chart.value": "Value",
@@ -96,16 +96,16 @@ export const en = {
   "rec.skip": "Skip",
   "rec.thanks": "Thank you, your feedback was recorded.",
   "rec.failed": "Your feedback could not be recorded.",
-  "img.loading": "Loading image…",
+  "img.loading": "Loading imageâ€¦",
   "img.failed": "The image could not be loaded.",
   "img.placeholder_alt": "Course figure (description unavailable)",
   "img.no_description": "The description of this figure is unavailable.",
   "img.adapted": "Adapted colours",
   "img.long": "Detailed description",
-  "audio.loading": "Loading audio…",
+  "audio.loading": "Loading audioâ€¦",
   "audio.failed": "The audio could not be loaded.",
   "audio.player_label": "Content audio player",
-  "audio.speed": "Speed: {speed}×",
+  "audio.speed": "Speed: {speed}Ã—",
   "warn.audio_generation_failed": "Audio generation failed for this response.",
   "meta.simulated": "Simulated data: this result comes from demo services.",
   "meta.degraded": "Partial response: part of the service was unavailable.",
@@ -209,3 +209,4 @@ export const en = {
 } as const;
 
 export type EnMessageKey = keyof typeof en;
+

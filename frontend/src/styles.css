@@ -546,6 +546,39 @@ td {
 }
 
 /* ============================================================
+   Step 10: Video player
+   ============================================================ */
+.video-player {
+  margin: 0.75rem 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.video-player video {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  background: #000;
+}
+.video-caption {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+}
+.video-loading,
+.video-failed {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
    Step 9: Onboarding wizard
    ============================================================ */
 .onboarding {

@@ -166,6 +166,15 @@ export const AudioBlock = z.object({
   language: text(10).nullish(),
 });
 
+// --- Step 10: video block ---
+export const VideoBlock = z.object({
+  type: z.literal("video"),
+  asset_id: id,
+  duration_s: z.number().min(0),
+  slide_count: z.number().int().min(1),
+  topic: text(200),
+});
+
 export const UIBlock = z.discriminatedUnion("type", [
   HeadingBlock,
   TextBlock,
@@ -187,6 +196,7 @@ export const UIBlock = z.discriminatedUnion("type", [
   BadgeToastBlock,
   EngagementBlock,
   AudioBlock,
+  VideoBlock,
   FallbackBlock,
 ]);
 export type UIBlock = z.infer<typeof UIBlock>;

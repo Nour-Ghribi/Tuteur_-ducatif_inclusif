@@ -63,6 +63,9 @@ services:
       TUTOR_TTS_BASE_URL: "${TUTOR_TTS_BASE_URL:-}"
       TUTOR_TTS_API_KEY: "${TUTOR_TTS_API_KEY:-}"
       TUTOR_TTS_SPEED: "${TUTOR_TTS_SPEED:-1.0}"
+      # Video summary (optional)
+      TUTOR_VIDEO_ENABLED: "${TUTOR_VIDEO_ENABLED:-false}"
+      TUTOR_VIDEO_MAX_SLIDES: "${TUTOR_VIDEO_MAX_SLIDES:-12}"
       # LLM (used when TUTOR_GENAI_BACKEND=tuteur)
       LLM_BASE_URL: "${LLM_BASE_URL:-http://localhost:11434/v1}"
       LLM_MODEL: "${LLM_MODEL:-qwen2.5:7b}"

@@ -6,7 +6,8 @@ intake ─┬─ experience ─► plan_experience ─► [retrieve_context] ─
         ├─ answer ─────► evaluate_answer ─► (wrong) retrieve ─► generate (remediation) …
         ├─ learning ───► recommend_activity
         └─ report ─────► load_report_data ─► generate_content (summary) …
-… ─► [recommend_activity] ─► attach_images ─► plan_ui ─► generate_audio ─► finalize
+… ─► [recommend_activity] ─► attach_images ─► plan_ui ─┬─ generate_audio ─┐
+                                                        └─ generate_video ─┴─► finalize
                                any fatal error ─► recover ─► finalize
 """
 
@@ -34,6 +35,7 @@ def build_tutor_graph(deps: GraphDependencies):
     graph.add_node("attach_images", nodes.attach_images)
     graph.add_node("plan_ui", nodes.plan_ui)
     graph.add_node("generate_audio", nodes.generate_audio)   # Step 7
+    graph.add_node("generate_video", nodes.generate_video)   # Step 10
     graph.add_node("recover", nodes.recover)
     graph.add_node("finalize", nodes.finalize)
 
@@ -71,8 +73,11 @@ def build_tutor_graph(deps: GraphDependencies):
         "recommend_activity", edges.after_recommendation, ["attach_images", "recover"]
     )
     graph.add_edge("attach_images", "plan_ui")
-    graph.add_edge("plan_ui", "generate_audio")   # audio runs after UI blocks are assembled
+    # Audio and video run in parallel after plan_ui, then both feed finalize
+    graph.add_edge("plan_ui", "generate_audio")
+    graph.add_edge("plan_ui", "generate_video")
     graph.add_edge("generate_audio", "finalize")
+    graph.add_edge("generate_video", "finalize")
     graph.add_edge("recover", "finalize")
     graph.add_edge("finalize", END)
 

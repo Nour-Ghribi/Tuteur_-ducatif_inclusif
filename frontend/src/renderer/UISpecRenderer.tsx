@@ -14,6 +14,7 @@ import { FallbackView, ImageFigure, UnknownBlock } from "../components/Media";
 import { AudioPlayer } from "../components/AudioPlayer";
 import { BadgeShelf, BadgeToast } from "../components/BadgeShelf";
 import { EngagementRadar } from "../components/EngagementRadar";
+import { VideoPlayer } from "../components/VideoPlayer";
 import type { ParsedUI, UIBlock, UIMeta } from "../ui-schema/schema";
 
 /**
@@ -56,6 +57,8 @@ export function BlockView({ block }: { block: UIBlock }) {
       return <ImageFigure block={block} />;
     case "audio":
       return <AudioPlayer block={block} />;
+    case "video":
+      return <VideoPlayer block={block} />;
     case "badge_shelf":
       return <BadgeShelf block={block} />;
     case "badge_toast":

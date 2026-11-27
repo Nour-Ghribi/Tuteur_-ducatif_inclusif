@@ -679,7 +679,82 @@ class TutorNodes:
         )
         return {"audio_block": audio_block}
 
-    # --- presentation --------------------------------------------------------------------------
+    # --- video (Step 10) -----------------------------------------------------------------------
+
+    async def generate_video(self, state: TutorState) -> Update:
+        """Generate a short summary video from the response content.
+
+        Runs only when:
+          1. TUTOR_VIDEO_ENABLED=true in settings.
+          2. The workflow produced ExplanationContent (video summaries are for explanations).
+          3. No fatal error in the state.
+
+        The video is built in a thread (CPU-bound), registered as an asset,
+        and a VideoBlock is prepended to the response after the audio block.
+        """
+        if not self._deps.settings.video_enabled:
+            return {}
+
+        generation = state.get("generation")
+        if generation is None or has_fatal_error(state):
+            return {}
+
+        content = generation.content
+        # Only generate videos for explanation-type content
+        if getattr(content, "kind", None) not in ("explanation", "steps", "concept_cards", "flashcards"):
+            return {}
+
+        plan = state.get("plan")
+        topic = plan.topic if plan else ""
+
+        try:
+            video_block = await asyncio.to_thread(
+                self._render_video, content, topic
+            )
+            if video_block is None:
+                return {}
+            return {"video_block": video_block}
+        except ImportError:
+            # Pillow or moviepy not installed — skip silently
+            return {"warnings": ["video_unavailable"]}
+        except Exception:
+            return {"warnings": ["video_generation_failed"]}
+
+    def _render_video(self, content, topic: str):
+        """CPU-bound: build slides + render MP4. Called in a thread."""
+        import tempfile
+        from pathlib import Path as _Path
+        from ..video import script_from_content, render_slides_to_mp4
+
+        slides = script_from_content(content, topic)
+        max_slides = self._deps.settings.video_max_slides
+        slides = slides[:max_slides]
+
+        # Write to a temp file in the images directory
+        images_dir = self._deps.settings.images_dir
+        images_dir.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(
+            suffix=".mp4", delete=False, dir=str(images_dir)
+        ) as f:
+            video_path = _Path(f.name)
+
+        render_slides_to_mp4(slides, video_path)
+
+        # Register as asset
+        assets = self._deps.adapters.assets
+        if assets is None:
+            video_path.unlink(missing_ok=True)
+            return None
+
+        asset = assets.register(video_path)
+        total_s = sum(s.duration_s for s in slides)
+
+        return ui.VideoBlock(
+            asset_id=asset.asset_id,
+            duration_s=round(total_s, 1),
+            slide_count=len(slides),
+            topic=topic[:200] or "Résumé",
+        )
 
     def plan_ui(self, state: TutorState) -> Update:
         workflow = state["workflow"]
@@ -717,6 +792,10 @@ class TutorNodes:
         # Prepend audio block if TTS was generated (Step 7)
         if (audio := state.get("audio_block")) is not None:
             blocks = [audio, *blocks]
+
+        # Prepend video block if generated (Step 10)
+        if (video := state.get("video_block")) is not None:
+            blocks = [video, *blocks]
 
         return {"ui_blocks": blocks, "issued_questions": ui_planner.issued_items(content)}
 

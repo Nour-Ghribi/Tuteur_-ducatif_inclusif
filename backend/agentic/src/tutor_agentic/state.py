@@ -120,6 +120,7 @@ class TutorState(TypedDict, total=False):
     image_blocks: list[UIBlock]
     ui_blocks: list[UIBlock]
     audio_block: "UIBlock | None"          # AudioBlock if TTS was run, else None
+    video_block: "UIBlock | None"          # VideoBlock if video was generated, else None
     fallback_used: bool
     ui: UISpec
     status: ResponseStatus
