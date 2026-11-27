@@ -12,6 +12,8 @@ import { ConceptMap } from "../components/ConceptMap";
 import { BarChart, MetricGrid, Progress, RecommendationCard } from "../components/Report";
 import { FallbackView, ImageFigure, UnknownBlock } from "../components/Media";
 import { AudioPlayer } from "../components/AudioPlayer";
+import { BadgeShelf, BadgeToast } from "../components/BadgeShelf";
+import { EngagementRadar } from "../components/EngagementRadar";
 import type { ParsedUI, UIBlock, UIMeta } from "../ui-schema/schema";
 
 /**
@@ -55,11 +57,11 @@ export function BlockView({ block }: { block: UIBlock }) {
     case "audio":
       return <AudioPlayer block={block} />;
     case "badge_shelf":
+      return <BadgeShelf block={block} />;
     case "badge_toast":
+      return <BadgeToast block={block} />;
     case "engagement":
-      // Phase 9 (progress dashboard) will add dedicated components.
-      // For now render a safe placeholder so the page doesn't break.
-      return <UnknownBlock />;
+      return <EngagementRadar block={block} />;
     case "fallback":
       return <FallbackView block={block} />;
     default:

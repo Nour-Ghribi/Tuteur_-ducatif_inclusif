@@ -94,6 +94,16 @@ export const api = {
   progress: async (): Promise<TutorResponse> =>
     parseTutorResponse(await (await call("/tutor/progress")).json()),
 
+  createProfile: async (input: {
+    age_group: string;
+    school_level: string;
+    cognitive_need: string;
+    vision_need: string;
+    hearing_need: string;
+    language_preference: string;
+    rendering_preferences?: unknown;
+  }): Promise<unknown> => post("/profile", input),
+
   reportOutcome: async (
     recommendationId: string,
     outcome: { completed: boolean; score?: number },
