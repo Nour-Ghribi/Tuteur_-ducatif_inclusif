@@ -1,0 +1,46 @@
+[
+  {
+    "student_id": "student-demo-1",
+    "badges": [
+      {"badge_id": "first_step",        "tier": "bronze", "earned_at": "2026-10-01T09:05:00Z"},
+      {"badge_id": "ten_questions",     "tier": "bronze", "earned_at": "2026-10-01T09:12:00Z"},
+      {"badge_id": "curious_explorer",  "tier": "bronze", "earned_at": "2026-10-03T10:30:00Z"},
+      {"badge_id": "streak_3",          "tier": "bronze", "earned_at": "2026-10-03T10:44:00Z"}
+    ]
+  },
+  {
+    "student_id": "student-demo-2",
+    "badges": [
+      {"badge_id": "first_step",  "tier": "bronze", "earned_at": "2026-10-02T14:05:00Z"},
+      {"badge_id": "resilient",   "tier": "bronze", "earned_at": "2026-10-04T14:20:00Z"},
+      {"badge_id": "comeback_kid","tier": "silver", "earned_at": "2026-10-04T14:35:00Z",
+       "note": "A réussi après plusieurs échecs consécutifs grâce à la remédiation adaptative"}
+    ]
+  },
+  {
+    "student_id": "student-demo-3",
+    "badges": [
+      {"badge_id": "first_step",        "tier": "bronze", "earned_at": "2026-10-05T16:03:00Z"},
+      {"badge_id": "ten_questions",     "tier": "bronze", "earned_at": "2026-10-05T16:15:00Z"},
+      {"badge_id": "curious_explorer",  "tier": "bronze", "earned_at": "2026-10-05T16:28:00Z"}
+    ]
+  },
+  {
+    "student_id": "student-demo-4",
+    "badges": [
+      {"badge_id": "first_step",           "tier": "bronze", "earned_at": "2026-10-06T11:02:00Z"},
+      {"badge_id": "ten_questions",        "tier": "bronze", "earned_at": "2026-10-06T11:08:00Z"},
+      {"badge_id": "curious_explorer",     "tier": "bronze", "earned_at": "2026-10-06T11:12:00Z"},
+      {"badge_id": "very_curious",         "tier": "silver", "earned_at": "2026-10-06T11:15:00Z"},
+      {"badge_id": "resilient",            "tier": "bronze", "earned_at": "2026-10-06T11:18:00Z"},
+      {"badge_id": "autonomous_learner",   "tier": "silver", "earned_at": "2026-10-06T11:20:00Z"}
+    ]
+  },
+  {
+    "student_id": "student-demo-5",
+    "badges": [
+      {"badge_id": "first_step", "tier": "bronze", "earned_at": "2026-10-07T09:35:00Z"},
+      {"badge_id": "resilient",  "tier": "bronze", "earned_at": "2026-10-07T10:00:00Z"}
+    ]
+  }
+]

@@ -125,6 +125,20 @@ def authenticator() -> DevTokenAuthenticator:
     )
 
 
+# Parent/supervisor principal for new tests (Step 8)
+PARENT_TOKEN = "dev-parent-token-0123456789abcdef"
+
+
+@pytest.fixture
+def parent() -> Principal:
+    return Principal(
+        subject_ref="parent-dev-1",
+        role="parent",
+        supervised_student_refs=frozenset({"student-dev-1", "student-dev-2"}),
+        auth_mode="dev_stub",
+    )
+
+
 @pytest.fixture
 def make_client(make_service, authenticator) -> Callable[..., TestClient]:
     """Test-only FastAPI app mounting the router, as the team's application would."""

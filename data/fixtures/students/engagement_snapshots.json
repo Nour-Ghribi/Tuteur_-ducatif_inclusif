@@ -1,0 +1,67 @@
+[
+  {
+    "student_id": "student-demo-1",
+    "computed_at": "2026-10-03T11:00:00Z",
+    "curiosity_score": 0.72,
+    "curiosity_tier": "high",
+    "persistence_score": 0.68,
+    "persistence_tier": "medium",
+    "autonomy_score": 0.61,
+    "autonomy_tier": "medium",
+    "sessions_used": 2,
+    "attempts_used": 33,
+    "note": "Élève curieux, explore différents formats (quiz, flashcards, explication)"
+  },
+  {
+    "student_id": "student-demo-2",
+    "computed_at": "2026-10-04T15:00:00Z",
+    "curiosity_score": 0.38,
+    "curiosity_tier": "medium",
+    "persistence_score": 0.74,
+    "persistence_tier": "high",
+    "autonomy_score": 0.29,
+    "autonomy_tier": "low",
+    "sessions_used": 2,
+    "attempts_used": 20,
+    "note": "Très persévérant malgré les difficultés, amélioration visible entre les sessions"
+  },
+  {
+    "student_id": "student-demo-3",
+    "computed_at": "2026-10-05T17:00:00Z",
+    "curiosity_score": 0.65,
+    "curiosity_tier": "medium",
+    "persistence_score": 0.71,
+    "persistence_tier": "high",
+    "autonomy_score": 0.58,
+    "autonomy_tier": "medium",
+    "sessions_used": 1,
+    "attempts_used": 20,
+    "note": "Bon niveau, interface arabe RTL, adaptation couleurs protanopie"
+  },
+  {
+    "student_id": "student-demo-4",
+    "computed_at": "2026-10-06T12:00:00Z",
+    "curiosity_score": 0.81,
+    "curiosity_tier": "high",
+    "persistence_score": 0.75,
+    "persistence_tier": "high",
+    "autonomy_score": 0.79,
+    "autonomy_tier": "high",
+    "sessions_used": 1,
+    "attempts_used": 25,
+    "note": "Très autonome, grand nombre de tentatives, formats variés"
+  },
+  {
+    "student_id": "student-demo-5",
+    "computed_at": "2026-10-07T10:30:00Z",
+    "curiosity_score": 0.31,
+    "curiosity_tier": "medium",
+    "persistence_score": 0.62,
+    "persistence_tier": "medium",
+    "autonomy_score": 0.22,
+    "autonomy_tier": "low",
+    "sessions_used": 1,
+    "attempts_used": 8,
+    "note": "Profil accessibilité complet, progression lente mais régulière"
+  }
+]

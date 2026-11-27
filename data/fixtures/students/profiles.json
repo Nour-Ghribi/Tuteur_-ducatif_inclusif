@@ -1,0 +1,117 @@
+[
+  {
+    "subject_ref": "student-demo-1",
+    "age_group": "middle",
+    "school_level": "middle",
+    "cognitive_need": "none",
+    "vision_need": "none",
+    "hearing_need": "none",
+    "motor_need": "none",
+    "language_preference": "fr",
+    "rendering_preferences": {
+      "simplified_language": false,
+      "short_segments": false,
+      "audio_enabled": false,
+      "audio_speed": 1.0,
+      "karaoke_mode": false,
+      "reduced_visual_complexity": false,
+      "screen_reader_optimized": false,
+      "high_contrast": false,
+      "color_vision": "none",
+      "text_scale": 1.0
+    },
+    "note": "Élève standard, bons résultats, curieux"
+  },
+  {
+    "subject_ref": "student-demo-2",
+    "age_group": "child",
+    "school_level": "primary",
+    "cognitive_need": "dyslexia",
+    "vision_need": "none",
+    "hearing_need": "none",
+    "motor_need": "none",
+    "language_preference": "fr",
+    "rendering_preferences": {
+      "simplified_language": true,
+      "short_segments": true,
+      "audio_enabled": true,
+      "audio_speed": 0.75,
+      "karaoke_mode": true,
+      "reduced_visual_complexity": false,
+      "screen_reader_optimized": false,
+      "high_contrast": false,
+      "color_vision": "none",
+      "text_scale": 1.2
+    },
+    "note": "Élève dyslexique, audio + karaoké activés, niveau primaire"
+  },
+  {
+    "subject_ref": "student-demo-3",
+    "age_group": "high",
+    "school_level": "high",
+    "cognitive_need": "none",
+    "vision_need": "protanopia",
+    "hearing_need": "none",
+    "motor_need": "none",
+    "language_preference": "ar",
+    "rendering_preferences": {
+      "simplified_language": false,
+      "short_segments": false,
+      "audio_enabled": false,
+      "audio_speed": 1.0,
+      "karaoke_mode": false,
+      "reduced_visual_complexity": false,
+      "screen_reader_optimized": false,
+      "high_contrast": false,
+      "color_vision": "protanopia",
+      "text_scale": 1.0
+    },
+    "note": "Lycéen arabophone, adaptation couleurs protanopie, interface RTL"
+  },
+  {
+    "subject_ref": "student-demo-4",
+    "age_group": "university",
+    "school_level": "university",
+    "cognitive_need": "adhd",
+    "vision_need": "none",
+    "hearing_need": "none",
+    "motor_need": "none",
+    "language_preference": "en",
+    "rendering_preferences": {
+      "simplified_language": false,
+      "short_segments": true,
+      "audio_enabled": true,
+      "audio_speed": 1.25,
+      "karaoke_mode": false,
+      "reduced_visual_complexity": true,
+      "screen_reader_optimized": false,
+      "high_contrast": false,
+      "color_vision": "none",
+      "text_scale": 1.0
+    },
+    "note": "Étudiant universitaire TDAH, anglophone, segments courts, affichage épuré"
+  },
+  {
+    "subject_ref": "student-demo-5",
+    "age_group": "middle",
+    "school_level": "middle",
+    "cognitive_need": "autism",
+    "vision_need": "low_vision",
+    "hearing_need": "none",
+    "motor_need": "none",
+    "language_preference": "fr",
+    "rendering_preferences": {
+      "simplified_language": true,
+      "short_segments": true,
+      "audio_enabled": true,
+      "audio_speed": 1.0,
+      "karaoke_mode": false,
+      "reduced_visual_complexity": true,
+      "screen_reader_optimized": true,
+      "high_contrast": true,
+      "color_vision": "none",
+      "text_scale": 1.5
+    },
+    "note": "Élève autiste + basse vision, contraste élevé, lecteur d'écran, texte agrandi"
+  }
+]

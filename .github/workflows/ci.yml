@@ -1,9 +1,13 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - integration/main
   pull_request:
     branches:
       - main
+      - integration/main
   workflow_dispatch:
 
 permissions:
@@ -14,54 +18,145 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  quality:
-    name: Ruff, Pytest and dependency checks
+  # ─────────────────────────────────────────────────────────────
+  # 1. Python quality: lint + test (MLOps app + tuteur library)
+  # ─────────────────────────────────────────────────────────────
+  quality-mlops:
+    name: Python — MLOps app + tuteur library
     runs-on: ubuntu-latest
     timeout-minutes: 20
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v7
-        with:
-          persist-credentials: false
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.11"
           cache: pip
           cache-dependency-path: requirements.txt
 
-      - name: Install dependencies
+      - name: Install MLOps dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Run Ruff
-        run: python -m ruff check app orchestration scripts tests
+      - name: Install tuteur library
+        run: pip install -e .
 
-      - name: Run Pytest
-        run: python -m pytest -q
+      - name: Ruff — MLOps app
+        run: python -m ruff check app orchestration tests
 
-      - name: Check installed dependencies
-        run: python -m pip check
+      - name: Pytest — MLOps app
+        run: python -m pytest tests/ -q --ignore=tests/tuteur
 
-  docker:
-    name: Build and smoke-test FastAPI image
-    needs: quality
+      - name: Pytest — tuteur library
+        run: python -m pytest tests/tuteur/ -q
+
+  # ─────────────────────────────────────────────────────────────
+  # 2. Python quality: agentic layer
+  # ─────────────────────────────────────────────────────────────
+  quality-agentic:
+    name: Python — agentic layer
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-
+    timeout-minutes: 20
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v7
-        with:
-          persist-credentials: false
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
 
-      - name: Build FastAPI image
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/agentic/pyproject.toml
+
+      - name: Install tuteur library (required by agentic adapters)
+        run: pip install -e .
+
+      - name: Install agentic dependencies
+        run: pip install -e "backend/agentic[dev]"
+
+      - name: Ruff — agentic
+        run: |
+          cd backend/agentic
+          python -m ruff check src tests
+
+      - name: Pytest — agentic
+        run: |
+          cd backend/agentic
+          python -m pytest -q
+
+  # ─────────────────────────────────────────────────────────────
+  # 3. Frontend
+  # ─────────────────────────────────────────────────────────────
+  quality-frontend:
+    name: Frontend — TypeScript + tests + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: cd frontend && npm ci
+
+      - name: Type-check
+        run: cd frontend && npx tsc --noEmit
+
+      - name: Tests (Vitest)
+        run: cd frontend && npm test -- --run
+
+      - name: Build
+        run: cd frontend && npm run build
+
+  # ─────────────────────────────────────────────────────────────
+  # 4. Docker build + smoke test
+  # ─────────────────────────────────────────────────────────────
+  docker:
+    name: Docker — build + smoke test
+    needs: [quality-mlops, quality-agentic]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+
+      - name: Build API image
         run: docker build --tag tuteur-inclusif-api:ci .
 
-      - name: Smoke-test FastAPI image
-        run: >-
-          docker run --rm --entrypoint python tuteur-inclusif-api:ci
-          -c "from app.main import app; assert app.title; print(app.title)"
+      - name: Smoke-test — health endpoint responds
+        run: |
+          docker run --rm -d --name tutor-ci -p 8000:8000 \
+            -e TUTOR_ENVIRONMENT=test \
+            -e TUTOR_ALLOW_MOCKS=true \
+            -e TUTOR_GENAI_BACKEND=mock \
+            tuteur-inclusif-api:ci
+          sleep 8
+          curl --fail http://localhost:8000/health
+          docker stop tutor-ci
+
+      - name: Smoke-test — ready endpoint lists adapters
+        run: |
+          docker run --rm -d --name tutor-ci2 -p 8001:8000 \
+            -e TUTOR_ENVIRONMENT=test \
+            -e TUTOR_ALLOW_MOCKS=true \
+            -e TUTOR_GENAI_BACKEND=mock \
+            tuteur-inclusif-api:ci
+          sleep 8
+          curl --fail http://localhost:8001/ready | grep -q '"using_mocks"'
+          docker stop tutor-ci2
+
+      - name: Build RL image
+        run: docker build --tag tuteur-inclusif-rl:ci -f backend/rl/Dockerfile .
+
+      - name: Smoke-test — RL health
+        run: |
+          docker run --rm -d --name rl-ci -p 8002:8001 tuteur-inclusif-rl:ci
+          sleep 6
+          curl --fail http://localhost:8002/health
+          docker stop rl-ci

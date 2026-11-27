@@ -1,0 +1,173 @@
+{
+  "_meta": {
+    "description": "Synthetic student interaction history for platform demonstration",
+    "generated": "2026-11-27",
+    "seed": 42,
+    "total_sessions": 12,
+    "total_attempts": 180,
+    "course": "demo-bio-101",
+    "topic": "La photosynthèse"
+  },
+  "sessions": [
+    {
+      "session_id": "session-demo-s1-01",
+      "student_id": "student-demo-1",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-01T09:00:00Z",
+      "ended_at": "2026-10-01T09:28:00Z",
+      "reading_level": "standard",
+      "summary": {
+        "attempts": 15, "correct": 12, "success_rate": 0.80,
+        "skills": ["photosynthèse-définition", "chlorophylle", "lumière-énergie"]
+      }
+    },
+    {
+      "session_id": "session-demo-s1-02",
+      "student_id": "student-demo-1",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-03T10:15:00Z",
+      "ended_at": "2026-10-03T10:44:00Z",
+      "reading_level": "standard",
+      "summary": {
+        "attempts": 18, "correct": 16, "success_rate": 0.89,
+        "skills": ["cycle-calvin", "atp-nadph", "chloroplaste"]
+      }
+    },
+    {
+      "session_id": "session-demo-s2-01",
+      "student_id": "student-demo-2",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-02T14:00:00Z",
+      "ended_at": "2026-10-02T14:35:00Z",
+      "reading_level": "simplifie",
+      "summary": {
+        "attempts": 10, "correct": 6, "success_rate": 0.60,
+        "skills": ["photosynthèse-définition", "lumière-énergie"],
+        "remediations": 3
+      }
+    },
+    {
+      "session_id": "session-demo-s2-02",
+      "student_id": "student-demo-2",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-04T14:00:00Z",
+      "ended_at": "2026-10-04T14:40:00Z",
+      "reading_level": "simplifie",
+      "summary": {
+        "attempts": 10, "correct": 8, "success_rate": 0.80,
+        "skills": ["photosynthèse-définition", "lumière-énergie", "chlorophylle"],
+        "remediations": 1,
+        "note": "Amélioration après remédiation adaptative"
+      }
+    },
+    {
+      "session_id": "session-demo-s3-01",
+      "student_id": "student-demo-3",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-05T16:00:00Z",
+      "ended_at": "2026-10-05T16:30:00Z",
+      "reading_level": "standard",
+      "summary": {
+        "attempts": 20, "correct": 17, "success_rate": 0.85,
+        "skills": ["photosynthèse-définition", "cycle-calvin", "chloroplaste", "atp-nadph"],
+        "language": "ar"
+      }
+    },
+    {
+      "session_id": "session-demo-s4-01",
+      "student_id": "student-demo-4",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-06T11:00:00Z",
+      "ended_at": "2026-10-06T11:20:00Z",
+      "reading_level": "standard",
+      "summary": {
+        "attempts": 25, "correct": 22, "success_rate": 0.88,
+        "skills": ["cycle-calvin", "atp-nadph", "chloroplaste", "lumière-énergie", "co2-fixation"],
+        "language": "en",
+        "note": "Segments courts, activités variées (quiz + flashcards + explication)"
+      }
+    },
+    {
+      "session_id": "session-demo-s5-01",
+      "student_id": "student-demo-5",
+      "course_id": "demo-bio-101",
+      "started_at": "2026-10-07T09:30:00Z",
+      "ended_at": "2026-10-07T10:05:00Z",
+      "reading_level": "simplifie",
+      "summary": {
+        "attempts": 8, "correct": 5, "success_rate": 0.625,
+        "skills": ["photosynthèse-définition", "lumière-énergie"],
+        "remediations": 2,
+        "accessibility": ["high_contrast", "screen_reader", "text_scale_1.5"]
+      }
+    }
+  ],
+  "sample_attempts": [
+    {
+      "student_id": "student-demo-1",
+      "skill": "photosynthèse-définition",
+      "question": "Qu'est-ce que la photosynthèse ?",
+      "student_answer": "C'est le processus par lequel les plantes fabriquent leur nourriture à partir de la lumière.",
+      "is_correct": true,
+      "response_time_s": 18.5,
+      "type": "short_answer",
+      "difficulty": "facile"
+    },
+    {
+      "student_id": "student-demo-1",
+      "skill": "chlorophylle",
+      "question": "Quel pigment absorbe la lumière dans les chloroplastes ?",
+      "student_answer": "La caroténoïde",
+      "is_correct": false,
+      "response_time_s": 12.0,
+      "type": "qcm",
+      "difficulty": "moyen",
+      "correct_answer": "La chlorophylle",
+      "remediation_triggered": true
+    },
+    {
+      "student_id": "student-demo-2",
+      "skill": "photosynthèse-définition",
+      "question": "Vrai ou faux : les plantes fabriquent de l'énergie à partir de la lumière.",
+      "student_answer": "Vrai",
+      "is_correct": true,
+      "response_time_s": 25.0,
+      "type": "vrai_faux",
+      "difficulty": "facile",
+      "note": "Niveau simplifié, audio activé, karaoke"
+    },
+    {
+      "student_id": "student-demo-3",
+      "skill": "cycle-calvin",
+      "question": "ما هو دور دورة كالفن في عملية التمثيل الضوئي؟",
+      "student_answer": "تثبيت ثاني أكسيد الكربون وإنتاج الجلوكوز.",
+      "is_correct": true,
+      "response_time_s": 22.0,
+      "type": "short_answer",
+      "difficulty": "difficile",
+      "language": "ar"
+    },
+    {
+      "student_id": "student-demo-4",
+      "skill": "atp-nadph",
+      "question": "What are the two main energy carriers produced in the light reactions?",
+      "student_answer": "ATP and NADPH",
+      "is_correct": true,
+      "response_time_s": 9.5,
+      "type": "short_answer",
+      "difficulty": "moyen",
+      "language": "en"
+    },
+    {
+      "student_id": "student-demo-5",
+      "skill": "lumière-énergie",
+      "question": "La lumière du soleil fournit de l'énergie aux plantes. Vrai ou faux ?",
+      "student_answer": "Vrai",
+      "is_correct": true,
+      "response_time_s": 35.0,
+      "type": "vrai_faux",
+      "difficulty": "facile",
+      "accessibility": ["high_contrast", "screen_reader"]
+    }
+  ]
+}

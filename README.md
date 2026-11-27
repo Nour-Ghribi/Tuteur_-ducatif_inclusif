@@ -1,205 +1,349 @@
-# Tuteur éducatif inclusif — module GenAI + RAG
+# Tuteur éducatif inclusif
 
-## MVP adaptatif GenAI/RAG + LinUCB
+**GenAI · Reinforcement Learning · MLOps**
 
-Le MVP intégré ajoute une interface Streamlit, un historique SQLite, un état étudiant versionné
-de 19 dimensions et une politique LinUCB principale pour sélectionner A0–A4. Le checkpoint fourni
-a été réellement entraîné sur une simulation explicitement hypothétique ; il ne démontre aucune
-efficacité éducative réelle. Une baseline règle-based reste disponible uniquement comme repli visible.
+An inclusive educational tutor that generates personalised learning activities,
+adapts to each student's pace and needs, and runs a full MLOps pipeline.
 
-```powershell
-pip install -e ".[dev,mvp]"
-streamlit run app.py
+[![CI](https://github.com/Nour-Ghribi/Tuteur_-ducatif_inclusif/actions/workflows/ci.yml/badge.svg?branch=integration/main)](https://github.com/Nour-Ghribi/Tuteur_-ducatif_inclusif/actions/workflows/ci.yml)
+
+---
+
+## Table of contents
+
+1. [Architecture overview](#architecture-overview)
+2. [Repository structure](#repository-structure)
+3. [Quick start (local)](#quick-start-local)
+4. [Environment variables](#environment-variables)
+5. [Running tests](#running-tests)
+6. [Cloud deployment](#cloud-deployment)
+7. [Feature map](#feature-map)
+8. [Student history fixtures](#student-history-fixtures)
+9. [Contributing](#contributing)
+
+---
+
+## Architecture overview
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    Frontend (React/Vite)              │
+│  OnboardingPage · StudentPage · ProgressPage         │
+│  TeacherPage · ParentPage · FR/AR/EN · RTL           │
+└─────────────────────┬───────────────────────────────-┘
+                      │  /api/v1  (Bearer token)
+┌─────────────────────▼────────────────────────────────┐
+│          FastAPI — app/main.py (MLOps scaffold)       │
+│  /health · /ready · /metrics · /artifacts/validated  │
+│  mounts ──► create_tutor_router() [agentic layer]    │
+└──────┬──────────────┬────────────────────────────────-┘
+       │              │
+┌──────▼──────┐  ┌────▼────────────────────────────────┐
+│  RL service │  │   backend/agentic (LangGraph)         │
+│  LinUCB     │  │   intake → plan → retrieve → generate │
+│  POST /v1/  │  │   → verify → recommend → audio/video │
+│  recommend  │  │   → finalize                          │
+└─────────────┘  └────────────┬───────────────────────--┘
+                               │  TUTOR_GENAI_BACKEND=tuteur
+                    ┌──────────▼──────────────────────────┐
+                    │  src/tuteur (GenAI+RAG+RL library)   │
+                    │  Tutor.ask/quiz/remediate             │
+                    │  VectorStore (ChromaDB + BM25)        │
+                    │  LLM (any OpenAI-compatible API)      │
+                    │  AdaptiveTutorService (LinUCB)        │
+                    └─────────────────────────────────────-┘
+                    
+Infrastructure: MLflow · Airflow · Prometheus · Grafana · Docker Compose
 ```
 
-La démonstration mock ne demande ni clé API ni réseau. Le mode réel réutilise le client LLM et le
-RAG configurables existants. Voir [`docs/MVP_LOCAL_DEMO.md`](docs/MVP_LOCAL_DEMO.md) pour les commandes
-Windows exactes et [`docs/LINUCB_SYNTHETIC_PROTOCOL.md`](docs/LINUCB_SYNTHETIC_PROTOCOL.md) pour le
-protocole, les résultats et leurs limites.
+---
 
-Premier module du projet : transformer un cours (PDF, TXT, MD) en base RAG, puis générer
-réponses, quiz et remédiations adaptés — avec un niveau de lecture **simplifié (FALC)** pour l'inclusion.
+## Repository structure
 
 ```
-Cours (PDF/texte) ──► ingestion.py ──► chunking.py ──► vectorstore.py ──► generation.py ──► Quiz / Réponse / Remédiation
-                      texte + images    passages       embeddings E5      prompts YAML        (JSON validé Pydantic)
-                                        + n° de page   + ChromaDB         + LLM
+.
+├── src/tuteur/              GenAI+RAG+RL library
+│   ├── generation.py        Tutor class (ask/quiz/remediate)
+│   ├── vectorstore.py       ChromaDB + BM25 hybrid search
+│   ├── ingestion.py         PDF/MD/TXT extraction + VLM image description
+│   ├── chunking.py          Text + image-caption chunks
+│   ├── vision.py            VLM describer (Ollama/Gemini/OpenAI)
+│   ├── prompts/             Versioned YAML prompts (FR/AR/EN + school_level)
+│   └── adaptive/            LinUCB policy + SQLite ledger + engagement + badges
+│
+├── backend/
+│   ├── agentic/             LangGraph orchestration layer
+│   │   └── src/tutor_agentic/
+│   │       ├── graph/       LangGraph nodes + builder
+│   │       ├── profiles/    Student profile store + onboarding API
+│   │       ├── reporting/   Parent report + PDF export
+│   │       ├── audio/       TTS adapter + text extractor
+│   │       ├── video/       Slide script + Pillow/moviepy renderer
+│   │       └── engagement/  EngagementService bridge
+│   └── rl/                  LinUCB HTTP microservice
+│
+├── app/                     MLOps FastAPI scaffold (mounts agentic router)
+├── orchestration/           Airflow DAGs (RAG, RL, evaluation pipelines)
+├── monitoring/              Prometheus · Grafana · Evidently · OpenTelemetry
+├── frontend/                React/Vite app (FR/AR/EN, RTL, accessibility)
+├── tests/                   MLOps + tuteur library tests
+│   └── tuteur/              Unit tests for src/tuteur (chunking, vision, video…)
+├── data/
+│   ├── raw/                 Sample course (photosynthèse.md)
+│   └── fixtures/students/   Synthetic student history for demo + warm-start
+├── compose.yaml             Full Docker Compose (api + rl + mlflow + airflow + grafana)
+└── .github/workflows/ci.yml CI: ruff + pytest + docker build
 ```
 
-| Fichier | Rôle |
-|---|---|
-| `src/tuteur/ingestion.py` | Extraction texte + images par page (PyMuPDF). Images → `data/images/` (pour le futur module Inclusion). |
-| `src/tuteur/chunking.py` | Découpage par paragraphes/phrases avec chevauchement ; chaque chunk garde sa page. |
-| `src/tuteur/vectorstore.py` | Embeddings `multilingual-e5-small` (bon en français, tourne sur CPU) + ChromaDB persistant. |
-| `src/tuteur/llm.py` | Client unique pour **toute API compatible OpenAI** (Ollama, Groq, Gemini, OpenAI). Sortie JSON validée + 1 relance si invalide. Trace latence/tokens (→ MLflow plus tard). |
-| `src/tuteur/prompts/*.yaml` | Prompts **versionnés** (`name@vN`) — exigence MLOps du sujet. |
-| `src/tuteur/schemas.py` | Formats Quiz / QuizItem / Remédiation, avec règles (QCM = 4 choix, réponse ∈ choix…). |
-| `src/tuteur/generation.py` | `Tutor.ask()`, `Tutor.quiz()`, `Tutor.remediate()`. |
-| `src/tuteur/cli.py` | Commande `tuteur`. |
-| `src/tuteur/pipeline.py` | Pipeline batch pour Airflow (branche `mlops`) : mêmes étapes et même manifeste `registry/rag/latest.json` que le pipeline simulé, avec le vrai code. DAG prêt à copier : `integration/airflow/rag_pipeline.py` ; mode d'emploi : `docs/INTEGRATION_MLOPS.md`. |
+---
 
-## Installation
+## Quick start (local)
+
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+- Docker + Docker Compose (for the full stack)
+
+### 1. Clone and configure
 
 ```bash
-python -m venv .venv
-.venv\Scripts\activate          # Windows  (Linux/Mac : source .venv/bin/activate)
+git clone https://github.com/Nour-Ghribi/Tuteur_-ducatif_inclusif.git
+cd Tuteur_-ducatif_inclusif
+git checkout integration/main
+cp .env.example .env
+# Edit .env — set your LLM provider (Ollama, Groq, Gemini, OpenAI...)
+```
+
+### 2. Install the tuteur library
+
+```bash
+pip install -e .
+# Optional: install evaluation dependencies
+pip install -e ".[eval]"
+```
+
+### 3. Install the agentic layer
+
+```bash
+cd backend/agentic
 pip install -e ".[dev]"
-copy .env.example .env          # puis choisir le LLM dans .env
+cd ../..
 ```
 
-> **Windows :** si le chemin du projet est très long, `chromadb` échoue avec « DLL load failed … filename too long ».
-> Créer alors le venv dans un chemin court (`python -m venv C:\Users\<moi>\.venvs\tuteur`).
-> Pour économiser ~2 Go : `pip install torch --index-url https://download.pytorch.org/whl/cpu` avant le reste.
-
-**Choix du LLM** (dans `.env`) — tout passe par l'API compatible OpenAI, on change juste 3 variables :
-- **Ollama** (local, gratuit) : installer depuis ollama.com puis `ollama pull qwen2.5:7b` (tient dans 8 Go de VRAM).
-- **Groq** ou **Gemini** : clé API gratuite, aucun GPU nécessaire.
-
-## Utilisation
+### 4. Ingest a course
 
 ```bash
-tuteur ingest data/raw/photosynthese.md mon_cours.pdf   # indexer
-tuteur docs                                              # lister (doc_id)
-tuteur search "pourquoi les feuilles sont vertes"        # tester le retrieval, sans LLM
-tuteur ask "C'est quoi la chlorophylle ?" --niveau simplifie
-tuteur quiz --topic "photosynthèse" -n 5 --difficulte facile -o quiz.json
-tuteur quiz --doc <doc_id> --pages 3-5 -n 8             # quiz sur un chapitre
-tuteur remediate "Que rejette la photosynthèse ?" "du CO2" "du dioxygène"
+# Without VLM (text only)
+tuteur ingest data/raw/photosynthese.md
+
+# With VLM image description (set VISION_MODEL in .env first)
+tuteur ingest data/raw/photosynthese.md
 ```
 
-## Tests
+### 5. Start the full stack
 
 ```bash
-pytest
+docker compose up
 ```
-Les tests n'ont pas besoin de LLM : le retrieval est testé avec le vrai modèle d'embedding,
-la génération avec un LLM simulé.
 
-## Évaluation
+| Service | URL |
+|---|---|
+| API | http://localhost:8000 |
+| API docs | http://localhost:8000/docs |
+| RL service | http://localhost:8001 |
+| MLflow | http://localhost:5000 |
+| Airflow | http://localhost:8080 |
+| Grafana | http://localhost:3000 |
+| Prometheus | http://localhost:9090 |
 
-Jeu de référence : `eval/reference.jsonl` (16 questions + 2 hors cours) et `eval/remediation.jsonl` (4 erreurs d'élève).
+### 6. Start the frontend
 
 ```bash
-tuteur eval --prompts 1                 # évalue les prompts v1 (juge léger par défaut)
-tuteur eval --prompts 2
-tuteur eval --compare eval/results/prompts-v1-leger.json eval/results/prompts-v2-leger.json
-tuteur eval --juge ragas                # métriques RAGAS officielles (≈3 appels juge / réponse)
+cd frontend
+npm install
+npm run dev
+# → http://localhost:5173
 ```
 
-- **Juge léger** (défaut) : 1 appel par réponse, critères RAGAS (part des affirmations supportées
-  par le contexte, pertinence, exactitude vs référence). Tient dans les quotas gratuits Groq.
-- **Juge** configurable à part (`EVAL_JUDGE_*` dans `.env`) : on utilise `qwen/qwen3.8-27b`,
-  d'une autre famille que le générateur `gpt-oss-120b` (limite l'auto-complaisance du juge).
-- Chaque étape est mise en cache dans `eval/runs/<label>/` : relancer reprend là où ça s'est arrêté.
-- Prompts versionnés : `src/tuteur/prompts/<nom>.v<N>.yaml` ; `PROMPT_VERSION` ou `--prompts` pour figer une version.
+The first time a student opens the app, the **onboarding wizard** walks them
+through age group, school level, special needs (dyslexia/ADHD/autism/…),
+vision, hearing, and language preference.
 
-**Résultats v1 → v2** (générateur gpt-oss-120b, juge qwen3.8-27b, 26/10/2026) :
+---
 
-| | v1 | v2 |
+## Environment variables
+
+See `.env.example` for the full reference. Key variables:
+
+| Variable | Default | Description |
 |---|---|---|
-| Fidélité au cours — standard | 0.93 | **0.99** |
-| Fidélité au cours — simplifié (FALC) | 0.70 | **0.95** |
-| Longueur moyenne — simplifié | 144 mots | **38 mots** |
-| Mots par phrase — simplifié | 9.8 | **7.3** |
-| Refus des questions hors cours | 100 % | 100 % |
-| Exercices de remédiation quasi identiques à la question | 50 % | 25 % |
-| Retrieval hit@1 / hit@5 | 0.56 / 0.94 | 0.56 / 0.94 |
+| `TUTOR_GENAI_BACKEND` | `mock` | `mock` / `tuteur` (in-process) / `http` |
+| `LLM_BASE_URL` | Ollama local | Any OpenAI-compatible endpoint |
+| `LLM_MODEL` | `qwen2.5:7b` | Model name |
+| `VISION_MODEL` | _(disabled)_ | VLM for image → RAG description |
+| `TUTOR_TTS_MODEL` | _(disabled)_ | TTS model for audio + karaoke |
+| `TUTOR_VIDEO_ENABLED` | `false` | Generate slide video after explanations |
+| `TUTOR_PROFILE_DB_PATH` | _(in-memory)_ | SQLite for student profiles |
+| `TUTOR_LEDGER_DB_PATH` | _(disabled)_ | SQLite for RL + engagement + badges |
 
-### Recherche dense vs hybride (BM25 + embeddings, fusion RRF)
+### Recommended model stacks
 
-`SEARCH_MODE=hybride` (défaut) ou `dense` ; `tuteur search "..." --recherche dense` pour comparer.
-`eval/paraphrases.jsonl` : 10 questions reformulées avec peu de mots du cours (comme un élève),
-pour vérifier que BM25 n'avantage pas seulement les questions écrites avec le vocabulaire du cours.
+| Use case | LLM | Embedding | VLM | TTS |
+|---|---|---|---|---|
+| Local / free | Qwen2.5:7b (Ollama) | multilingual-e5-small | LLaVA (Ollama) | Kokoro (local) |
+| Cloud / best | Gemini 2.0 Flash | multilingual-e5-large | Gemini 2.0 Flash | OpenAI tts-1 |
+| Groq (fast) | qwen-qwen2.5-72b | multilingual-e5-small | — | — |
 
-| | dense | hybride |
+---
+
+## Running tests
+
+### Tuteur library (src/tuteur)
+
+```bash
+pytest tests/tuteur/ -v
+```
+
+### Agentic layer (backend/agentic)
+
+```bash
+cd backend/agentic
+pytest -v
+```
+
+### MLOps app (tests/)
+
+```bash
+pytest tests/ -v
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm test
+```
+
+### All at once (CI-equivalent)
+
+```bash
+# Python
+ruff check app orchestration tests backend/agentic/src
+pytest tests/ tests/tuteur/ -q
+
+# Frontend
+cd frontend && npm ci && npm test && npm run build
+```
+
+---
+
+## Cloud deployment
+
+### Docker Compose (single server / VPS)
+
+```bash
+# Production .env
+TUTOR_ENVIRONMENT=production
+TUTOR_ALLOW_MOCKS=false
+TUTOR_GENAI_BACKEND=http   # or tuteur if running LLM on the same server
+# Set all service URLs, API keys, DB paths...
+
+docker compose up -d
+```
+
+### GitHub Actions CI/CD (automated)
+
+The workflow at `.github/workflows/ci.yml` runs on every PR to `main`:
+
+1. **Ruff** — Python linting
+2. **Pytest** — all Python tests
+3. **Docker build** — builds and smoke-tests the API image
+4. **Frontend build** — `npm ci && npm test && npm run build`
+
+Add a `deploy` job to push to your cloud provider after CI passes
+(see the `Cloud deployment` section in `docs/DEPLOYMENT.md`).
+
+### Railway / Render (one-click PaaS)
+
+Both platforms support Docker Compose deployment. Point them at this repo
+with `compose.yaml` as the entry point.
+
+Environment variables are set in the platform's dashboard —
+copy from `.env.example` and fill in your production values.
+
+### AWS / GCP / Azure (Kubernetes)
+
+See `docs/DEPLOYMENT.md` for Helm chart and Kubernetes manifests.
+The recommended architecture is:
+
+```
+Ingress (nginx/ALB)
+  → frontend (static files served by nginx or Vercel)
+  → api (FastAPI, 2+ replicas)
+  → rl  (FastAPI, 1 replica)
+  → mlflow (1 replica, persistent volume for SQLite)
+  → airflow (scheduler + webserver)
+  → postgres (Airflow metadata)
+  → prometheus + grafana
+```
+
+---
+
+## Feature map
+
+| Feature | Status | Config |
 |---|---|---|
-| hit@1 — questions de référence (16) | 0.56 | **0.75** |
-| hit@5 — questions de référence | 0.94 | **1.00** |
-| hit@1 — questions reformulées (10) | **0.80** | 0.70 |
-| hit@5 — questions reformulées | 1.00 | 1.00 |
-| Mode standard (prompts v2) : fidélité / pertinence / exactitude | 0.99 / 0.94 / 0.94 | **1.00 / 1.00 / 1.00** |
+| GenAI quiz/explanation/flashcards | ✅ | `TUTOR_GENAI_BACKEND=tuteur` |
+| RAG (hybrid BM25 + dense) | ✅ | `LLM_*` + `EMBEDDING_MODEL` |
+| VLM image → RAG chunks | ✅ | `VISION_MODEL` |
+| LinUCB adaptive difficulty | ✅ | `TUTOR_RL_SERVICE_URL` |
+| Student profile + onboarding | ✅ | `TUTOR_PROFILE_DB_PATH` |
+| Multilingual (AR/FR/EN) | ✅ | `LLM_MODEL` (multilingual) |
+| School-level prompt tone | ✅ | Automatic from profile |
+| Audio + karaoke | ✅ | `TUTOR_TTS_MODEL` |
+| Color vision adaptation | ✅ | Declared in profile |
+| Engagement scores + badges | ✅ | `TUTOR_LEDGER_DB_PATH` |
+| Parent/supervisor report + PDF | ✅ | `TUTOR_LEDGER_DB_PATH` |
+| Video summary | ✅ | `TUTOR_VIDEO_ENABLED=true` |
+| MLflow tracing | ✅ | `MLFLOW_TRACKING_URI` |
+| Airflow orchestration | ✅ | `docker compose up` |
+| Prometheus + Grafana monitoring | ✅ | `docker compose up` |
+| Security guard model | 🔜 | `TUTOR_GUARD_MODEL` (placeholder) |
 
-Le LLM reçoit les 5 premiers passages : c'est hit@5 qui compte le plus, et seul l'hybride atteint 1.0
-partout. La question « combien de quiz par chapitre » (passage p. 4 au rang 6 en dense) est maintenant résolue.
-Mode simplifié en hybride : pas encore évalué (quota journalier Groq atteint).
+---
 
-### Citations
+## Student history fixtures
 
-Problème observé : « [p. 8] » pour un PDF de 4 pages (le numéro de section « 8. Valeur ajoutée » pris
-pour une page), et des pages citées qui ne contiennent pas l'information.
+Synthetic student interaction data lives in `data/fixtures/students/`.
+It represents 5 students with varied profiles using the platform over
+one week on the photosynthesis course.
 
-- **Garde-fou** (`src/tuteur/citations.py`) : toute page citée qui n'est pas celle d'un passage fourni
-  est retirée avant affichage ; `tuteur ask` signale les citations retirées.
-- **Prompt `answer.v3`** : chaque passage a un en-tête `=== PASSAGE i — page N ===` séparé du texte,
-  et la consigne précise que les numéros présents dans le texte ne sont jamais des pages.
-- **Métriques** (sur la réponse brute, avant garde-fou) : `citation_rate`, `citation_validity`
-  (page citée ∈ passages fournis), `citation_hit_pdf` (la page citée contient l'information — PDF seulement).
-
-| Recherche hybride | v2 | v3 |
+| Student | Profile | Highlights |
 |---|---|---|
-| Citations valides — standard / simplifié | 0.95 / 0.97 | **1.00 / 1.00** |
-| Bonne page citée (PDF) — standard / simplifié | 0.83 / 0.67 | 0.83 / **1.00** |
-| Fidélité — standard / simplifié | 1.00 / 0.83 | 0.99 / **0.90** |
+| `student-demo-1` | Standard, FR, collège | Curious (high), 2 sessions, 33 attempts |
+| `student-demo-2` | Dyslexie, FR, primaire | Persistent (high), audio+karaoke, improved with remediation |
+| `student-demo-3` | Protanopie, AR, lycée | Arabic RTL, color adaptation, 85% success rate |
+| `student-demo-4` | TDAH, EN, université | Autonomous (high), 25 attempts in 20 min, 6 badges |
+| `student-demo-5` | Autisme+basse vision, FR | Full accessibility stack, text_scale 1.5, high contrast |
 
-Attention au bruit : avec 16 questions et une génération à température 0.3, deux runs du **même**
-prompt varient (ex. remédiation : 25 % → 0 % de quasi-doublons alors que son prompt n'a pas changé).
-Seuls les écarts nets et cohérents sont à interpréter.
+Use these fixtures to:
+- **Demo** the platform without real user data
+- **Warm-start** the LinUCB policy before real students arrive
+- **Benchmark** recommendation quality offline
 
-### Taille des passages : pourquoi 800 caractères
+---
 
-`tuteur eval --decoupage 300 400 600 800 1000 1200 --cours <cours…>` découpe et indexe les cours à
-chaque taille (chevauchement gardé à 150/800 de la taille), puis mesure la recherche seule : pas
-de LLM, pas de quota. Les 2 cours, recherche hybride, 13/11/2026 :
+## Contributing
 
-| Taille | Passages | Les 5 envoyés = part du cours | hit@5 référence (16) | hit@5 reformulées (10) | hit@1 référence | hit@1 reformulées |
-|---|---|---|---|---|---|---|
-| 300 | 50 | 10 % | 1.00 | 1.00 | 0.50 | 0.30 |
-| 400 | 34 | 15 % | 1.00 | 0.90 | 0.81 | 0.50 |
-| 600 | 24 | 21 % | 1.00 | 0.90 | 0.75 | 0.60 |
-| **800** | 19 | 26 % | **1.00** | **1.00** | 0.75 | 0.70 |
-| 1000 | 15 | 33 % | 1.00 | 1.00 | 0.88 | 0.70 |
-| 1200 | 11 | 45 % | 1.00 | 1.00 | 0.75 | 0.90 |
+This project is developed on `integration/main`. Each feature lives in its
+own section of the codebase; see the architecture diagram above.
 
-- **Ce qui compte, hit@5** (le bon passage parmi les 5 envoyés au LLM) : à 400 et 600, une question
-  reformulée sur 10 rate son passage. À partir de 800, 100 % partout.
-- **Plus grand n'est pas mieux** : à 1 200, les 5 passages envoyés couvrent 45 % de tout le cours,
-  donc les trouver devient presque automatique (la mesure ne départage plus rien), et le LLM reçoit
-  environ 4 800 caractères au lieu de 3 000 (plus de tokens, plus de texte hors sujet).
-- **Choix gardé : 800**, la plus petite taille qui trouve toujours le bon passage dans les deux jeux.
-- **Prudence** : 2 petits cours ; un écart de 0.06 (référence) ou 0.10 (reformulées) = une question.
-  Sur des cours plus longs, la comparaison serait plus discriminante.
+```bash
+# Run the full quality check before opening a PR
+ruff check .
+pytest -q
+cd frontend && npm test
+```
 
-### Mode simplifié sans exemples inventés (snapshot v4)
-
-La consigne « termine par un exemple concret » (styles v2) poussait le modèle à inventer des exemples
-hors cours (« une vache mange de l'herbe et reçoit du dioxygène »). `styles.v4` : simplifier = dire la
-même chose avec des mots plus simples ; un exemple seulement s'il est dans le cours.
-`--prompts 4` = answer v3 + styles v4 (le label d'un run suit le numéro de snapshot).
-
-| Recherche hybride, mode simplifié | v3 | v4 |
-|---|---|---|
-| Fidélité au cours | 0.90 | **1.00** |
-| Affirmations non supportées (16 questions) | 7 | **0** |
-| Pertinence / exactitude | 1.00 / 1.00 | 0.97 / 0.97 |
-| Longueur moyenne | 34 mots | **20 mots** |
-| Mots par phrase / score Kandel-Moles | 6.8 / 83 | 9.1 / 77 |
-
-Contrepartie : en reprenant les phrases du cours, les phrases s'allongent un peu (toujours sous la
-limite de 12 mots). Une réponse est jugée partielle : « pourquoi la photosynthèse est importante pour
-les animaux » répond dioxygène mais oublie les chaînes alimentaires.
-
-**Snapshot v5** (`styles.v5` : « simplifier, ce n'est pas couper », donner tous les éléments du cours) :
-pertinence / exactitude simplifié 0.97 → **1.00**, fidélité toujours 1.00, 19 mots en moyenne.
-photo-09 répond maintenant dioxygène **et** nourriture des herbivores puis des carnivores.
-La « bonne page (PDF) » baisse (standard 1.00 → 0.67) alors que le prompt standard n'a pas changé :
-c'est du bruit (6 questions PDF), comme la remédiation (0 % → 25 % de quasi-doublons, prompt identique).
-
-## Prochaines étapes (GenAI / RAG)
-
-1. **Jeu de test** : passer de 16 à ~50 questions pour que les écarts de 1 question ne pèsent plus 6 %.
-2. **Remédiation** : la similarité d'embeddings capte mal « un autre angle » ; ajouter un critère au juge.
-3. **MLflow** : logger chaque `eval/results/*.json` (params = prompts/modèles, metrics = scores).
-4. **Mini-jeux** : ajouter un prompt + schéma (ex. « associer les paires », « texte à trous »).
-5. **Multimodal / Inclusion** : décrire les images de `data/images/` (BLIP/LLaVA) et indexer
-   ces descriptions comme chunks → le RAG « voit » les schémas.
-6. **API** : exposer `Tutor` via FastAPI (le module RL appellera `quiz(difficulty=...)`).
+All commits must be attributed to the team member who wrote the code.
+Never commit secrets, PII or real student data.
