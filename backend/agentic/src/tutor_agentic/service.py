@@ -19,6 +19,7 @@ from .integrations import AdapterSet, build_adapters
 from .integrations.contracts import OutcomeReport
 from .audio import make_tts_from_settings
 from .engagement import EngagementService
+from .reporting import ParentReportService, export_pdf
 from .profiles import (
     InMemoryProfileStore,
     ProfileStore,
@@ -34,6 +35,7 @@ from .schemas.requests import (
     ActivityOutcome,
     AnswerSubmission,
     ExperienceRequest,
+    ParentReportRequest,
     RecommendationRequest,
     TeacherReportRequest,
 )
@@ -55,7 +57,8 @@ class TutorService:
         history: StudentHistoryStore | None = None,
         profiles: ProfileStore | None = None,
         engagement: EngagementService | None = None,
-        tts=None,  # TTSAdapter | None
+        tts=None,              # TTSAdapter | None
+        parent_reports: "ParentReportService | None" = None,
     ) -> None:
         self._settings = settings
         self._adapters = adapters
@@ -65,6 +68,10 @@ class TutorService:
         self._profiles: ProfileStore = profiles or InMemoryProfileStore()
         ledger_path = getattr(settings, "ledger_db_path", None)
         self._engagement = engagement or EngagementService(ledger_path)
+        self._parent_reports = parent_reports or ParentReportService(
+            ledger_path=ledger_path,
+            llm=None,   # LLM injected via from_settings when tuteur backend is active
+        )
         router = IntentRouter(adapters.intent_classifier, settings.intent_classifier_min_confidence)
         self._graph = build_tutor_graph(
             GraphDependencies(
@@ -89,6 +96,19 @@ class TutorService:
         )
         ledger_db = getattr(settings, "ledger_db_path", None)
         tts = make_tts_from_settings(settings)
+        # Build ParentReportService — wire LLM if tuteur backend is active
+        llm_for_reports = None
+        if settings.genai_backend == "tuteur":
+            try:
+                from tuteur.generation import Tutor as _T
+                _tutor_inst = _T()
+                llm_for_reports = _tutor_inst.llm
+            except Exception:
+                pass
+        parent_reports = ParentReportService(
+            ledger_path=ledger_db,
+            llm=llm_for_reports,
+        )
         return cls(
             settings=settings,
             adapters=build_adapters(settings, telemetry, tutor=tutor),
@@ -96,6 +116,7 @@ class TutorService:
             profiles=profiles,
             engagement=EngagementService(ledger_db),
             tts=tts,
+            parent_reports=parent_reports,
         )
 
     @property
@@ -265,6 +286,47 @@ class TutorService:
         principal.require_class(request.class_id)
         state = await self._run(Workflow.TEACHER_REPORT, principal, report_request=request)
         return self._response(state)
+
+    def parent_report(
+        self, principal: Principal, request: ParentReportRequest
+    ) -> TutorResponse:
+        """Generate a progress report for a single student (parent/supervisor view).
+
+        Access control: the caller must be parent/supervisor authorized for this
+        student_ref, or a teacher. Students cannot access this endpoint.
+        """
+        principal.require_role("parent", "supervisor", "teacher")
+        principal.require_student_access(request.student_ref)
+
+        # Resolve language: request → student profile → "fr"
+        language = request.language
+        if not language:
+            profile = self._profiles.get(request.student_ref)
+            language = profile.language_preference if profile else "fr"
+
+        return self._parent_reports.generate(
+            student_ref=request.student_ref,
+            period_start=str(request.period_start),
+            period_end=str(request.period_end),
+            language=language or "fr",
+        )
+
+    def export_parent_report_pdf(
+        self, principal: Principal, report_id: str
+    ) -> "Path":  # type: ignore[name-defined]
+        """Export a previously generated parent report as a PDF asset.
+
+        Returns the Path to a temporary PDF file. The caller must serve it
+        and delete it after the response is sent.
+        """
+        from pathlib import Path
+        principal.require_role("parent", "supervisor", "teacher")
+        record = self._parent_reports.get_record(report_id)
+        if record is None:
+            raise NotFound("Report not found or expired.")
+        # Authorization: re-check the caller can access this student
+        principal.require_student_access(record.student_ref)
+        return export_pdf(record)
 
     def progress(self, principal: Principal) -> TutorResponse:
         """The learner's own progress: history snapshot + engagement scores + badges."""

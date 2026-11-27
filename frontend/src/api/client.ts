@@ -109,6 +109,26 @@ export const api = {
     period_end: string;
   }): Promise<TutorResponse> => parseTutorResponse(await post("/teacher/reports", input)),
 
+  parentReport: async (input: {
+    student_ref: string;
+    period_start: string;
+    period_end: string;
+    language?: string;
+  }): Promise<TutorResponse> => parseTutorResponse(await post("/parent/reports", input)),
+
+  downloadParentReportPdf: async (reportId: string): Promise<void> => {
+    const response = await call(`/parent/reports/${encodeURIComponent(reportId)}/pdf`);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `rapport-progres-${reportId.slice(0, 8)}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
   /** Images need the bearer token, so they are fetched and exposed as object URLs. */
   assetUrl: async (assetId: string): Promise<string> =>
     URL.createObjectURL(await (await call(`/assets/${encodeURIComponent(assetId)}`)).blob()),

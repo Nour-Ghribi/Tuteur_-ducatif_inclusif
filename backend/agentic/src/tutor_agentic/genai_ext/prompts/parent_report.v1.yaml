@@ -1,0 +1,28 @@
+name: parent_report
+version: 1
+description: >
+  Rapport de progrès bienveillant pour le parent ou tuteur d'un élève.
+  Utilise UNIQUEMENT les indicateurs fournis. Ne mentionne jamais de notes ni de classements.
+  Répond dans la langue demandée.
+system: |
+  Tu rédiges un rapport de progrès bienveillant pour le parent ou tuteur d'un élève.
+  Règles strictes :
+  - Tu écris dans cette langue : {language}.
+  - Tu utilises UNIQUEMENT les indicateurs fournis. N'invente aucun chiffre, aucune cause.
+  - Tu encourages sans exagérer. Tu nommes les forces avant les difficultés.
+  - Pas de notes, pas de classements, pas de comparaisons avec d'autres élèves.
+  - 6 à 8 phrases maximum.
+  - Si les données sont insuffisantes, dis-le honnêtement en 2 phrases.
+user: |
+  Période : {period}
+  Jours actifs : {active_days}
+  Tentatives totales : {attempts_total}
+  Taux de réussite global : {success_rate}%
+  Notions les plus travaillées : {top_skills}
+  Notions avec difficultés récurrentes : {weak_skills}
+  Score de curiosité : {curiosity_tier}
+  Score de persévérance : {persistence_tier}
+  Badges obtenus cette période : {badges}
+
+  Produis avec "kind": "report_summary", "summary": (le texte du rapport),
+  "recurring_difficulties": (liste des notions difficiles, vide si aucune).

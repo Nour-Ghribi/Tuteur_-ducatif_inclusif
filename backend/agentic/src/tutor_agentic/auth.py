@@ -16,7 +16,7 @@ from pydantic import BaseModel, ConfigDict
 from .config import DevIdentity, Settings
 from .errors import AuthenticationRequired, Forbidden
 
-Role = Literal["student", "teacher"]
+Role = Literal["student", "teacher", "parent", "supervisor"]
 
 
 class Principal(BaseModel):
@@ -25,6 +25,7 @@ class Principal(BaseModel):
     subject_ref: str  # pseudonymous; never a name or email
     role: Role
     class_ids: frozenset[str] = frozenset()
+    supervised_student_refs: frozenset[str] = frozenset()
     auth_mode: Literal["dev_stub", "external"]
 
     def require_role(self, *roles: Role) -> None:
@@ -34,6 +35,17 @@ class Principal(BaseModel):
     def require_class(self, class_id: str) -> None:
         if class_id not in self.class_ids:
             raise Forbidden("You are not authorized for this class.")
+
+    def require_student_access(self, student_ref: str) -> None:
+        """Guards parent/supervisor access to a specific student's data."""
+        if self.role in ("parent", "supervisor"):
+            if student_ref not in self.supervised_student_refs:
+                raise Forbidden("You are not authorized to access this student's data.")
+        elif self.role == "teacher":
+            pass  # teachers access students via class membership — checked separately
+        elif self.role == "student":
+            if student_ref != self.subject_ref:
+                raise Forbidden("Students can only access their own data.")
 
 
 class Authenticator(Protocol):
@@ -60,6 +72,7 @@ class DevTokenAuthenticator:
             subject_ref=identity.subject_ref,
             role=identity.role,
             class_ids=frozenset(identity.class_ids),
+            supervised_student_refs=frozenset(identity.supervised_student_refs),
             auth_mode="dev_stub",
         )
 

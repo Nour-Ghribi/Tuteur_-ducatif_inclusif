@@ -142,6 +142,15 @@ export const fr = {
   // observed errors: machine codes from the answer-key check; free text from the grader is shown as is
   "obs.selected_incorrect_option": "Tu as choisi une autre réponse que la bonne.",
   "obs.missing_key_terms": "Des mots-clés attendus ne figurent pas dans ta réponse.",
+  // parent report
+  "parent.title": "Rapport de progrès",
+  "parent.student_ref": "Identifiant de l'élève",
+  "parent.start": "Début de la période",
+  "parent.end": "Fin de la période",
+  "parent.send": "Générer le rapport",
+  "parent.download_pdf": "Télécharger en PDF",
+  "parent.note": "Ce rapport contient uniquement des indicateurs agrégés. Aucune réponse individuelle n'est incluse.",
+  "label.active_days": "Jours actifs",
   // audio player (Step 7)
   "prefs.audio_section": "Audio et lecture",
   "prefs.audio_enabled": "Lire le contenu à voix haute (audio)",

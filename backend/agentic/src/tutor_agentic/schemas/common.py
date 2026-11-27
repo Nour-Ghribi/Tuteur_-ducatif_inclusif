@@ -38,6 +38,7 @@ class Workflow(StrEnum):
     ANSWER = "answer"
     LEARNING_PATH = "learning_path"
     TEACHER_REPORT = "teacher_report"
+    PARENT_REPORT = "parent_report"
     PROGRESS = "progress"
 
 

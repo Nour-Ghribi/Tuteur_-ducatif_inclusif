@@ -16,8 +16,10 @@ class DevIdentity(BaseModel):
     """Pseudonymous identity bound to a development token. Never a real person."""
 
     subject_ref: str = Field(min_length=1, max_length=64, pattern=r"^[A-Za-z0-9_.:-]+$")
-    role: Literal["student", "teacher"]
+    role: Literal["student", "teacher", "parent", "supervisor"]
     class_ids: list[str] = Field(default_factory=list, max_length=50)
+    # For parent/supervisor: which students they are authorized to access
+    supervised_student_refs: list[str] = Field(default_factory=list, max_length=50)
 
 
 class Settings(BaseSettings):

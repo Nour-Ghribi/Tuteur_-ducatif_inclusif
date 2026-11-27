@@ -87,3 +87,25 @@ class TeacherReportRequest(StrictModel):
         if self.period_end - self.period_start > MAX_REPORT_PERIOD:
             raise ValueError("the report period cannot exceed 366 days")
         return self
+
+
+class ParentReportRequest(StrictModel):
+    """Request a progress report for a single student (parent/supervisor view).
+
+    The student_ref is the pseudonymous identifier of the child/supervised student.
+    The backend verifies the caller is authorized to access this student's data.
+    """
+    student_ref: Identifier
+    period_start: date
+    period_end: date
+    language: LanguageTag | None = None   # defaults to student's profile language
+
+    @model_validator(mode="after")
+    def _valid_period(self) -> Self:
+        if self.period_start > self.period_end:
+            raise ValueError("period_start must not be after period_end")
+        if self.period_end > date.today():
+            raise ValueError("period_end cannot be in the future")
+        if self.period_end - self.period_start > MAX_REPORT_PERIOD:
+            raise ValueError("the report period cannot exceed 366 days")
+        return self
