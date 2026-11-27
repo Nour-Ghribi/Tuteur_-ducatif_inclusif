@@ -96,6 +96,23 @@ def _school_level(state: TutorState) -> str:
     return "middle"
 
 
+def _baseline_difficulty(state: TutorState) -> Difficulty | None:
+    """Default difficulty from the student's school level (overridden by RL later).
+
+    primary/middle → easy   high/university/adult_learning → medium
+    Returns None when no school_level is set so the RL policy is not constrained.
+    """
+    from ..profiles.defaults import SCHOOL_LEVEL_DIFFICULTY
+    sl = _school_level(state)
+    raw = SCHOOL_LEVEL_DIFFICULTY.get(sl)  # type: ignore[arg-type]
+    if raw is None:
+        return None
+    try:
+        return Difficulty(raw)
+    except ValueError:
+        return None
+
+
 def _preferences(state: TutorState) -> AccessibilityPreferences:
     for key in ("experience", "answer_submission", "recommendation_request"):
         if (request := state.get(key)) is not None:
@@ -169,6 +186,7 @@ class TutorNodes:
             needs_recommendation=request.adaptive
             and (intent is Intent.NEW_EXERCISE or request.previous_activity is not None),
             n_items=n_items,
+            difficulty=_baseline_difficulty(state),
         )
         return {"plan": plan, "generation_attempts": 0}
 
@@ -340,7 +358,7 @@ class TutorNodes:
                         question_prompt=item.prompt,
                         reference_answer=item.reference_answer,
                         student_answer=answer.text,
-                        language=submission.language,
+                        language=submission.language or _language(state),
                     )
                 )
             except AdapterError as exc:
@@ -417,11 +435,21 @@ class TutorNodes:
                 else (previous.outcome if previous else None)
             )
         scores = [*history.recent_scores, *([evaluation.score] if evaluation else [])][-10:]
+
+        # Build declared_needs: accessibility + profile + engagement context for RL
+        declared = list(prefs.declared_needs())
+        if sl := state.get("school_level"):
+            declared.append(f"school_level:{sl.value if hasattr(sl, 'value') else sl}")
+        if cn := state.get("cognitive_need"):
+            val = cn.value if hasattr(cn, "value") else str(cn)
+            if val != "none":
+                declared.append(f"cognitive:{val}")
+
         features = LearnerFeatures(
             recent_scores=scores,
             avg_time_s=history.avg_time_s,
             last_outcome=last,
-            declared_needs=prefs.declared_needs(),
+            declared_needs=declared,
         )
 
         catalog = default_activity_catalog(topic[:200])
